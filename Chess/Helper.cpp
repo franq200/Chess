@@ -2,17 +2,17 @@
 
 namespace textures
 {
-	sf::Texture blackPawn;
-	sf::Texture blackQueen;
-	sf::Texture blackKing;
-	sf::Texture blackKnight;
-	sf::Texture blackRook;
-	sf::Texture blackBishop;
+	std::unique_ptr<ITexture> blackPawn;
+	std::unique_ptr<ITexture> blackQueen;
+	std::unique_ptr<ITexture> blackKing;
+	std::unique_ptr<ITexture> blackKnight;
+	std::unique_ptr<ITexture> blackRook;
+	std::unique_ptr<ITexture> blackBishop;
 
-	sf::Texture whitePawn;
-	sf::Texture whiteQueen;
-	sf::Texture whiteKing;
-	sf::Texture whiteKnight;
-	sf::Texture whiteRook;
-	sf::Texture whiteBishop;
+	std::unique_ptr<ITexture> whitePawn;
+	std::unique_ptr<ITexture> whiteQueen;
+	std::unique_ptr<ITexture> whiteKing;
+	std::unique_ptr<ITexture> whiteKnight;
+	std::unique_ptr<ITexture> whiteRook;
+	std::unique_ptr<ITexture> whiteBishop;
 }
