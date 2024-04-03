@@ -1,6 +1,6 @@
 #pragma once
-#include "IWindow.h"
 #include <memory>
+#include "IWindow.h"
 
 class IBoard
 {

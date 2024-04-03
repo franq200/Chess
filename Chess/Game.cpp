@@ -1,9 +1,10 @@
 #include "Game.h"
 #include "Helper.h"
-#include "Texture.h"
+#include "ITexture.h"
+#include "IBoard.h"
 
-Game::Game(std::unique_ptr<ITexture> texture):
-	m_texture(std::move(texture))
+Game::Game(std::unique_ptr<ITexture> texture, std::unique_ptr<IBoard> board):
+	m_texture(std::move(texture)), m_board(std::move(board))
 {
 	LoadTextures();
 }
@@ -49,18 +50,18 @@ void Game::LoadTextures()
 	textures::whiteKnight = std::move(m_texture);
 	textures::whiteRook = std::move(m_texture);
 	textures::whiteBishop = std::move(m_texture);
+	isLoaded &= textures::blackQueen->LoadFromFile("textures\\figures\\BQueen.png");
 	isLoaded &= textures::blackPawn->LoadFromFile("textures\\figures\\BPawn.png");
-	isLoaded &= textures::blackQueen.loadFromFile("textures\\figures\\BQueen.png");
-	isLoaded &= textures::blackKing.loadFromFile("textures\\figures\\BKing.png");
-	isLoaded &= textures::blackKnight.loadFromFile("textures\\figures\\BKnight.png");
-	isLoaded &= textures::blackRook.loadFromFile("textures\\figures\\BRook.png");
-	isLoaded &= textures::blackBishop.loadFromFile("textures\\figures\\BBishop.png");
-	isLoaded &= textures::whitePawn.loadFromFile("textures\\figures\\WPawn.png");
-	isLoaded &= textures::whiteQueen.loadFromFile("textures\\figures\\WQueen.png");
-	isLoaded &= textures::whiteKing.loadFromFile("textures\\figures\\WKing.png");
-	isLoaded &= textures::whiteKnight.loadFromFile("textures\\figures\\WKnight.png");
-	isLoaded &= textures::whiteRook.loadFromFile("textures\\figures\\WRook.png");
-	isLoaded &= textures::whiteBishop.loadFromFile("textures\\figures\\WBishop.png");
+	isLoaded &= textures::blackKing->LoadFromFile("textures\\figures\\BKing.png");
+	isLoaded &= textures::blackKnight->LoadFromFile("textures\\figures\\BKnight.png");
+	isLoaded &= textures::blackRook->LoadFromFile("textures\\figures\\BRook.png");
+	isLoaded &= textures::blackBishop->LoadFromFile("textures\\figures\\BBishop.png");
+	isLoaded &= textures::whitePawn->LoadFromFile("textures\\figures\\WPawn.png");
+	isLoaded &= textures::whiteQueen->LoadFromFile("textures\\figures\\WQueen.png");
+	isLoaded &= textures::whiteKing->LoadFromFile("textures\\figures\\WKing.png");
+	isLoaded &= textures::whiteKnight->LoadFromFile("textures\\figures\\WKnight.png");
+	isLoaded &= textures::whiteRook->LoadFromFile("textures\\figures\\WRook.png");
+	isLoaded &= textures::whiteBishop->LoadFromFile("textures\\figures\\WBishop.png");
 	if (!isLoaded)
 	{
 		throw(std::exception("failed to load textures"));

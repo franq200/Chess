@@ -141,6 +141,7 @@
     <ClCompile Include="IBoard.cpp" />
     <ClCompile Include="ICell.cpp" />
     <ClCompile Include="IFigure.cpp" />
+    <ClCompile Include="IGame.cpp" />
     <ClCompile Include="ITexture.cpp" />
     <ClCompile Include="IWindow.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="IBoard.h" />
     <ClInclude Include="ICell.h" />
     <ClInclude Include="IFigure.h" />
+    <ClInclude Include="IGame.h" />
     <ClInclude Include="ITexture.h" />
     <ClInclude Include="IWindow.h" />
     <ClInclude Include="Texture.h" />

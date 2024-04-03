@@ -1,6 +1,5 @@
 #pragma once
 #include "IWindow.h"
-#include <SFML/Graphics.hpp>
 
 class Window : public IWindow
 {

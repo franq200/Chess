@@ -13,4 +13,3 @@ public:
 	virtual bool IsOpen() const = 0;
 	virtual void Create(sf::VideoMode mode, const std::string& title, sf::Uint32 style = sf::Style::Default) = 0;
 };
-

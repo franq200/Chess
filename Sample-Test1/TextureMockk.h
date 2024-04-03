@@ -4,6 +4,7 @@
 
 class TextureMockk : public ITexture
 {
+public:
 	MOCK_METHOD(bool, LoadFromFile, (const std::string& filename), (override));
 };
 
