@@ -1,5 +1,6 @@
 #include "Board.h"
-#include "ICell.h"
+#include "Window.h"
+#include "interface/ICell.h"
 
 Board::Board(std::unique_ptr<ICell> cell)
 {
@@ -12,7 +13,7 @@ Board::Board(std::unique_ptr<ICell> cell)
 	}
 }
 
-void Board::Draw(std::unique_ptr<IWindow> window)
+void Board::Draw(std::unique_ptr<Window> window)
 {
 	for (int x = 0; x < m_board.size(); x++)
 	{

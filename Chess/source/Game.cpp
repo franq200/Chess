@@ -1,12 +1,12 @@
 #include "Game.h"
 #include "Helper.h"
-#include "ITexture.h"
-#include "IBoard.h"
+#include "interface/ITexture.h"
+#include "interface/IBoard.h"
 
-Game::Game(std::unique_ptr<ITexture> texture, std::unique_ptr<IBoard> board):
-	m_texture(std::move(texture)), m_board(std::move(board))
+Game::Game(std::array<std::unique_ptr<ITexture>, 12> texture, std::unique_ptr<IBoard> board):
+	m_board(std::move(board))
 {
-	LoadTextures();
+	LoadTextures(texture);
 }
 
 void Game::Update()
@@ -35,21 +35,21 @@ void Game::Events()
 	}
 }
 
-void Game::LoadTextures()
+void Game::LoadTextures(std::array<std::unique_ptr<ITexture>, 12>& textures)
 {
 	bool isLoaded = true;
-	textures::blackPawn = std::move(m_texture);
-	textures::blackQueen = std::move(m_texture);
-	textures::blackKing = std::move(m_texture);
-	textures::blackKnight = std::move(m_texture);
-	textures::blackRook = std::move(m_texture);
-	textures::blackBishop = std::move(m_texture);
-	textures::whitePawn = std::move(m_texture);
-	textures::whiteQueen = std::move(m_texture);
-	textures::whiteKing = std::move(m_texture);
-	textures::whiteKnight = std::move(m_texture);
-	textures::whiteRook = std::move(m_texture);
-	textures::whiteBishop = std::move(m_texture);
+	textures::blackPawn = std::move(textures.at(0));
+	textures::blackQueen = std::move(textures.at(1));
+	textures::blackKing = std::move(textures.at(2));
+	textures::blackKnight = std::move(textures.at(3));
+	textures::blackRook = std::move(textures.at(4));
+	textures::blackBishop = std::move(textures.at(5));
+	textures::whitePawn = std::move(textures.at(6));
+	textures::whiteQueen = std::move(textures.at(7));
+	textures::whiteKing = std::move(textures.at(8));
+	textures::whiteKnight = std::move(textures.at(9));
+	textures::whiteRook = std::move(textures.at(10));
+	textures::whiteBishop = std::move(textures.at(11));
 	isLoaded &= textures::blackQueen->LoadFromFile("textures\\figures\\BQueen.png");
 	isLoaded &= textures::blackPawn->LoadFromFile("textures\\figures\\BPawn.png");
 	isLoaded &= textures::blackKing->LoadFromFile("textures\\figures\\BKing.png");

@@ -1,4 +1,5 @@
 #include "Helper.h"
+#include "Texture.h"
 
 namespace textures
 {
@@ -15,4 +16,14 @@ namespace textures
 	std::unique_ptr<ITexture> whiteKnight;
 	std::unique_ptr<ITexture> whiteRook;
 	std::unique_ptr<ITexture> whiteBishop;
+
+	std::array<std::unique_ptr<ITexture>, 12> CreateTextures()
+	{
+		std::array<std::unique_ptr<ITexture>, 12> textures;
+		for (int i = 0; i < textures.size(); i++)
+		{
+			textures[i] = std::make_unique<Texture>();
+		}
+		return textures;
+	}
 }

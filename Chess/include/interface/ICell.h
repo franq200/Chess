@@ -1,11 +1,12 @@
 #pragma once
 #include <memory>
-#include "IWindow.h"
+
+class Window;
 
 class ICell
 {
 public:
 	~ICell() = default;
-	virtual void Draw(std::unique_ptr<IWindow> window) = 0;
+	virtual void Draw(std::unique_ptr<Window> window) = 0;
 };
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "../chess/IFigure.h"
+#include "interface/IFigure.h"
 
 class FigureMock : public IFigure
 {

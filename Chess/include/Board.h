@@ -1,16 +1,17 @@
 #pragma once
 #include <vector>
 #include <memory>
-#include "IBoard.h"
+#include "interface/IBoard.h"
+#include "interface/ICell.h"
 
-class ICell;
+class Window;
 
 class Board : public IBoard
 {
 public:
 	Board() = default;
 	Board(std::unique_ptr<ICell> cell);
-	void Draw(std::unique_ptr<IWindow> window) override;
+	void Draw(std::unique_ptr<Window> window) override;
 private:
 	std::vector<std::vector<std::unique_ptr<ICell>>> m_board;
 };

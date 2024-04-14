@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "gmock/gmock.h"
-#include "..\Chess\ITexture.h"
+#include "interface/ITexture.h"
 
 class TextureMockk : public ITexture
 {

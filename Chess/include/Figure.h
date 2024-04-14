@@ -1,5 +1,5 @@
 #pragma once
-#include "IFigure.h"
+#include "interface/IFigure.h"
 
 class Figure : public IFigure
 {

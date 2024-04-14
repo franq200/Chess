@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\kuj-f\OneDrive\Pulpit\Chess\Chess\SFML-2.6.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;SFML-2.6.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -121,7 +121,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\kuj-f\OneDrive\Pulpit\Chess\Chess\SFML-2.6.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;SFML-2.6.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,35 +133,43 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Board.cpp" />
-    <ClCompile Include="Cell.cpp" />
-    <ClCompile Include="Figure.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Helper.cpp" />
-    <ClCompile Include="IBoard.cpp" />
-    <ClCompile Include="ICell.cpp" />
-    <ClCompile Include="IFigure.cpp" />
-    <ClCompile Include="IGame.cpp" />
-    <ClCompile Include="ITexture.cpp" />
-    <ClCompile Include="IWindow.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="Window.cpp" />
+    <ClCompile Include="source/Event.cpp" />
+    <ClCompile Include="source/interface/IEvent.cpp" />
+    <ClCompile Include="source/interface/IRectangleShape.cpp" />
+    <ClCompile Include="source/RectangleShape.cpp" />
+    <ClCompile Include="source/Board.cpp" />
+    <ClCompile Include="source/Cell.cpp" />
+    <ClCompile Include="source/Figure.cpp" />
+    <ClCompile Include="source/Game.cpp" />
+    <ClCompile Include="source/Helper.cpp" />
+    <ClCompile Include="source/interface/IBoard.cpp" />
+    <ClCompile Include="source/interface/ICell.cpp" />
+    <ClCompile Include="source/interface/IFigure.cpp" />
+    <ClCompile Include="source/interface/IGame.cpp" />
+    <ClCompile Include="source/interface/ITexture.cpp" />
+    <ClCompile Include="source/interface/IWindow.cpp" />
+    <ClCompile Include="source/Main.cpp" />
+    <ClCompile Include="source/Texture.cpp" />
+    <ClCompile Include="source/Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Board.h" />
-    <ClInclude Include="Cell.h" />
-    <ClInclude Include="Figure.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="Helper.h" />
-    <ClInclude Include="IBoard.h" />
-    <ClInclude Include="ICell.h" />
-    <ClInclude Include="IFigure.h" />
-    <ClInclude Include="IGame.h" />
-    <ClInclude Include="ITexture.h" />
-    <ClInclude Include="IWindow.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="Window.h" />
+    <ClInclude Include="include/Event.h" />
+    <ClInclude Include="include/interface/IEvent.h" />
+    <ClInclude Include="include/Board.h" />
+    <ClInclude Include="include/Cell.h" />
+    <ClInclude Include="include/Figure.h" />
+    <ClInclude Include="include/Game.h" />
+    <ClInclude Include="include/Helper.h" />
+    <ClInclude Include="include/interface/IBoard.h" />
+    <ClInclude Include="include/interface/ICell.h" />
+    <ClInclude Include="include/interface/IFigure.h" />
+    <ClInclude Include="include/interface/IGame.h" />
+    <ClInclude Include="include/interface/ITexture.h" />
+    <ClInclude Include="include/interface/IWindow.h" />
+    <ClInclude Include="include/Texture.h" />
+    <ClInclude Include="include/Window.h" />
+    <ClInclude Include="include/interface/IRectangleShape.h" />
+    <ClInclude Include="include/RectangleShape.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,5 +1,8 @@
-#include <SFML/Graphics.hpp>
-#include "ITexture.h"
+#pragma once
+#include <array>
+#include <memory>
+
+class ITexture;
 
 namespace textures
 {
@@ -16,5 +19,7 @@ namespace textures
 	extern std::unique_ptr<ITexture> whiteKnight;
 	extern std::unique_ptr<ITexture> whiteRook;
 	extern std::unique_ptr<ITexture> whiteBishop;
+
+	std::array<std::unique_ptr<ITexture>, 12> CreateTextures();
 }
 

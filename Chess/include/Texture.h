@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "ITexture.h"
+#include "interface/ITexture.h"
 
 class Texture : public ITexture
 {

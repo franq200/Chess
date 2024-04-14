@@ -1,6 +1,6 @@
 #pragma once
 #include <gmock/gmock.h>
-#include "../Chess/IGame.h"
+#include "interface/IGame.h"
 
 class GameMock : public IGame
 {
