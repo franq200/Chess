@@ -1,7 +1,6 @@
 #pragma once
 #include <memory>
-
-class Window;
+#include "Window.h"
 
 class IBoard
 {

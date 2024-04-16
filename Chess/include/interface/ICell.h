@@ -1,7 +1,6 @@
 #pragma once
 #include <memory>
-
-class Window;
+#include "Window.h"
 
 class ICell
 {
@@ -10,3 +9,5 @@ public:
 	virtual void Draw(std::unique_ptr<Window> window) = 0;
 };
 
+//window to nie IWindow
+// w IWindow s¹ jakieœ class ...;

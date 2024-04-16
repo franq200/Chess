@@ -13,11 +13,17 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Interface">
+    <Filter Include="Source Files\Source Files/Interface">
+      <UniqueIdentifier>{a38f086c-a733-417f-8fed-722e7b69ce99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Header Files/Interface">
       <UniqueIdentifier>{40a997b5-cf96-4a34-98ad-da30960402db}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Interface">
-      <UniqueIdentifier>{a38f086c-a733-417f-8fed-722e7b69ce99}</UniqueIdentifier>
+    <Filter Include="Header Files\Figures">
+      <UniqueIdentifier>{795f15df-a742-4479-a0b0-3d4b7fe740e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Figures">
+      <UniqueIdentifier>{9e7763a9-556b-4cb0-80e1-d0019e39bf0e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -39,41 +45,65 @@
     <ClCompile Include="source/Board.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source/Figure.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source/Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source/interface/ICell.cpp">
-      <Filter>Source Files\Interface</Filter>
+      <Filter>Source Files\Source Files/Interface</Filter>
     </ClCompile>
     <ClCompile Include="source/interface/ITexture.cpp">
-      <Filter>Source Files\Interface</Filter>
+      <Filter>Source Files\Source Files/Interface</Filter>
     </ClCompile>
     <ClCompile Include="source/interface/IFigure.cpp">
-      <Filter>Source Files\Interface</Filter>
+      <Filter>Source Files\Source Files/Interface</Filter>
     </ClCompile>
     <ClCompile Include="source/interface/IBoard.cpp">
-      <Filter>Source Files\Interface</Filter>
+      <Filter>Source Files\Source Files/Interface</Filter>
     </ClCompile>
     <ClCompile Include="source/interface/IGame.cpp">
-      <Filter>Source Files\Interface</Filter>
+      <Filter>Source Files\Source Files/Interface</Filter>
     </ClCompile>
     <ClCompile Include="source/interface/IWindow.cpp">
-      <Filter>Source Files\Interface</Filter>
+      <Filter>Source Files\Source Files/Interface</Filter>
     </ClCompile>
     <ClCompile Include="source/RectangleShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source/interface/IRectangleShape.cpp">
-      <Filter>Source Files\Interface</Filter>
+      <Filter>Source Files\Source Files/Interface</Filter>
     </ClCompile>
     <ClCompile Include="source/interface/IEvent.cpp">
-      <Filter>Source Files\Interface</Filter>
+      <Filter>Source Files\Source Files/Interface</Filter>
     </ClCompile>
     <ClCompile Include="source/Event.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source/interface/IPlayer.cpp">
+      <Filter>Source Files\Source Files/Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="source/Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\figures\King.cpp">
+      <Filter>Source Files\Figures</Filter>
+    </ClCompile>
+    <ClCompile Include="source/figures/Figure.cpp">
+      <Filter>Source Files\Figures</Filter>
+    </ClCompile>
+    <ClCompile Include="source\figures\Pawn.cpp">
+      <Filter>Source Files\Figures</Filter>
+    </ClCompile>
+    <ClCompile Include="source\figures\Queen.cpp">
+      <Filter>Source Files\Figures</Filter>
+    </ClCompile>
+    <ClCompile Include="source/figures/Bishop.cpp">
+      <Filter>Source Files\Figures</Filter>
+    </ClCompile>
+    <ClCompile Include="source/figures/Knight.cpp">
+      <Filter>Source Files\Figures</Filter>
+    </ClCompile>
+    <ClCompile Include="source/figures/Rook.cpp">
+      <Filter>Source Files\Figures</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -92,41 +122,65 @@
     <ClInclude Include="include/Board.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include/Figure.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include/Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include/interface/IBoard.h">
-      <Filter>Header Files\Interface</Filter>
+      <Filter>Header Files\Header Files/Interface</Filter>
     </ClInclude>
     <ClInclude Include="include/interface/ITexture.h">
-      <Filter>Header Files\Interface</Filter>
+      <Filter>Header Files\Header Files/Interface</Filter>
     </ClInclude>
     <ClInclude Include="include/interface/IFigure.h">
-      <Filter>Header Files\Interface</Filter>
+      <Filter>Header Files\Header Files/Interface</Filter>
     </ClInclude>
     <ClInclude Include="include/interface/ICell.h">
-      <Filter>Header Files\Interface</Filter>
+      <Filter>Header Files\Header Files/Interface</Filter>
     </ClInclude>
     <ClInclude Include="include/interface/IGame.h">
-      <Filter>Header Files\Interface</Filter>
+      <Filter>Header Files\Header Files/Interface</Filter>
     </ClInclude>
     <ClInclude Include="include/interface/IWindow.h">
-      <Filter>Header Files\Interface</Filter>
+      <Filter>Header Files\Header Files/Interface</Filter>
     </ClInclude>
     <ClInclude Include="include/RectangleShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include/interface/IRectangleShape.h">
-      <Filter>Header Files\Interface</Filter>
+      <Filter>Header Files\Header Files/Interface</Filter>
     </ClInclude>
     <ClInclude Include="include/interface/IEvent.h">
-      <Filter>Header Files\Interface</Filter>
+      <Filter>Header Files\Header Files/Interface</Filter>
     </ClInclude>
     <ClInclude Include="include/Event.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include/interface/IPlayer.h">
+      <Filter>Header Files\Header Files/Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include/Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include/figures/Figure.h">
+      <Filter>Header Files\Figures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\figures\King.h">
+      <Filter>Header Files\Figures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\figures\Pawn.h">
+      <Filter>Header Files\Figures</Filter>
+    </ClInclude>
+    <ClInclude Include="include/figures/Knight.h">
+      <Filter>Header Files\Figures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\figures\Queen.h">
+      <Filter>Header Files\Figures</Filter>
+    </ClInclude>
+    <ClInclude Include="include/figures/Rook.h">
+      <Filter>Header Files\Figures</Filter>
+    </ClInclude>
+    <ClInclude Include="include/figures/Bishop.h">
+      <Filter>Header Files\Figures</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

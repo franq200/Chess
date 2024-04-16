@@ -9,7 +9,7 @@ public:
 	MOCK_METHOD(void, Close,(), (override));
 	MOCK_METHOD(void, Clear,(), (override));
 	MOCK_METHOD(void, Display,(), (override));
-	MOCK_METHOD(void, Draw,(IDrawable& drawable), (override));
+	MOCK_METHOD(void, Draw,(const IRectangleShape& drawable), (override));
 	MOCK_METHOD(bool, IsOpen,(), (const, override));
 	MOCK_METHOD(void, Create,(Resolution mode, const std::string& title), (override));
 };
