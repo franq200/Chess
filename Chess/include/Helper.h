@@ -23,3 +23,16 @@ namespace textures
 	std::array<std::unique_ptr<ITexture>, 12> CreateTextures();
 }
 
+struct Pos
+{
+	Pos() = default;
+	Pos(int newX, int newY);
+	int x = 0;
+	int y = 0;
+};
+
+namespace size
+{
+	extern int cellSizeX;
+	extern int cellSizeY;
+}

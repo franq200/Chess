@@ -27,3 +27,16 @@ namespace textures
 		return textures;
 	}
 }
+
+Pos::Pos(int newX, int newY):
+	x(newX), y(newY)
+{
+}
+
+
+
+namespace size
+{
+	int cellSizeX = 50;
+	int cellSizeY = 50;
+}
