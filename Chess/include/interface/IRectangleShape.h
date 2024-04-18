@@ -6,6 +6,6 @@ class IRectangleShape : public sf::Drawable
 {
 public:
 	~IRectangleShape() = default;
-	virtual const Pos& GetPosition() const = 0;
+	virtual Pos GetPosition() const = 0;
 };
 
