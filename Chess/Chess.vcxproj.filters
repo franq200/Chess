@@ -183,4 +183,7 @@
       <Filter>Header Files\Figures</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ChessDiagram.cd" />
+  </ItemGroup>
 </Project>
