@@ -10,6 +10,7 @@ class Player : public IPlayer
 public:
 	void TryChangeCurrentFigure(Pos mousePos) override;
 private:
+	void UpdateCurrentFigure();
 	std::shared_ptr<IFigure> m_currentFigure = nullptr;
 	std::vector<std::shared_ptr<IFigure>> m_figures;
 };

@@ -11,6 +11,7 @@ Board::Board(std::unique_ptr<ICell> cell)
 			m_board[x][y] = std::move(cell);
 		}
 	}
+	CreateFigures();
 }
 
 void Board::Draw(std::unique_ptr<IWindow> window)
@@ -22,4 +23,8 @@ void Board::Draw(std::unique_ptr<IWindow> window)
 			m_board[x][y]->Draw(std::move(window));
 		}
 	}
+}
+
+void Board::CreateFigures()
+{
 }

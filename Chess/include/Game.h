@@ -10,12 +10,12 @@ class IBoard;
 class Game : public IGame
 {
 public:
-	Game(std::array<std::unique_ptr<ITexture>, 12> texture, std::unique_ptr<IBoard> board);
+	Game(std::array<std::unique_ptr<ITexture>, 14> texture, std::unique_ptr<IBoard> board);
 	void Update() override;
 private:
 	void Draw();
 	void Events();
-	void LoadTextures(std::array<std::unique_ptr<ITexture>, 12>&);
+	void LoadTextures(std::array<std::unique_ptr<ITexture>, 14>&);
 	sf::RenderWindow m_window;
 	std::unique_ptr<IBoard> m_board;
 };

@@ -4,6 +4,7 @@
 #include "interface/IBoard.h"
 #include "interface/ICell.h"
 
+class IFigure;
 class Window;
 
 class Board : public IBoard
@@ -13,6 +14,8 @@ public:
 	Board(std::unique_ptr<ICell> cell);
 	void Draw(std::unique_ptr<IWindow> window) override;
 private:
+	void CreateFigures();
 	std::vector<std::vector<std::unique_ptr<ICell>>> m_board;
+	std::vector<std::shared_ptr<IFigure>> m_figures;
 };
 

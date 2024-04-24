@@ -20,13 +20,33 @@ namespace textures
 	extern std::unique_ptr<ITexture> whiteRook;
 	extern std::unique_ptr<ITexture> whiteBishop;
 
-	std::array<std::unique_ptr<ITexture>, 12> CreateTextures();
+	extern std::unique_ptr<ITexture> boardGrey;
+	extern std::unique_ptr<ITexture> boardRed;
+
+	std::array<std::unique_ptr<ITexture>, 14> CreateTextures();
 }
 
 struct Pos
 {
 	Pos() = default;
 	Pos(int newX, int newY);
+	int x = 0;
+	int y = 0;
+};
+
+struct Color
+{
+	Color() = default;
+	Color(uint8_t r, uint8_t g, uint8_t b);
+	uint8_t red = 0;
+	uint8_t green = 0;
+	uint8_t blue = 0;
+};
+
+struct Size
+{
+	Size() = default;
+	Size(int newX, int newY);
 	int x = 0;
 	int y = 0;
 };

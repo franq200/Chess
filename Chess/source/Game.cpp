@@ -3,7 +3,7 @@
 #include "interface/ITexture.h"
 #include "interface/IBoard.h"
 
-Game::Game(std::array<std::unique_ptr<ITexture>, 12> texture, std::unique_ptr<IBoard> board):
+Game::Game(std::array<std::unique_ptr<ITexture>, 14> texture, std::unique_ptr<IBoard> board):
 	m_board(std::move(board))
 {
 	LoadTextures(texture);
@@ -35,7 +35,7 @@ void Game::Events()
 	}
 }
 
-void Game::LoadTextures(std::array<std::unique_ptr<ITexture>, 12>& textures)
+void Game::LoadTextures(std::array<std::unique_ptr<ITexture>, 14>& textures)
 {
 	bool isLoaded = true;
 	textures::blackPawn = std::move(textures.at(0));
@@ -50,6 +50,8 @@ void Game::LoadTextures(std::array<std::unique_ptr<ITexture>, 12>& textures)
 	textures::whiteKnight = std::move(textures.at(9));
 	textures::whiteRook = std::move(textures.at(10));
 	textures::whiteBishop = std::move(textures.at(11));
+	textures::boardGrey = std::move(textures.at(12));
+	textures::boardRed = std::move(textures.at(13));
 	isLoaded &= textures::blackQueen->LoadFromFile("textures\\figures\\BQueen.png");
 	isLoaded &= textures::blackPawn->LoadFromFile("textures\\figures\\BPawn.png");
 	isLoaded &= textures::blackKing->LoadFromFile("textures\\figures\\BKing.png");
@@ -62,6 +64,8 @@ void Game::LoadTextures(std::array<std::unique_ptr<ITexture>, 12>& textures)
 	isLoaded &= textures::whiteKnight->LoadFromFile("textures\\figures\\WKnight.png");
 	isLoaded &= textures::whiteRook->LoadFromFile("textures\\figures\\WRook.png");
 	isLoaded &= textures::whiteBishop->LoadFromFile("textures\\figures\\WBishop.png");
+	isLoaded &= textures::boardGrey->LoadFromFile("textures\\figures\\BoardGrey.png");
+	isLoaded &= textures::boardRed->LoadFromFile("textures\\figures\\BoardRed.png");
 	if (!isLoaded)
 	{
 		throw(std::exception("failed to load textures"));

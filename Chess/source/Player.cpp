@@ -15,3 +15,8 @@ void Player::TryChangeCurrentFigure(Pos mousePos)
 		}
 	}
 }
+
+void Player::UpdateCurrentFigure()
+{
+	m_currentFigure->SetOutlineThickness(2);
+}
