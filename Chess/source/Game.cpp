@@ -2,16 +2,17 @@
 #include "Helper.h"
 #include "interface/ITexture.h"
 #include "interface/IBoard.h"
+#include "interface/IEvent.h"
 
-Game::Game(std::array<std::unique_ptr<ITexture>, 14> texture, std::unique_ptr<IBoard> board):
-	m_board(std::move(board))
+Game::Game(std::array<std::unique_ptr<ITexture>, 14> texture, std::unique_ptr<IBoard> board, std::unique_ptr<IWindow> window):
+	m_board(std::move(board)), m_window(std::move(window))
 {
 	LoadTextures(texture);
 }
 
 void Game::Update()
 {
-	while (m_window.isOpen())
+	while (m_window->IsOpen())
 	{
 		Events();
 		Draw();
@@ -20,18 +21,18 @@ void Game::Update()
 
 void Game::Draw()
 {
-	m_window.clear();
+	m_window->Clear();
 
-	m_window.display();
+	m_window->Display();
 }
 
 void Game::Events()
 {
-	sf::Event event;
-	while (m_window.pollEvent(event))
+	IEvent event;
+	while (m_window->PollEvent(event))
 	{
 		if (event.type == sf::Event::Closed)
-			m_window.close();
+			m_window->Close();
 	}
 }
 

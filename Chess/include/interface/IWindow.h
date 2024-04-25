@@ -13,7 +13,7 @@ class IEvent;
 class IWindow
 {
 public:
-	~IWindow() = default;
+	virtual ~IWindow() = default;
 	virtual bool PollEvent(IEvent& event) = 0;
 	virtual void Close() = 0;
 	virtual void Clear() = 0;

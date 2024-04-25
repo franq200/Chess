@@ -8,7 +8,7 @@ public:
 	Pos GetPosition() const override;
 	void SetOutlineThickness(int thickness) override;
 	void SetOutlineColor(Color color) override;
-	void SetTexture(std::unique_ptr<ITexture> texture) override;
+	void SetTexture(const ITexture& texture) override;
 	void SetPosition(Pos pos) override;
 	void SetSize(Size size) override;
 private:

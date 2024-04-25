@@ -4,6 +4,6 @@
 class IEvent: public sf::Event
 {
 public:
-	~IEvent() = default;
+	virtual ~IEvent() = default;
 };
 

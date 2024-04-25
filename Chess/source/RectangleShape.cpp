@@ -1,4 +1,5 @@
 #include "RectangleShape.h"
+#include "interface/ITexture.h"
 
 Pos RectangleShape::GetPosition() const
 {
@@ -16,17 +17,17 @@ void RectangleShape::SetOutlineColor(Color color)
 	m_shape.setOutlineColor(sf::Color{ color.red, color.green, color.blue });
 }
 
-void RectangleShape::SetTexture(std::unique_ptr<ITexture> texture)
+void RectangleShape::SetTexture(const ITexture& texture)
 {
-	m_shape.setTexture(texture);
+	m_shape.setTexture(texture.GetTexture());
 }
 
 void RectangleShape::SetPosition(Pos pos)
 {
-	m_shape.setPosition({ pos.x, pos.y });
+	m_shape.setPosition({ static_cast<float>(pos.x), static_cast<float>(pos.y) });
 }
 
 void RectangleShape::SetSize(Size size)
 {
-	m_shape.setPosition({ size.x, size.y });
+	m_shape.setPosition({ static_cast<float>(size.x), static_cast<float>(size.y) });
 }

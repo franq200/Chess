@@ -1,7 +1,8 @@
 #include "figures/Figure.h"
 #include "interface/IRectangleShape.h"
+#include "interface/ITexture.h"
 
-Figure::Figure(std::unique_ptr<ITexture> texture, Pos pos, Size size)
+Figure::Figure(const ITexture& texture, Pos pos, Size size)
 {
     m_figure->SetOutlineColor(Color(50, 50, 150));
     m_figure->SetTexture(texture);

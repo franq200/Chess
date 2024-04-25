@@ -2,7 +2,7 @@
 class IGame
 {
 public:
-	~IGame() = default;
+	virtual ~IGame() = default;
 	virtual void Update() = 0;
 };
 

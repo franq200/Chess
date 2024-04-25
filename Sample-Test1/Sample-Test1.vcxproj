@@ -106,7 +106,7 @@
     <ClCompile Include="FigureMock.cpp" />
     <ClCompile Include="GameMock.cpp" />
     <ClCompile Include="test.cpp" />
-    <ClCompile Include="TextureMockk.cpp" />
+    <ClCompile Include="TextureMock.cpp" />
     <ClCompile Include="WindowMock.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -117,7 +117,7 @@
     <ClInclude Include="CellMock.h" />
     <ClInclude Include="FigureMock.h" />
     <ClInclude Include="GameMock.h" />
-    <ClInclude Include="TextureMockk.h" />
+    <ClInclude Include="TextureMock.h" />
     <ClInclude Include="WindowMock.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

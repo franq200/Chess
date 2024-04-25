@@ -1,12 +1,10 @@
 #pragma once
 #include <memory>
+#include "Figure.h"
 
-class IFigure;
-
-class Pawn
+class Pawn : public Figure
 {
 public:
 private:
-	std::unique_ptr<IFigure> m_figure;
 };
 
