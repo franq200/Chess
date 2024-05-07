@@ -112,6 +112,12 @@
       <AdditionalLibraryDirectories>C:/Users/kuj-f/OneDrive/Pulpit/Chess/Chess/SFML-2.6.0/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-window-d.lib;sfml-system-d.lib;sfml-graphics-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>cd ..
+xcopy /s /Y Chess\SFML-2.6.0\bin\sfml-graphics-d-2.dll  x64\Debug
+xcopy /s /Y Chess\SFML-2.6.0\bin\sfml-system-d-2.dll  x64\Debug
+xcopy /s /Y Chess\SFML-2.6.0\bin\sfml-window-d-2.dll  x64\Debug</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -131,6 +137,12 @@
       <AdditionalLibraryDirectories>C:/Users/kuj-f/OneDrive/Pulpit/Chess/Chess/SFML-2.6.0/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-window.lib;sfml-system.lib;sfml-graphics.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>cd ..
+xcopy /s /Y Chess\SFML-2.6.0\bin\sfml-graphics-d-2.dll  x64\Release
+xcopy /s /Y Chess\SFML-2.6.0\bin\sfml-system-d-2.dll  x64\Release
+xcopy /s /Y Chess\SFML-2.6.0\bin\sfml-window-d-2.dll  x64\Release</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source/Event.cpp" />
