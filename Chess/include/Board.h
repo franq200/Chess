@@ -2,8 +2,8 @@
 #include <vector>
 #include <memory>
 #include "interface/IBoard.h"
-#include "interface/ICell.h"
 
+class Cell;
 class IFigure;
 class Window;
 
@@ -11,11 +11,12 @@ class Board : public IBoard
 {
 public:
 	Board() = default;
-	Board(std::unique_ptr<ICell> cell);
+	Board();
 	void Draw(std::unique_ptr<IWindow> window) override;
 private:
 	void CreateFigures();
-	std::vector<std::vector<std::unique_ptr<ICell>>> m_board;
+	void CreateBoard();
+	std::vector<std::vector<Cell>> m_board;
 	std::vector<std::shared_ptr<IFigure>> m_figures;
 };
 

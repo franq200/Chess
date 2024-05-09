@@ -9,6 +9,7 @@ class Window;
 class Cell : public ICell
 {
 public:
+	Cell(Pos pos);
 	void Draw(std::unique_ptr<IWindow> window) override;
 private:
 	 std::unique_ptr<IRectangleShape> m_cell;

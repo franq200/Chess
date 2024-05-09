@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\Source Files/Interface">
-      <UniqueIdentifier>{a38f086c-a733-417f-8fed-722e7b69ce99}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Header Files/Interface">
       <UniqueIdentifier>{40a997b5-cf96-4a34-98ad-da30960402db}</UniqueIdentifier>
     </Filter>
@@ -48,38 +45,11 @@
     <ClCompile Include="source/Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source/interface/ICell.cpp">
-      <Filter>Source Files\Source Files/Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="source/interface/ITexture.cpp">
-      <Filter>Source Files\Source Files/Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="source/interface/IFigure.cpp">
-      <Filter>Source Files\Source Files/Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="source/interface/IBoard.cpp">
-      <Filter>Source Files\Source Files/Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="source/interface/IGame.cpp">
-      <Filter>Source Files\Source Files/Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="source/interface/IWindow.cpp">
-      <Filter>Source Files\Source Files/Interface</Filter>
-    </ClCompile>
     <ClCompile Include="source/RectangleShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source/interface/IRectangleShape.cpp">
-      <Filter>Source Files\Source Files/Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="source/interface/IEvent.cpp">
-      <Filter>Source Files\Source Files/Interface</Filter>
-    </ClCompile>
     <ClCompile Include="source/Event.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source/interface/IPlayer.cpp">
-      <Filter>Source Files\Source Files/Interface</Filter>
     </ClCompile>
     <ClCompile Include="source/Player.cpp">
       <Filter>Source Files</Filter>
