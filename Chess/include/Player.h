@@ -8,7 +8,7 @@ class IFigure;
 class Player : public IPlayer
 {
 public:
-	void TryChangeCurrentFigure(Pos mousePos) override;
+	__declspec(dllexport) void TryChangeCurrentFigure(Pos mousePos) override;
 private:
 	void UpdateCurrentFigure();
 	std::shared_ptr<IFigure> m_currentFigure = nullptr;

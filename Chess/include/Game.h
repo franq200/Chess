@@ -10,8 +10,8 @@ class IBoard;
 class Game : public IGame
 {
 public:
-	Game(std::array<std::unique_ptr<ITexture>, 14> texture, std::unique_ptr<IBoard> board, std::unique_ptr<IWindow> window);
-	void Update() override;
+	__declspec(dllexport) Game(std::array<std::unique_ptr<ITexture>, 14> texture, std::unique_ptr<IBoard> board, std::unique_ptr<IWindow> window);
+	__declspec(dllexport) void Update() override;
 private:
 	void Draw();
 	void Events();

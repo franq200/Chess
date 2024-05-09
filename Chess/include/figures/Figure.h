@@ -8,10 +8,10 @@ class IRectangleShape;
 class Figure : public IFigure
 {
 public:
-	Figure(const ITexture& texture, Pos pos = { 0, 0 }, Size size = { 0, 0 });
-	bool IsInRange(Pos mousePos) override;
-	void SetOutlineThickness(int thickness) override;
-	void SetOutlineColor(Color color) override;
+	__declspec(dllexport) Figure(const ITexture& texture, Pos pos = { 0, 0 }, Size size = { 0, 0 });
+	__declspec(dllexport) bool IsInRange(Pos mousePos) override;
+	__declspec(dllexport) void SetOutlineThickness(int thickness) override;
+	__declspec(dllexport) void SetOutlineColor(Color color) override;
 protected:
 	std::unique_ptr<IRectangleShape> m_figure;
 };

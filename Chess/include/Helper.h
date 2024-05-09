@@ -24,7 +24,7 @@ namespace textures
 	extern std::unique_ptr<ITexture> boardGrey;
 	extern std::unique_ptr<ITexture> boardRed;
 
-	std::array<std::unique_ptr<ITexture>, 14> CreateTextures();
+	__declspec(dllexport) std::array<std::unique_ptr<ITexture>, 14> CreateTextures();
 }
 
 struct Pos
@@ -58,6 +58,6 @@ namespace size
 	extern int cellSizeY;
 }
 
-int GetCellIndex(Pos index2Int);
+__declspec(dllexport) int GetCellIndex(Pos index2Int);
 
-std::array<std::unique_ptr<ICell>, 64> CreateCells();
+__declspec(dllexport) std::array<std::unique_ptr<ICell>, 64> CreateCells();

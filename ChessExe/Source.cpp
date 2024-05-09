@@ -1,4 +1,3 @@
-//#include "interface/IRectangleShape.h"
 #include "Game.h"
 #include "Board.h"
 #include "Cell.h"

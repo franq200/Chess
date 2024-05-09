@@ -5,12 +5,12 @@
 class RectangleShape : public IRectangleShape
 {
 public:
-	Pos GetPosition() const override;
-	void SetOutlineThickness(int thickness) override;
-	void SetOutlineColor(Color color) override;
-	void SetTexture(const ITexture& texture) override;
-	void SetPosition(Pos pos) override;
-	void SetSize(Size size) override;
+	__declspec(dllexport) Pos GetPosition() const override;
+	__declspec(dllexport) void SetOutlineThickness(int thickness) override;
+	__declspec(dllexport) void SetOutlineColor(Color color) override;
+	__declspec(dllexport) void SetTexture(const ITexture& texture) override;
+	__declspec(dllexport) void SetPosition(Pos pos) override;
+	__declspec(dllexport) void SetSize(Size size) override;
 private:
 	sf::RectangleShape m_shape;
 };
