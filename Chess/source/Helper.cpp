@@ -1,5 +1,6 @@
 #include "Helper.h"
 #include "Texture.h"
+#include "Cell.h"
 
 namespace textures
 {
@@ -50,4 +51,19 @@ namespace size
 Size::Size(int newX, int newY):
 	x(newX), y(newY)
 {
+}
+
+int GetCellIndex(Pos index2Int)
+{
+	return index2Int.x + index2Int.y * 8;
+}
+
+std::array<std::unique_ptr<ICell>, 64> CreateCells()
+{
+	std::array<std::unique_ptr<ICell>, 64> cells;
+	for (int i = 0; i < cells.size(); i++)
+	{
+		cells[i] = std::make_unique<Cell>();
+	}
+	return cells;
 }

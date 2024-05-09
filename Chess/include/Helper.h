@@ -3,6 +3,7 @@
 #include <memory>
 
 class ITexture;
+class ICell;
 
 namespace textures
 {
@@ -56,3 +57,7 @@ namespace size
 	extern int cellSizeX;
 	extern int cellSizeY;
 }
+
+int GetCellIndex(Pos index2Int);
+
+std::array<std::unique_ptr<ICell>, 64> CreateCells();

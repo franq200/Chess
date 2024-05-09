@@ -9,6 +9,7 @@ class Window;
 class Cell : public ICell
 {
 public:
+	Cell() = default;
 	Cell(Pos pos);
 	void Draw(std::unique_ptr<IWindow> window) override;
 private:
