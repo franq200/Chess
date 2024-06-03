@@ -1,9 +1,13 @@
 #pragma once
-#include <array>
+#include <map>
 #include <memory>
+#include <string>
+#include <array>
 
 class ITexture;
 class ICell;
+using FigureName = std::string;
+using TextureContainer = std::map<FigureName, std::unique_ptr<ITexture>>;
 
 namespace textures
 {
@@ -24,15 +28,15 @@ namespace textures
 	extern std::unique_ptr<ITexture> boardGrey;
 	extern std::unique_ptr<ITexture> boardRed;
 
-	__declspec(dllexport) std::array<std::unique_ptr<ITexture>, 14> CreateTextures();
+	__declspec(dllexport) TextureContainer CreateTextures();
 }
 
 struct Pos
 {
 	Pos() = default;
-	Pos(int newX, int newY);
-	int x = 0;
-	int y = 0;
+	__declspec(dllexport) Pos(uint16_t newX, uint16_t newY);
+	uint16_t x = 0;
+	uint16_t y = 0;
 };
 
 struct Color
@@ -47,17 +51,21 @@ struct Color
 struct Size
 {
 	Size() = default;
-	Size(int newX, int newY);
-	int x = 0;
-	int y = 0;
+	Size(uint16_t newX, uint16_t newY);
+	uint16_t x = 0;
+	uint16_t y = 0;
 };
 
 namespace size
 {
-	extern int cellSizeX;
-	extern int cellSizeY;
+	extern uint16_t boardCellsX;
+	extern uint16_t boardCellsY;
+	extern uint16_t windowSizeXPix;
+	extern uint16_t windowSizeYPix;
+	extern uint16_t cellSizeXPix;
+	extern uint16_t cellSizeYPix;
 }
 
-__declspec(dllexport) int GetCellIndex(Pos index2Int);
+__declspec(dllexport) int GetCellIndex(Pos posIndex);
 
 __declspec(dllexport) std::array<std::unique_ptr<ICell>, 64> CreateCells();

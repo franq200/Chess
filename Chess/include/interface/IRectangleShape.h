@@ -15,5 +15,6 @@ public:
 	virtual void SetTexture(const ITexture& texture) = 0;
 	virtual void SetPosition(Pos pos) = 0;
 	virtual void SetSize(Size size) = 0;
+	virtual void SetFillColor(Color color) = 0;
 };
 

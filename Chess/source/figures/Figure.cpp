@@ -13,8 +13,8 @@ Figure::Figure(const ITexture& texture, Pos pos, Size size)
 bool Figure::IsInRange(Pos mousePos)
 {
     Pos pos = m_figure->GetPosition();
-    bool isInXRange = mousePos.x - pos.x <= size::cellSizeX && mousePos.x - pos.x >= 0;
-    bool isInYRange = mousePos.y - pos.y <= size::cellSizeX && mousePos.y - pos.y >= 0;
+    bool isInXRange = mousePos.x - pos.x <= size::cellSizeXPix && mousePos.x - pos.x >= 0;
+    bool isInYRange = mousePos.y - pos.y <= size::cellSizeYPix && mousePos.y - pos.y >= 0;
     return isInXRange && isInYRange;
 }
 

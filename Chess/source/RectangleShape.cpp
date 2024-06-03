@@ -29,5 +29,15 @@ void RectangleShape::SetPosition(Pos pos)
 
 void RectangleShape::SetSize(Size size)
 {
-	m_shape.setPosition({ static_cast<float>(size.x), static_cast<float>(size.y) });
+	m_shape.setSize({ static_cast<float>(size.x), static_cast<float>(size.y) });
+}
+
+void RectangleShape::SetFillColor(Color color)
+{
+	m_shape.setFillColor(sf::Color{ color.red, color.green, color.blue });
+}
+
+void RectangleShape::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	target.draw(m_shape, states);
 }

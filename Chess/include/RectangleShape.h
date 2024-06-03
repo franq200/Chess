@@ -11,6 +11,8 @@ public:
 	__declspec(dllexport) void SetTexture(const ITexture& texture) override;
 	__declspec(dllexport) void SetPosition(Pos pos) override;
 	__declspec(dllexport) void SetSize(Size size) override;
+	__declspec(dllexport) void SetFillColor(Color color) override;
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 private:
 	sf::RectangleShape m_shape;
 };

@@ -105,6 +105,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>include;SFML-2.6.0/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -128,6 +129,7 @@ xcopy /s /Y Chess\SFML-2.6.0\bin\sfml-window-d-2.dll  x64\Debug</Command>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>include;SFML-2.6.0/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -145,6 +147,7 @@ xcopy /s /Y Chess\SFML-2.6.0\bin\sfml-window-2.dll  x64\Release</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source/Mouse.cpp" />
     <ClCompile Include="source/Event.cpp" />
     <ClCompile Include="source/RectangleShape.cpp" />
     <ClCompile Include="source/Board.cpp" />
@@ -188,6 +191,8 @@ xcopy /s /Y Chess\SFML-2.6.0\bin\sfml-window-2.dll  x64\Release</Command>
     <ClInclude Include="include\figures\King.h" />
     <ClInclude Include="include\figures\Pawn.h" />
     <ClInclude Include="include\figures\Queen.h" />
+    <ClInclude Include="include\interface\IMouse.h" />
+    <ClInclude Include="include/Mouse.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ChessDiagram.cd" />

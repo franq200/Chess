@@ -4,35 +4,29 @@
 
 namespace textures
 {
-	std::unique_ptr<ITexture> blackPawn;
-	std::unique_ptr<ITexture> blackQueen;
-	std::unique_ptr<ITexture> blackKing;
-	std::unique_ptr<ITexture> blackKnight;
-	std::unique_ptr<ITexture> blackRook;
-	std::unique_ptr<ITexture> blackBishop;
 
-	std::unique_ptr<ITexture> whitePawn;
-	std::unique_ptr<ITexture> whiteQueen;
-	std::unique_ptr<ITexture> whiteKing;
-	std::unique_ptr<ITexture> whiteKnight;
-	std::unique_ptr<ITexture> whiteRook;
-	std::unique_ptr<ITexture> whiteBishop;
-
-	std::unique_ptr<ITexture> boardGrey;
-	std::unique_ptr<ITexture> boardRed;
-
-	std::array<std::unique_ptr<ITexture>, 14> CreateTextures()
+	TextureContainer CreateTextures()
 	{
-		std::array<std::unique_ptr<ITexture>, 14> textures;
-		for (int i = 0; i < textures.size(); i++)
-		{
-			textures[i] = std::make_unique<Texture>();
-		}
+		TextureContainer textures;
+		textures["blackPawn"] = std::make_unique<Texture>();
+		textures["blackQueen"] = std::make_unique<Texture>();
+		textures["blackKing"] = std::make_unique<Texture>();
+		textures["blackKnight"] = std::make_unique<Texture>();
+		textures["blackRook"] = std::make_unique<Texture>();
+		textures["blackBishop"] = std::make_unique<Texture>();
+		textures["whitePawn"] = std::make_unique<Texture>();
+		textures["whiteQueen"] = std::make_unique<Texture>();
+		textures["whiteKing"] = std::make_unique<Texture>();
+		textures["whiteKnight"] = std::make_unique<Texture>();
+		textures["whiteRook"] = std::make_unique<Texture>();
+		textures["whiteBishop"] = std::make_unique<Texture>();
+		textures["boardGrey"] = std::make_unique<Texture>();
+		textures["boardRed"] = std::make_unique<Texture>();
 		return textures;
 	}
 }
 
-Pos::Pos(int newX, int newY):
+Pos::Pos(uint16_t newX, uint16_t newY):
 	x(newX), y(newY)
 {
 }
@@ -44,18 +38,26 @@ Color::Color(uint8_t r, uint8_t g, uint8_t b) :
 
 namespace size
 {
-	int cellSizeX = 50;
-	int cellSizeY = 50;
+	uint16_t boardCellsX = 8;
+	uint16_t boardCellsY = 8;
+	uint16_t windowSizeXPix = 1000;
+	uint16_t windowSizeYPix = 1000;
+	uint16_t cellSizeXPix = windowSizeXPix/boardCellsX;
+	uint16_t cellSizeYPix = windowSizeYPix/boardCellsY;
 }
 
-Size::Size(int newX, int newY):
+Size::Size(uint16_t newX, uint16_t newY):
 	x(newX), y(newY)
 {
 }
 
-int GetCellIndex(Pos index2Int)
+int GetCellIndex(Pos posIndex)
 {
-	return index2Int.x + index2Int.y * 8;
+	if (posIndex.x >= 8 || posIndex.y >= 8 || posIndex.x < 0 || posIndex.y < 0)
+	{
+		throw(std::exception("too big position index"));
+	}
+	return posIndex.x + posIndex.y * 8;
 }
 
 std::array<std::unique_ptr<ICell>, 64> CreateCells()

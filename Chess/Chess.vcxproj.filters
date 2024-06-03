@@ -72,6 +72,9 @@
     <ClCompile Include="source/figures/Rook.cpp">
       <Filter>Source Files\Figures</Filter>
     </ClCompile>
+    <ClCompile Include="source/Mouse.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include/Helper.h">
@@ -148,6 +151,12 @@
     </ClInclude>
     <ClInclude Include="include/figures/Bishop.h">
       <Filter>Header Files\Figures</Filter>
+    </ClInclude>
+    <ClInclude Include="include/Mouse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\interface\IMouse.h">
+      <Filter>Header Files\Header Files/Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
