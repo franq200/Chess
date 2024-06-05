@@ -66,6 +66,8 @@ namespace size
 	extern uint16_t cellSizeYPix;
 }
 
+__declspec(dllexport) Pos GetPixelPosFromCellPos(Pos pos);
+
 __declspec(dllexport) int GetCellIndex(Pos posIndex);
 
 __declspec(dllexport) std::array<std::unique_ptr<ICell>, 64> CreateCells();

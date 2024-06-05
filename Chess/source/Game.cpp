@@ -9,6 +9,7 @@ Game::Game(TextureContainer& textures, std::unique_ptr<IBoard> board, std::uniqu
 	m_textures(std::move(textures)), m_board(std::move(board)), m_window(std::move(window)), m_mouse(std::move(mouse))
 {
 	LoadTextures();
+	m_board->CreateFigures(m_textures);
 	m_window->Create(Resolution(size::windowSizeXPix, size::windowSizeYPix), "Chess");
 }
 
@@ -69,22 +70,6 @@ void Game::LoadTextures()
 	isLoaded &= m_textures["whiteKnight"]->LoadFromFile("..\\Chess\\textures\\figures\\WKnight.png");
 	isLoaded &= m_textures["whiteRook"]->LoadFromFile("..\\Chess\\textures\\figures\\WRook.png");
 	isLoaded &= m_textures["whiteBishop"]->LoadFromFile("..\\Chess\\textures\\figures\\WBishop.png");
-	/*
-	for (int i = 0; i < size::boardCellsX; i++)
-	{
-		for (int j = 0; j < size::boardCellsY; j++)
-		{
-			if (i + j % 2 == 0)
-			{
-				isLoaded &= m_textures["boardGrey"]->LoadFromFile("..\\Chess\\textures\\board\\LightGrey.png");
-			}
-			else
-			{
-				isLoaded &= m_textures["boardRed"]->LoadFromFile("..\\Chess\\textures\\board\\LightRed.png");
-			}
-		}
-	}
-	*/
 	isLoaded &= m_textures["boardGrey"]->LoadFromFile("..\\Chess\\textures\\board\\LightGrey.png");
 	isLoaded &= m_textures["boardRed"]->LoadFromFile("..\\Chess\\textures\\board\\LightRed.png");
 	if (!isLoaded)

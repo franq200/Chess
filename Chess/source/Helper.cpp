@@ -51,6 +51,11 @@ Size::Size(uint16_t newX, uint16_t newY):
 {
 }
 
+Pos GetPixelPosFromCellPos(Pos pos)
+{
+	return Pos(pos.x * size::cellSizeXPix, pos.y * size::cellSizeYPix);
+}
+
 int GetCellIndex(Pos posIndex)
 {
 	if (posIndex.x >= 8 || posIndex.y >= 8 || posIndex.x < 0 || posIndex.y < 0)

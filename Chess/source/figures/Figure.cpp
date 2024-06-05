@@ -1,12 +1,16 @@
 #include "figures/Figure.h"
 #include "interface/IRectangleShape.h"
 #include "interface/ITexture.h"
+#include "Helper.h"
+#include "RectangleShape.h"
+#include "interface/IWindow.h"
 
 Figure::Figure(const ITexture& texture, Pos pos, Size size)
 {
+    m_figure = std::make_unique<RectangleShape>();
     m_figure->SetOutlineColor(Color(50, 50, 150));
     m_figure->SetTexture(texture);
-    m_figure->SetPosition(pos);
+    m_figure->SetPosition(GetPixelPosFromCellPos(pos));
     m_figure->SetSize(size);
 }
 
@@ -26,4 +30,9 @@ void Figure::SetOutlineThickness(int thickness)
 void Figure::SetOutlineColor(Color color)
 {
     m_figure->SetOutlineColor(color);
+}
+
+void Figure::Draw(std::unique_ptr<IWindow>& window)
+{
+    window->Draw(*m_figure);
 }
