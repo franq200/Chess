@@ -10,6 +10,11 @@ struct Resolution
 class IRectangleShape;
 class IEvent;
 
+namespace sf
+{
+class RenderWindow;
+} // namespace sf
+
 class IWindow
 {
 public:
@@ -21,4 +26,5 @@ public:
 	virtual void Draw(const IRectangleShape& drawable) = 0;
 	virtual bool IsOpen() const = 0;
 	virtual void Create(Resolution res, const std::string& title) = 0;
+	virtual const sf::RenderWindow* GetSfmlWindow() const = 0;
 };

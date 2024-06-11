@@ -2,6 +2,8 @@
 #include <cstdint>
 #include "Helper.h"
 
+class IWindow;
+
 class IMouse
 {
 public:
@@ -11,6 +13,7 @@ public:
 		Right
 	};
 	virtual bool IsButtonPressed(Button button) const = 0;
-	virtual Pos GetPosition() = 0;
+	virtual Pos GetPosition(const std::unique_ptr<IWindow>& window) = 0;
+	virtual bool IsMouseInWindow(const std::unique_ptr<IWindow>& window) const = 0;
 };
 

@@ -11,5 +11,7 @@ public:
 	virtual void SetOutlineThickness(int thickness) = 0;
 	virtual void SetOutlineColor(Color color) = 0;
 	virtual void Draw(std::unique_ptr<IWindow>& window) = 0;
+	virtual void SetPosition(Pos pos) = 0;
+	virtual bool IsMovePossible(Pos moveCell) = 0;
 };
 

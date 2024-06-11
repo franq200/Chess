@@ -13,5 +13,9 @@ public:
 	virtual void SetFillColor(Color color) = 0;
 	virtual void SetPosition(Pos pos) = 0;
 	virtual void SetSize(Size size) = 0;
-	virtual void AddFigure(std::shared_ptr<IFigure> figure) = 0;
+	virtual void SetFigure(std::shared_ptr<IFigure> figure) = 0;
+	virtual void RemoveFigure() = 0;
+	virtual std::shared_ptr<IFigure> GetFigure() const = 0;
+	virtual bool IsOccupied() = 0;
+	virtual bool IsMovePossible(Pos moveCell) = 0;
 };

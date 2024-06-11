@@ -19,8 +19,6 @@ Board::Board(std::array<std::unique_ptr<ICell>, 64> cells, TextureContainer& tex
 
 void Board::CreateFigures(TextureContainer& textures)
 {
-	m_figures[FigureColor::white].resize(16);
-	m_figures[FigureColor::black].resize(16);
 	CreateWhite(textures);
 	CreateBlack(textures);
 }
@@ -36,27 +34,31 @@ void Board::Draw(std::unique_ptr<IWindow>& window)
 	}
 }
 
-bool Board::IsCellOccupied(Pos mousePos) const
+bool Board::IsCellOccupied(Pos mouseCell) const
 {
-	return false;
+	return m_board[mouseCell.x][mouseCell.y]->IsOccupied();
 }
 
-void Board::SetCurrentFigure(Pos mousePos)
+void Board::SetCurrentFigure(Pos mouseCell)
 {
+	m_selectedFigureCell = mouseCell;
 }
 
 bool Board::IsCurrentFigureSet() const
 {
-	return false;
+	return m_selectedFigureCell.x != std::numeric_limits<uint16_t>::max();
 }
 
-bool Board::IsMovePossible(Pos mousePos) const
+bool Board::IsMovePossible(Pos mouseCell) const
 {
-	return false;
+	return m_board[m_selectedFigureCell.x][m_selectedFigureCell.y]->IsMovePossible(mouseCell);
 }
 
-void Board::MoveCurrentFiguresToNewCell(Pos mousePos)
+void Board::MoveCurrentFiguresToNewCell(Pos mouseCell)
 {
+	m_board[mouseCell.x][mouseCell.y]->SetFigure(m_board[m_selectedFigureCell.x][m_selectedFigureCell.y]->GetFigure());
+	m_board[m_selectedFigureCell.x][m_selectedFigureCell.y]->RemoveFigure();
+	m_selectedFigureCell = Pos(std::numeric_limits<uint16_t>::max(), std::numeric_limits<uint16_t>::max());
 }
 
 void Board::CreateBoard(std::array<std::unique_ptr<ICell>, 64>& cells)
@@ -83,38 +85,103 @@ void Board::CreateBoard(std::array<std::unique_ptr<ICell>, 64>& cells)
 	}
 }
 
+namespace
+{
+	struct WhiteStartingIndex
+	{
+		Pos rook1 = Pos(0, 7);
+		Pos knight1 = Pos(1, 7);
+		Pos bishop1 = Pos(2, 7);
+		Pos queen = Pos(3, 7);
+		Pos king = Pos(4, 7);
+		Pos bishop2 = Pos(5, 7);
+		Pos knight2 = Pos(6, 7);
+		Pos rook2 = Pos(7, 7);
+	};
+
+	struct BlackStartingIndex
+	{
+		Pos rook1 = Pos(0, 0);
+		Pos knight1 = Pos(1, 0);
+		Pos bishop1 = Pos(2, 0);
+		Pos queen = Pos(3, 0);
+		Pos king = Pos(4, 0);
+		Pos bishop2 = Pos(5, 0);
+		Pos knight2 = Pos(6, 0);
+		Pos rook2 = Pos(7, 0);
+	};
+}
+
 void Board::CreateWhite(TextureContainer& textures)
 {
 	Size size = Size(static_cast<uint16_t>(size::cellSizeXPix), static_cast<uint16_t>(size::cellSizeYPix));
-	WhiteStartingIndex startingIndex = WhiteStartingIndex();
-	for (int i = 0; i < 8; i++)
+	WhiteStartingIndex startingIndex;
+	
+	const int pawnStartRow = 6;
+	
+	for (int i = 0; i < size::boardCellsX; i++)
 	{
-		m_board[i][6]->AddFigure(m_figures[FigureColor::white][i] = std::make_unique<Pawn>(*textures["whitePawn"], Pos(i, 6), size));
+		const auto& figure = m_figures[FigureColor::white].emplace_back(std::make_shared<Pawn>(*textures["whitePawn"], Pos(i, pawnStartRow), size));
+		m_board[i][pawnStartRow]->SetFigure(figure);
 	}
-	m_board[startingIndex.rook1.x][startingIndex.rook1.y]->AddFigure(m_figures[FigureColor::white][8] = std::make_unique<Rook>(*textures["whiteRook"], startingIndex.rook1, size));
-	m_board[startingIndex.knight1.x][startingIndex.knight1.y]->AddFigure(m_figures[FigureColor::white][9] = std::make_unique<Knight>(*textures["whiteKnight"], startingIndex.knight1, size));
-	m_board[startingIndex.bishop1.x][startingIndex.bishop1.y]->AddFigure(m_figures[FigureColor::white][10] = std::make_unique<Bishop>(*textures["whiteBishop"], startingIndex.bishop1, size));
-	m_board[startingIndex.queen.x][startingIndex.queen.y]->AddFigure(m_figures[FigureColor::white][11] = std::make_unique<Queen>(*textures["whiteQueen"], startingIndex.queen, size));
-	m_board[startingIndex.king.x][startingIndex.king.y]->AddFigure(m_figures[FigureColor::white][12] = std::make_unique<King>(*textures["whiteKing"], startingIndex.king, size));
-	m_board[startingIndex.bishop2.x][startingIndex.bishop2.y]->AddFigure(m_figures[FigureColor::white][13] = std::make_unique<Bishop>(*textures["whiteBishop"], startingIndex.bishop2, size));
-	m_board[startingIndex.knight2.x][startingIndex.knight2.y]->AddFigure(m_figures[FigureColor::white][14] = std::make_unique<Knight>(*textures["whiteKnight"], startingIndex.knight2, size));
-	m_board[startingIndex.rook2.x][startingIndex.rook2.y]->AddFigure(m_figures[FigureColor::white][15] = std::make_unique<Rook>(*textures["whiteRook"], startingIndex.rook2, size));
+	const auto& whiteRook1 = m_figures[FigureColor::white].emplace_back(std::make_shared<Rook>(*textures["whiteRook"], startingIndex.rook1, size));
+	m_board[startingIndex.rook1.x][startingIndex.rook1.y]->SetFigure(whiteRook1);
+	
+	const auto& whiteKnight1 = m_figures[FigureColor::white].emplace_back(std::make_shared<Knight>(*textures["whiteKnight"], startingIndex.knight1, size));
+	m_board[startingIndex.knight1.x][startingIndex.knight1.y]->SetFigure(whiteKnight1);
+	
+	const auto& whiteBishop1 = m_figures[FigureColor::white].emplace_back(std::make_shared<Bishop>(*textures["whiteBishop"], startingIndex.bishop1, size));
+	m_board[startingIndex.bishop1.x][startingIndex.bishop1.y]->SetFigure(whiteBishop1);
+	
+	const auto& whiteQueen = m_figures[FigureColor::white].emplace_back(std::make_shared<Queen>(*textures["whiteQueen"], startingIndex.queen, size));
+	m_board[startingIndex.queen.x][startingIndex.queen.y]->SetFigure(whiteQueen);
+	
+	const auto& whiteKing = m_figures[FigureColor::white].emplace_back(std::make_shared<King>(*textures["whiteKing"], startingIndex.king, size));
+	m_board[startingIndex.king.x][startingIndex.king.y]->SetFigure(whiteKing);
+	
+	const auto& whiteBishop2 = m_figures[FigureColor::white].emplace_back(std::make_shared<Bishop>(*textures["whiteBishop"], startingIndex.bishop2, size));
+	m_board[startingIndex.bishop2.x][startingIndex.bishop2.y]->SetFigure(whiteBishop2);
+	
+	const auto& whiteKnight2 = m_figures[FigureColor::white].emplace_back(std::make_shared<Knight>(*textures["whiteKnight"], startingIndex.knight2, size));
+	m_board[startingIndex.knight2.x][startingIndex.knight2.y]->SetFigure(whiteKnight2);
+	
+	const auto& whiteRook2 = m_figures[FigureColor::white].emplace_back(std::make_shared<Rook>(*textures["whiteRook"], startingIndex.rook2, size));
+	m_board[startingIndex.rook2.x][startingIndex.rook2.y]->SetFigure(whiteRook2);
 }
 
 void Board::CreateBlack(TextureContainer& textures)
 {
-	BlackStartingIndex startingIndex = BlackStartingIndex();
+	BlackStartingIndex startingIndex;
 	Size size = Size(static_cast<uint16_t>(size::cellSizeXPix), static_cast<uint16_t>(size::cellSizeYPix));
-	m_board[startingIndex.rook1.x][startingIndex.rook1.y]->AddFigure(m_figures[FigureColor::black][0] = std::make_unique<Rook>(*textures["blackRook"], startingIndex.rook1, size));
-	m_board[startingIndex.knight1.x][startingIndex.knight1.y]->AddFigure(m_figures[FigureColor::black][1] = std::make_unique<Knight>(*textures["blackKnight"], startingIndex.knight1, size));
-	m_board[startingIndex.bishop1.x][startingIndex.bishop1.y]->AddFigure(m_figures[FigureColor::black][2] = std::make_unique<Bishop>(*textures["blackBishop"], startingIndex.bishop1, size));
-	m_board[startingIndex.queen.x][startingIndex.queen.y]->AddFigure(m_figures[FigureColor::black][3] = std::make_unique<Queen>(*textures["blackQueen"], startingIndex.queen, size));
-	m_board[startingIndex.king.x][startingIndex.king.y]->AddFigure(m_figures[FigureColor::black][4] = std::make_unique<King>(*textures["blackKing"], startingIndex.king, size));
-	m_board[startingIndex.bishop2.x][startingIndex.bishop2.y]->AddFigure(m_figures[FigureColor::black][5] = std::make_unique<Bishop>(*textures["blackBishop"], startingIndex.bishop2, size));
-	m_board[startingIndex.knight2.x][startingIndex.knight2.y]->AddFigure(m_figures[FigureColor::black][6] = std::make_unique<Knight>(*textures["blackKnight"], startingIndex.knight2, size));
-	m_board[startingIndex.rook2.x][startingIndex.rook2.y]->AddFigure(m_figures[FigureColor::black][7] = std::make_unique<Rook>(*textures["blackRook"], startingIndex.rook2, size));
-	for (int i = 7; i < 15; i++)
+	
+	const int pawnStartRow = 1;
+	
+	const auto& blackRook1 = m_figures[FigureColor::black].emplace_back(std::make_shared<Rook>(*textures["blackRook"], startingIndex.rook1, size));
+	m_board[startingIndex.rook1.x][startingIndex.rook1.y]->SetFigure(blackRook1);
+	
+	const auto& blackKnight1 = m_figures[FigureColor::black].emplace_back(std::make_shared<Knight>(*textures["blackKnight"], startingIndex.knight1, size));
+	m_board[startingIndex.knight1.x][startingIndex.knight1.y]->SetFigure(blackKnight1);
+	
+	const auto& blackBishop1 = m_figures[FigureColor::black].emplace_back(std::make_shared<Bishop>(*textures["blackBishop"], startingIndex.bishop1, size));
+	m_board[startingIndex.bishop1.x][startingIndex.bishop1.y]->SetFigure(blackBishop1);
+	
+	const auto& blackQueen = m_figures[FigureColor::black].emplace_back(std::make_shared<Queen>(*textures["blackQueen"], startingIndex.queen, size));
+	m_board[startingIndex.queen.x][startingIndex.queen.y]->SetFigure(blackQueen);
+	
+	const auto& blackKing = m_figures[FigureColor::black].emplace_back(std::make_shared<King>(*textures["blackKing"], startingIndex.king, size));
+	m_board[startingIndex.king.x][startingIndex.king.y]->SetFigure(blackKing);
+	
+	const auto& blackBishop2 = m_figures[FigureColor::black].emplace_back(std::make_shared<Bishop>(*textures["blackBishop"], startingIndex.bishop2, size));
+	m_board[startingIndex.bishop2.x][startingIndex.bishop2.y]->SetFigure(blackBishop2);
+	
+	const auto& blackKnight2 = m_figures[FigureColor::black].emplace_back(std::make_shared<Knight>(*textures["blackKnight"], startingIndex.knight2, size));
+	m_board[startingIndex.knight2.x][startingIndex.knight2.y]->SetFigure(blackKnight2);
+	
+	const auto& blackRook2 = m_figures[FigureColor::black].emplace_back(std::make_shared<Rook>(*textures["blackRook"], startingIndex.rook2, size));
+	m_board[startingIndex.rook2.x][startingIndex.rook2.y]->SetFigure(blackRook2);
+	for (int i = 0; i < size::boardCellsX; i++)
 	{
-		m_board[i-7][1]->AddFigure(m_figures[FigureColor::white][i] = std::make_unique<Pawn>(*textures["blackPawn"], Pos(i-7, 1), size));
+		const auto& blackPawn = m_figures[FigureColor::black].emplace_back(std::make_shared<Pawn>(*textures["blackPawn"], Pos(i, pawnStartRow), size));
+		m_board[i][pawnStartRow]->SetFigure(blackPawn);
 	}
 }

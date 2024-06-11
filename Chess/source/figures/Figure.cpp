@@ -36,3 +36,8 @@ void Figure::Draw(std::unique_ptr<IWindow>& window)
 {
     window->Draw(*m_figure);
 }
+
+void Figure::SetPosition(Pos pos)
+{
+    m_figure->SetPosition(pos);
+}

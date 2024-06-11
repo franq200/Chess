@@ -15,6 +15,8 @@ public:
 	__declspec(dllexport) void SetOutlineThickness(int thickness) override;
 	__declspec(dllexport) void SetOutlineColor(Color color) override;
 	__declspec(dllexport) void Draw(std::unique_ptr<IWindow>& window) override;
+	__declspec(dllexport) void SetPosition(Pos pos) override;
+	bool IsMovePossible(Pos moveCell) override = 0;
 protected:
 	std::unique_ptr<IRectangleShape> m_figure;
 };

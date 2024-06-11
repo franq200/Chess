@@ -18,24 +18,38 @@ void Game::Update()
 	while (m_window->IsOpen())
 	{
 		Events();
+		if (m_mouse->IsMouseInWindow(m_window))
+		{
+			Move();
+		}
 		Draw();
 	}
 }
 
 void Game::Move()
 {
-	Pos mousePos = m_mouse->GetPosition();
-	//if (m_mouse->IsButtonPressed(IMouse::Button::Left))
-	//{
-	//	if (m_board->IsCellOccupied(mousePos))
-	//	{
-	//		m_board->SetCurrentFigure(mousePos);
-	//	}
-	//}
-	//if (m_board->IsCurrentFigureSet() && m_mouse->IsButtonPressed(IMouse::Button::Left) && m_board->IsMovePossible(mousePos))
-	//{
-	//	m_board->MoveCurrentFiguresToNewCell(mousePos);
-	//}
+	Pos mouseCell = m_mouse->GetPosition(m_window);
+	if (m_board->IsCurrentFigureSet() && m_mouse->IsButtonPressed(IMouse::Button::Left) && m_board->IsMovePossible(mouseCell) && !m_isMoveButtonPressed)
+	{
+		m_board->MoveCurrentFiguresToNewCell(mouseCell);
+		m_isMoveButtonPressed = true;
+	}
+	if (m_mouse->IsButtonPressed(IMouse::Button::Left))
+	{
+		if (!m_isMoveButtonPressed)
+		{
+			Pos mousePos = m_mouse->GetPosition(m_window);
+			if (m_board->IsCellOccupied(mouseCell))
+			{
+				m_board->SetCurrentFigure(mouseCell);
+			}
+			m_isMoveButtonPressed = true;
+		}
+	}
+	else
+	{
+		m_isMoveButtonPressed = false;
+	}
 }
 
 void Game::Draw()

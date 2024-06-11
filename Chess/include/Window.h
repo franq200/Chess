@@ -13,6 +13,7 @@ public:
 	__declspec(dllexport) void Display() override;
 	__declspec(dllexport) void Draw(const IRectangleShape& drawable) override;
 	__declspec(dllexport) bool IsOpen() const override;
+	__declspec(dllexport) virtual const sf::RenderWindow* GetSfmlWindow() const override;
 private:
 	sf::RenderWindow m_window;
 };

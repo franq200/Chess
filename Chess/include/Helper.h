@@ -67,6 +67,7 @@ namespace size
 }
 
 __declspec(dllexport) Pos GetPixelPosFromCellPos(Pos pos);
+__declspec(dllexport) Pos GetCellPosFromPixelPos(Pos pos);
 
 __declspec(dllexport) int GetCellIndex(Pos posIndex);
 

@@ -25,5 +25,6 @@ private:
 	std::unique_ptr<IBoard> m_board;
 	std::unique_ptr<IMouse> m_mouse;
 	TextureContainer m_textures;
+	bool m_isMoveButtonPressed = false;
 };
 

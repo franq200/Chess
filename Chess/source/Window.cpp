@@ -33,6 +33,11 @@ bool Window::IsOpen() const
     return m_window.isOpen();
 }
 
+const sf::RenderWindow* Window::GetSfmlWindow() const
+{
+    return &m_window;
+}
+
 void Window::Create(Resolution res, const std::string& title)
 {
     m_window.create(sf::VideoMode(res.width, res.height), title);

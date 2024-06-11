@@ -7,5 +7,6 @@ class Rook: public Figure
 public:
 	Rook() = default;
 	Rook(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, size) {}
+	bool IsMovePossible(Pos moveCell) override;
 private:
 };

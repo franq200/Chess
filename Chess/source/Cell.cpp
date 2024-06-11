@@ -35,7 +35,28 @@ void Cell::SetSize(Size size)
 	m_cell->SetSize(size);
 }
 
-void Cell::AddFigure(std::shared_ptr<IFigure> figure)
+void Cell::SetFigure(std::shared_ptr<IFigure> figure)
 {
 	m_figure = figure;
+	m_figure->SetPosition(m_cell->GetPosition());
+}
+
+void Cell::RemoveFigure()
+{
+	m_figure.reset();
+}
+
+std::shared_ptr<IFigure> Cell::GetFigure() const
+{
+	return m_figure;
+}
+
+bool Cell::IsOccupied()
+{
+	return m_figure!=nullptr;
+}
+
+bool Cell::IsMovePossible(Pos moveCell)
+{
+	return m_figure->IsMovePossible(moveCell);
 }
