@@ -2,6 +2,12 @@
 #include <memory>
 #include "Helper.h"
 
+enum class CellFigureColor : uint8_t
+{
+	black = 0,
+	white
+};
+
 class IWindow;
 class IFigure;
 
@@ -16,6 +22,6 @@ public:
 	virtual void SetFigure(std::shared_ptr<IFigure> figure) = 0;
 	virtual void RemoveFigure() = 0;
 	virtual std::shared_ptr<IFigure> GetFigure() const = 0;
-	virtual bool IsOccupied() = 0;
+	virtual bool IsOccupied(CellFigureColor currentColor) = 0;
 	virtual bool IsMovePossible(Pos moveCell) = 0;
 };

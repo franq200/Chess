@@ -11,14 +11,8 @@ class ICell;
 class IFigure;
 class Window;
 
-enum class FigureColor : uint8_t
-{
-	black = 0,
-	white
-};
-
 using Figures = std::vector < std::shared_ptr<IFigure>>;
-using FiguresMap = std::map<FigureColor, Figures>;
+using FiguresMap = std::map<FigureColors, Figures>;
 using Cells = std::vector<std::vector<std::unique_ptr<ICell>>>;
 
 class Board : public IBoard
@@ -27,7 +21,7 @@ public:
 	__declspec(dllexport) Board() = default;
 	__declspec(dllexport) Board(std::array < std::unique_ptr<ICell>, 64> cells, TextureContainer& textures);
 	__declspec(dllexport) void Draw(std::unique_ptr<IWindow>& window) override;
-	__declspec(dllexport) bool IsCellOccupied(Pos mouseCell) const override;
+	__declspec(dllexport) bool IsCellOccupied(Pos mouseCell, FigureColors currentColor) const override;
 	__declspec(dllexport) void SetCurrentFigure(Pos mouseCell) override;
 	__declspec(dllexport) bool IsCurrentFigureSet() const override;
 	__declspec(dllexport) bool IsMovePossible(Pos mouseCell) const override;

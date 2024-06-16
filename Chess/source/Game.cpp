@@ -5,9 +5,11 @@
 #include "interface/IEvent.h"
 #include "interface/IMouse.h"
 
-Game::Game(TextureContainer& textures, std::unique_ptr<IBoard> board, std::unique_ptr<IWindow> window, std::unique_ptr<IMouse> mouse):
+Game::Game(TextureContainer& textures, std::unique_ptr<IBoard> board, std::unique_ptr<IWindow> window, std::unique_ptr<IMouse> mouse, PairOfPlayers players):
 	m_textures(std::move(textures)), m_board(std::move(board)), m_window(std::move(window)), m_mouse(std::move(mouse))
 {
+	m_player[PlayerColor::white] = (std::move(players.first));
+	m_player[PlayerColor::black] = (std::move(players.second));
 	LoadTextures();
 	m_board->CreateFigures(m_textures);
 	m_window->Create(Resolution(size::windowSizeXPix, size::windowSizeYPix), "Chess");
@@ -39,7 +41,7 @@ void Game::Move()
 		if (!m_isMoveButtonPressed)
 		{
 			Pos mousePos = m_mouse->GetPosition(m_window);
-			if (m_board->IsCellOccupied(mouseCell))
+			if (m_board->IsCellOccupied(mouseCell, static_cast<FigureColors>(m_currentPlayer)))
 			{
 				m_board->SetCurrentFigure(mouseCell);
 			}
