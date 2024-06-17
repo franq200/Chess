@@ -8,7 +8,7 @@ class BoardMock : public IBoard
 {
 public:
 	MOCK_METHOD(void, Draw, (std::unique_ptr<IWindow>& window), (override));
-	MOCK_METHOD(bool, IsCellOccupied, (Pos mouseCell), (const, override));
+	MOCK_METHOD(bool, IsCellOccupied, (Pos mouseCell, PlayerColor currentColor), (const, override));
 	MOCK_METHOD(void, SetCurrentFigure, (Pos mouseCell), (override));
 	MOCK_METHOD(bool, IsCurrentFigureSet, (), (const, override));
 	MOCK_METHOD(bool, IsMovePossible, (Pos mouseCell), (const, override));

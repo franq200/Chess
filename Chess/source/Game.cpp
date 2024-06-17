@@ -5,11 +5,11 @@
 #include "interface/IEvent.h"
 #include "interface/IMouse.h"
 
-Game::Game(TextureContainer& textures, std::unique_ptr<IBoard> board, std::unique_ptr<IWindow> window, std::unique_ptr<IMouse> mouse, PairOfPlayers players):
+Game::Game(TextureContainer& textures, std::unique_ptr<IBoard> board, std::unique_ptr<IWindow> window, std::unique_ptr<IMouse> mouse, std::unique_ptr<IPlayer> white, std::unique_ptr<IPlayer> black):
 	m_textures(std::move(textures)), m_board(std::move(board)), m_window(std::move(window)), m_mouse(std::move(mouse))
 {
-	m_player[PlayerColor::white] = (std::move(players.first));
-	m_player[PlayerColor::black] = (std::move(players.second));
+	m_player[PlayerColor::white] = std::move(white);
+	m_player[PlayerColor::black] = std::move(black);
 	LoadTextures();
 	m_board->CreateFigures(m_textures);
 	m_window->Create(Resolution(size::windowSizeXPix, size::windowSizeYPix), "Chess");
@@ -22,26 +22,24 @@ void Game::Update()
 		Events();
 		if (m_mouse->IsMouseInWindow(m_window))
 		{
-			Move();
+			MoveAndSetCurrentFigure();
 		}
 		Draw();
 	}
 }
 
-void Game::Move()
+void Game::MoveAndSetCurrentFigure()
 {
 	Pos mouseCell = m_mouse->GetPosition(m_window);
 	if (m_board->IsCurrentFigureSet() && m_mouse->IsButtonPressed(IMouse::Button::Left) && m_board->IsMovePossible(mouseCell) && !m_isMoveButtonPressed)
 	{
-		m_board->MoveCurrentFiguresToNewCell(mouseCell);
-		m_isMoveButtonPressed = true;
+		MoveAndSetCurrentFigure();
 	}
 	if (m_mouse->IsButtonPressed(IMouse::Button::Left))
 	{
 		if (!m_isMoveButtonPressed)
 		{
-			Pos mousePos = m_mouse->GetPosition(m_window);
-			if (m_board->IsCellOccupied(mouseCell, static_cast<FigureColors>(m_currentPlayer)))
+			if (m_board->IsCellOccupied(mouseCell, m_currentPlayer))
 			{
 				m_board->SetCurrentFigure(mouseCell);
 			}
@@ -52,6 +50,13 @@ void Game::Move()
 	{
 		m_isMoveButtonPressed = false;
 	}
+}
+
+void Game::Move(Pos mouseCell)
+{
+	m_board->MoveCurrentFiguresToNewCell(mouseCell);
+	m_isMoveButtonPressed = true;
+	m_currentPlayer = (m_currentPlayer == PlayerColor::white) ? PlayerColor::black : PlayerColor::white;
 }
 
 void Game::Draw()

@@ -10,10 +10,7 @@
 int main()
 {
 	TextureContainer textures = textures::CreateTextures();
-	std::pair<std::unique_ptr<IPlayer>, std::unique_ptr<IPlayer>> players;
-	players.first = std::make_unique<Player>();
-	players.second = std::make_unique<Player>();
-	Game chess(textures, std::make_unique<Board>(CreateCells(), textures), std::make_unique<Window>(), std::make_unique<Mouse>(), players);
+	Game chess(textures, std::make_unique<Board>(CreateCells(), textures), std::make_unique<Window>(), std::make_unique<Mouse>(), std::make_unique<Player>(), std::make_unique<Player>());
 	chess.Update();
 	return 0;
 }

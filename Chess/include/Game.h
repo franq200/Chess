@@ -5,6 +5,7 @@
 #include <memory>
 #include <map>
 #include <string>
+#include <vector>
 
 enum class PlayerColor : uint8_t
 {
@@ -17,18 +18,18 @@ class IBoard;
 class IMouse;
 using FigureName = std::string;
 using TextureContainer = std::map<FigureName, std::unique_ptr<ITexture>>;
-using PairOfPlayers = std::pair<std::unique_ptr<IPlayer>, std::unique_ptr<IPlayer>>;
 
 class Game : public IGame
 {
 public:
-	__declspec(dllexport) Game(TextureContainer& textures, std::unique_ptr<IBoard> board, std::unique_ptr<IWindow> window, std::unique_ptr<IMouse> mouse, PairOfPlayers players);
+	__declspec(dllexport) Game(TextureContainer& textures, std::unique_ptr<IBoard> board, std::unique_ptr<IWindow> window, std::unique_ptr<IMouse> mouse, std::unique_ptr<IPlayer> white, std::unique_ptr<IPlayer> black);
 	__declspec(dllexport) void Update() override;
 private:
-	void Move();
+	void MoveAndSetCurrentFigure();
 	void Draw();
 	void Events();
 	void LoadTextures();
+	void Move(Pos mouseCell);
 	std::unique_ptr<IWindow> m_window;
 	std::unique_ptr<IBoard> m_board;
 	std::unique_ptr<IMouse> m_mouse;

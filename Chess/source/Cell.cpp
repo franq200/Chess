@@ -51,9 +51,9 @@ std::shared_ptr<IFigure> Cell::GetFigure() const
 	return m_figure;
 }
 
-bool Cell::IsOccupied(CellFigureColor currentColor)
+bool Cell::IsOccupied(PlayerColor currentColor)
 {
-	return m_figure!=nullptr && static_cast<uint8_t>(currentColor) == static_cast<uint8_t>(m_figure->GetFigureColor());
+	return m_figure!=nullptr && currentColor == m_figure->GetFigureColor();
 }
 
 bool Cell::IsMovePossible(Pos moveCell)

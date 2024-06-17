@@ -2,6 +2,7 @@
 #include "TextureMock.h"
 #include "WindowMock.h"
 #include "BoardMock.h"
+#include "PlayerMock.h"
 #include "Game.h"
 #include "Helper.h"
 #include "MouseMock.h"
@@ -33,6 +34,8 @@ protected:
 	std::unique_ptr<testing::NiceMock<BoardMock>> boardMock{ std::make_unique<testing::NiceMock<BoardMock>>() };
 	std::unique_ptr<testing::NiceMock<WindowMock>> windowMock{ std::make_unique<testing::NiceMock<WindowMock>>() };
 	std::unique_ptr<testing::NiceMock<MouseMock>> mouseMock{ std::make_unique<testing::NiceMock<MouseMock>>() };
+	std::unique_ptr<testing::NiceMock<PlayerMock>> white = std::make_unique<testing::NiceMock<PlayerMock>>();
+	std::unique_ptr<testing::NiceMock<PlayerMock>> black = std::make_unique<testing::NiceMock<PlayerMock>>();
 	TextureContainer texturesMock = CreateTextures();
 };
 
@@ -41,7 +44,7 @@ class GameTest : public BasicChessTests
 protected:
 	Game createSut()
 	{
-		Game game(texturesMock, std::move(boardMock), std::move(windowMock), std::move(mouseMock));
+		Game game(texturesMock, std::move(boardMock), std::move(windowMock), std::move(mouseMock), std::move(white), std::move(black));
 		return game;
 		//return { std::move(texturesMock), std::move(boardMock), std::move(windowMock) };
 	}

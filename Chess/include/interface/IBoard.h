@@ -4,14 +4,9 @@
 #include <string>
 #include "Helper.h"
 
+
+enum class PlayerColor : uint8_t;
 class ITexture;
-
-enum class FigureColors : uint8_t
-{
-	black = 0,
-	white
-};
-
 using FigureName = std::string;
 using TextureContainer = std::map<FigureName, std::unique_ptr<ITexture>>;
 
@@ -22,7 +17,7 @@ class IBoard
 public:
 	virtual ~IBoard() = default;
 	virtual void Draw(std::unique_ptr<IWindow>& window) = 0;
-	virtual bool IsCellOccupied(Pos mouseCell, FigureColors currentColor) const = 0;
+	virtual bool IsCellOccupied(Pos mouseCell, PlayerColor currentColor) const = 0;
 	virtual void SetCurrentFigure(Pos mouseCell) = 0;
 	virtual bool IsCurrentFigureSet() const = 0;
 	virtual bool IsMovePossible(Pos mouseCell) const = 0;

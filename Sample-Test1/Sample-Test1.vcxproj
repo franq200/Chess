@@ -110,6 +110,7 @@
     <ClCompile Include="FigureMock.cpp" />
     <ClCompile Include="GameMock.cpp" />
     <ClCompile Include="MouseMock.cpp" />
+    <ClCompile Include="PlayerMock.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="TextureMock.cpp" />
     <ClCompile Include="WindowMock.cpp" />
@@ -123,6 +124,7 @@
     <ClInclude Include="FigureMock.h" />
     <ClInclude Include="GameMock.h" />
     <ClInclude Include="MouseMock.h" />
+    <ClInclude Include="PlayerMock.h" />
     <ClInclude Include="TextureMock.h" />
     <ClInclude Include="WindowMock.h" />
   </ItemGroup>

@@ -5,7 +5,7 @@
 #include "RectangleShape.h"
 #include "interface/IWindow.h"
 
-Figure::Figure(const ITexture& texture, Pos pos, Size size, FigureColor color)
+Figure::Figure(const ITexture& texture, Pos pos, Size size, PlayerColor color)
 {
     m_figure = std::make_unique<RectangleShape>();
     m_figure->SetOutlineColor(Color(50, 50, 150));
@@ -42,7 +42,7 @@ void Figure::SetPosition(Pos pos)
     m_figure->SetPosition(pos);
 }
 
-FigureColor Figure::GetFigureColor() const
+PlayerColor Figure::GetFigureColor() const
 {
     return m_color;
 }
