@@ -5,7 +5,14 @@
 #include <array>
 #include <map>
 #include <string>
+#include <optional>
 #include "Helper.h"
+
+enum class PlayerColor : uint8_t
+{
+	white = 0,
+	black
+};
 
 class ICell;
 class IFigure;
@@ -21,17 +28,17 @@ public:
 	__declspec(dllexport) Board() = default;
 	__declspec(dllexport) Board(std::array < std::unique_ptr<ICell>, 64> cells, TextureContainer& textures);
 	__declspec(dllexport) void Draw(std::unique_ptr<IWindow>& window) override;
-	__declspec(dllexport) bool IsCellOccupied(Pos mouseCell, PlayerColor currentColor) const override;
+	__declspec(dllexport) bool IsCellOccupied(Pos mouseCell, const std::unique_ptr<IPlayer>& currentPlayer) const override;
 	__declspec(dllexport) void SetCurrentFigure(Pos mouseCell) override;
-	__declspec(dllexport) bool IsCurrentFigureSet() const override;
 	__declspec(dllexport) bool IsMovePossible(Pos mouseCell) const override;
 	__declspec(dllexport) void MoveCurrentFiguresToNewCell(Pos mouseCell) override;
-	__declspec(dllexport) void CreateFigures(TextureContainer& textures) override;
+	__declspec(dllexport) void CreateFigures(TextureContainer& textures, std::unique_ptr<IPlayer>& white, std::unique_ptr<IPlayer>& black) override;
 private:
+	bool IsCurrentFigureSet() const;
 	void CreateBoard(std::array < std::unique_ptr<ICell>, 64>& cells);
 	void CreateWhite(TextureContainer& textures);
 	void CreateBlack(TextureContainer& textures);
 	Cells m_board;
 	FiguresMap m_figures;
-	Pos m_selectedFigureCell = Pos(std::numeric_limits<uint16_t>::max(), std::numeric_limits<uint16_t>::max());
+	std::optional<Pos> m_selectedFigureCell;
 };

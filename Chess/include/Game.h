@@ -3,15 +3,10 @@
 #include "interface/IWindow.h"
 #include "interface/IPlayer.h"
 #include <memory>
+#include <functional>
 #include <map>
 #include <string>
 #include <vector>
-
-enum class PlayerColor : uint8_t
-{
-	black = 0,
-	white
-};
 
 class ITexture;
 class IBoard;
@@ -33,8 +28,9 @@ private:
 	std::unique_ptr<IWindow> m_window;
 	std::unique_ptr<IBoard> m_board;
 	std::unique_ptr<IMouse> m_mouse;
-	std::map<PlayerColor, std::unique_ptr<IPlayer>> m_player;
-	PlayerColor m_currentPlayer;
+	std::unique_ptr<IPlayer> m_whitePlayer;
+	std::unique_ptr<IPlayer> m_blackPlayer;
+	std::unique_ptr<IPlayer>* m_currentPlayer;
 	TextureContainer m_textures;
 	bool m_isMoveButtonPressed = false;
 };

@@ -2,8 +2,7 @@
 #include <memory>
 #include "Helper.h"
 
-enum class PlayerColor : uint8_t;
-
+class IPlayer;
 class IWindow;
 class IFigure;
 
@@ -18,6 +17,6 @@ public:
 	virtual void SetFigure(std::shared_ptr<IFigure> figure) = 0;
 	virtual void RemoveFigure() = 0;
 	virtual std::shared_ptr<IFigure> GetFigure() const = 0;
-	virtual bool IsOccupied(PlayerColor currentColor) = 0;
+	virtual bool IsOccupiedByPlayer(const std::unique_ptr<IPlayer>& currentColor) const = 0;
 	virtual bool IsMovePossible(Pos moveCell) = 0;
 };

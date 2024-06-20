@@ -1,4 +1,5 @@
 #include "Cell.h"
+#include "interface/IPlayer.h"
 #include "interface/IRectangleShape.h"
 #include "interface/IWindow.h"
 #include "RectangleShape.h"
@@ -51,9 +52,9 @@ std::shared_ptr<IFigure> Cell::GetFigure() const
 	return m_figure;
 }
 
-bool Cell::IsOccupied(PlayerColor currentColor)
+bool Cell::IsOccupiedByPlayer(const std::unique_ptr<IPlayer>& currentPlayer) const
 {
-	return m_figure!=nullptr && currentColor == m_figure->GetFigureColor();
+	return currentPlayer->HasFigure(m_figure);
 }
 
 bool Cell::IsMovePossible(Pos moveCell)

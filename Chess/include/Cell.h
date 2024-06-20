@@ -17,7 +17,7 @@ public:
 	__declspec(dllexport) void SetFigure(std::shared_ptr<IFigure> figure) override;
 	__declspec(dllexport) void RemoveFigure() override;
 	__declspec(dllexport) std::shared_ptr<IFigure> GetFigure() const override;
-	__declspec(dllexport) bool IsOccupied(PlayerColor currentColor) override;
+	__declspec(dllexport) bool IsOccupiedByPlayer(const std::unique_ptr<IPlayer>& currentPlayer) const override;
 	__declspec(dllexport) bool IsMovePossible(Pos moveCell) override;
 private:
 	 std::unique_ptr<IRectangleShape> m_cell;

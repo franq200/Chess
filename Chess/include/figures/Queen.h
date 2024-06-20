@@ -6,7 +6,7 @@ class Queen : public Figure
 {
 public:
     Queen() = default;
-    Queen(const ITexture& texture, Pos pos, Size size, PlayerColor color) :Figure(texture, pos, size, color) {}
+    Queen(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, size) {}
     bool IsMovePossible(Pos moveCell) override;
 private:
 };

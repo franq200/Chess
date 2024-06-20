@@ -6,7 +6,7 @@ class Knight : public Figure
 {
 public:
 	Knight() = default;
-	Knight(const ITexture& texture, Pos pos, Size size, PlayerColor color) :Figure(texture, pos, size, color) {}
+	Knight(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, size) {}
 	bool IsMovePossible(Pos moveCell) override;
 private:
 };

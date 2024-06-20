@@ -6,7 +6,7 @@ class Bishop : public Figure
 {
 public:
 	Bishop() = default;
-	Bishop(const ITexture& texture, Pos pos, Size size, PlayerColor color) :Figure(texture, pos, size, color) {}
+	Bishop(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, size) {}
 	bool IsMovePossible(Pos moveCell) override;
 private:
 };
