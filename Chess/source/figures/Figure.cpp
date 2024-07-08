@@ -41,3 +41,134 @@ void Figure::SetPosition(Pos pos)
 {
     m_figure->SetPosition(pos);
 }
+
+Pos Figure::GetPosition() const
+{
+    return GetCellPosFromPixelPos(m_figure->GetPosition());
+}
+
+Positions Figure::GetTopPath(const Pos pos, const Pos moveCell) const
+{
+    Positions positions;
+    for (int i = 1; pos.y - i >= moveCell.y; ++i)
+    {
+        positions.push_back(Pos(pos.x, pos.y - i));
+    }
+    return positions;
+}
+
+Positions Figure::GetDownPath(const Pos pos, const Pos moveCell) const
+{
+    Positions positions;
+    for (int i = 1; i + pos.y <= moveCell.y; ++i)
+    {
+        positions.push_back(Pos(pos.x, pos.y + i));
+    }
+    return positions;
+}
+
+Positions Figure::GetLeftPath(const Pos pos, const Pos moveCell) const
+{
+    Positions positions;
+    for (int i = 1; pos.x - i >= moveCell.x; ++i)
+    {
+        positions.push_back(Pos(pos.x - i, pos.y));
+    }
+    return positions;
+}
+
+Positions Figure::GetRightPath(const Pos pos, const Pos moveCell) const
+{
+    Positions positions;
+    for (int i = 1; i + pos.x <= moveCell.x; ++i)
+    {
+        positions.push_back(Pos(pos.x + i, pos.y));
+    }
+    return positions;
+}
+
+Positions Figure::GetRightTopPath(const Pos pos, const Pos moveCell) const
+{
+    Positions positions;
+    for (int i = 1; i + pos.x <= moveCell.x; ++i)
+    {
+        positions.push_back(Pos(pos.x + i, pos.y - i));
+    }
+    return positions;
+}
+
+Positions Figure::GetRightDownPath(const Pos pos, const Pos moveCell) const
+{
+    Positions positions;
+    for (int i = 1; i + pos.x <= moveCell.x; ++i)
+    {
+        positions.push_back(Pos(pos.x + i, pos.y + i));
+    }
+    return positions;
+}
+
+Positions Figure::GetLeftTopPath(const Pos pos, const Pos moveCell) const
+{
+    Positions positions;
+    for (int i = 1; pos.x - i >= moveCell.x; ++i)
+    {
+        positions.push_back(Pos(pos.x - i, pos.y - i));
+    }
+    return positions;
+}
+
+Positions Figure::GetLeftDownPath(const Pos pos, const Pos moveCell) const
+{
+    Positions positions;
+    for (int i = 1; pos.x - i >= moveCell.x; ++i)
+    {
+        positions.push_back(Pos(pos.x - i, pos.y + i));
+    }
+    return positions;
+}
+
+std::vector<Pos> Figure::HandleDiagonalMovement(int xDifferenceRaw, int yDifferenceRaw, Pos pos, Pos moveCell) const
+{
+    if (xDifferenceRaw > 0 && yDifferenceRaw < 0)
+    {
+        return GetRightTopPath(pos, moveCell);
+    }
+    else if (xDifferenceRaw > 0 && yDifferenceRaw > 0)
+    {
+        return GetRightDownPath(pos, moveCell);
+    }
+    else if (xDifferenceRaw < 0 && yDifferenceRaw < 0)
+    {
+        return GetLeftTopPath(pos, moveCell);
+    }
+    else
+    {
+        return GetLeftDownPath(pos, moveCell);
+    }
+}
+
+std::vector<Pos> Figure::HandleBasicMovement(int xDifferenceRaw, int yDifferenceRaw, Pos pos, Pos moveCell) const
+{
+    if (xDifferenceRaw == 0)
+    {
+        if (yDifferenceRaw < 0)
+        {
+            return GetTopPath(pos, moveCell);
+        }
+        else
+        {
+            return GetDownPath(pos, moveCell);
+        }
+    }
+    else
+    {
+        if (xDifferenceRaw < 0)
+        {
+            return GetLeftPath(pos, moveCell);
+        }
+        else
+        {
+            return GetRightPath(pos, moveCell);
+        }
+    }
+}

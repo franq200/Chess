@@ -44,7 +44,7 @@ void Game::MoveAndSetCurrentFigure()
 	{
 		if (!m_isMoveButtonPressed)
 		{
-			if (m_board->IsMovePossible(mouseCell))
+			if (m_board->IsMovePossible(mouseCell, *m_currentPlayer))
 			{
 				Move(mouseCell);
 			}

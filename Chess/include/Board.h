@@ -30,7 +30,7 @@ public:
 	__declspec(dllexport) void Draw(std::unique_ptr<IWindow>& window) override;
 	__declspec(dllexport) bool IsCellOccupied(Pos mouseCell, const std::unique_ptr<IPlayer>& currentPlayer) const override;
 	__declspec(dllexport) void SetCurrentFigure(Pos mouseCell) override;
-	__declspec(dllexport) bool IsMovePossible(Pos mouseCell) const override;
+	__declspec(dllexport) bool IsMovePossible(Pos mouseCell, const std::unique_ptr<IPlayer>& currentPlayer) const override;
 	__declspec(dllexport) void MoveCurrentFiguresToNewCell(Pos mouseCell) override;
 	__declspec(dllexport) void CreateFigures(TextureContainer& textures, std::unique_ptr<IPlayer>& white, std::unique_ptr<IPlayer>& black) override;
 private:

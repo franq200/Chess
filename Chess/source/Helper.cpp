@@ -31,6 +31,11 @@ Pos::Pos(uint16_t newX, uint16_t newY):
 {
 }
 
+bool Pos::operator==(const Pos& pos)
+{
+	return pos.x == x && pos.y == y;
+}
+
 Color::Color(uint8_t r, uint8_t g, uint8_t b) :
 	red(r), green(g), blue(b)
 {

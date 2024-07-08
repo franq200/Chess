@@ -18,5 +18,5 @@ public:
 	virtual void RemoveFigure() = 0;
 	virtual std::shared_ptr<IFigure> GetFigure() const = 0;
 	virtual bool IsOccupiedByPlayer(const std::unique_ptr<IPlayer>& currentColor) const = 0;
-	virtual bool IsMovePossible(Pos moveCell) = 0;
+	virtual bool IsMovePossible(Pos moveCell, const std::unique_ptr<IPlayer>& currentPlayer) = 0;
 };

@@ -57,7 +57,8 @@ bool Cell::IsOccupiedByPlayer(const std::unique_ptr<IPlayer>& currentPlayer) con
 	return currentPlayer->HasFigure(m_figure);
 }
 
-bool Cell::IsMovePossible(Pos moveCell)
+bool Cell::IsMovePossible(Pos moveCell, const std::unique_ptr<IPlayer>& currentPlayer)
 {
-	return m_figure->IsMovePossible(moveCell);
+	FiguresVector currentPlayerFigures = currentPlayer->GetFigures();
+	return m_figure->IsMovePossible(moveCell, currentPlayerFigures);
 }

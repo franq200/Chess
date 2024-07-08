@@ -42,11 +42,11 @@ bool Board::IsCurrentFigureSet() const
 	return m_selectedFigureCell.has_value();
 }
 
-bool Board::IsMovePossible(Pos mouseCell) const
+bool Board::IsMovePossible(Pos mouseCell, const std::unique_ptr<IPlayer>& currentPlayer) const
 {
 	if (IsCurrentFigureSet())
 	{
-		return m_board.at(m_selectedFigureCell.value().x).at(m_selectedFigureCell.value().y)->IsMovePossible(mouseCell);
+		return m_board.at(m_selectedFigureCell.value().x).at(m_selectedFigureCell.value().y)->IsMovePossible(mouseCell, currentPlayer);
 	}
 	return false;
 }
