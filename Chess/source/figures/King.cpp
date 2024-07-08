@@ -2,7 +2,7 @@
 #include "interface/IRectangleShape.h"
 #include "Helper.h"
 
-bool King::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures)
+bool King::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures)
 {
     Pos pos = GetCellPosFromPixelPos(m_figure->GetPosition());
     uint8_t yDifference = std::abs(moveCell.y - pos.y);
@@ -15,5 +15,5 @@ bool King::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures)
             return false;
         }
     }
-    return xDifference + yDifference == 1;
+    return xDifference + yDifference == 1 || (xDifference == 1 && yDifference == 1);
 }

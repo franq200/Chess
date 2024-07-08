@@ -2,7 +2,7 @@
 #include "figures/Bishop.h"
 #include "interface/IRectangleShape.h"
 
-bool Bishop::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures)
+bool Bishop::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures)
 {
     Pos pos = GetCellPosFromPixelPos(m_figure->GetPosition());
     uint8_t yDifference = std::abs(moveCell.y - pos.y);

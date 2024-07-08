@@ -14,8 +14,10 @@ class Pawn : public Figure
 public:
 	Pawn() = default;
 	Pawn(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, size) {}
-	bool IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures) override;
+	bool IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) override;
 private:
+	bool IsPromotion(Pos moveCell);
+	bool IsEnPassant(Pos moveCell, FiguresVector opponentPlayerFigures);
 	void SetDirectionBasedOnStartingPos();
 	MoveDirection m_dir = MoveDirection::unknown;
 	uint8_t m_startingHeight = 0;

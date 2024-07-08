@@ -21,7 +21,7 @@ public:
 	__declspec(dllexport) void Draw(std::unique_ptr<IWindow>& window) override;
 	__declspec(dllexport) void SetPosition(Pos pos) override;
 	__declspec(dllexport) Pos GetPosition() const override;
-	bool IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures) override = 0;
+	bool IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) override = 0;
 protected:
 	std::unique_ptr<IRectangleShape> m_figure;
 	Positions GetTopPath(const Pos pos, const Pos moveCell) const;

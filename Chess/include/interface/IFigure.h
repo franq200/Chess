@@ -15,6 +15,6 @@ public:
 	virtual void Draw(std::unique_ptr<IWindow>& window) = 0;
 	virtual void SetPosition(Pos pos) = 0;
 	virtual Pos GetPosition() const = 0;
-	virtual bool IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures) = 0;
+	virtual bool IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) = 0;
 };
 

@@ -44,7 +44,8 @@ void Game::MoveAndSetCurrentFigure()
 	{
 		if (!m_isMoveButtonPressed)
 		{
-			if (m_board->IsMovePossible(mouseCell, *m_currentPlayer))
+			std::unique_ptr<IPlayer>* opponentFigures = (*m_currentPlayer == m_whitePlayer) ? &m_blackPlayer : &m_whitePlayer;
+			if (m_board->IsMovePossible(mouseCell, m_currentPlayer->get()->GetFigures(), opponentFigures->get()->GetFigures()))
 			{
 				Move(mouseCell);
 			}

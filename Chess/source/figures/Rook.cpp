@@ -1,7 +1,7 @@
 #include "figures/Rook.h"
 #include "interface/IRectangleShape.h"
 
-bool Rook::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures)
+bool Rook::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures)
 {
     Pos pos = GetCellPosFromPixelPos(m_figure->GetPosition());
     uint8_t yDifference = std::abs(moveCell.y - pos.y);
