@@ -21,8 +21,8 @@ public:
 	__declspec(dllexport) void Draw(std::unique_ptr<IWindow>& window) override;
 	__declspec(dllexport) void SetPosition(Pos pos) override;
 	__declspec(dllexport) Pos GetPosition() const override;
-	__declspec(dllexport) std::vector<Pos> GetEveryPossibleMoves(FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const override;
-	__declspec(dllexport) bool IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) override = 0;
+	__declspec(dllexport) bool IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const override = 0;
+	__declspec(dllexport) virtual std::vector<Pos> GetEveryPossibleMoves(FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const override;
 protected:
 	std::unique_ptr<IRectangleShape> m_figure;
 	Positions GetTopPath(const Pos pos, const Pos moveCell) const;
@@ -38,8 +38,6 @@ protected:
 	std::vector<Pos> HandleDiagonalMovement(int xDifferenceRaw, int yDifferenceRaw, Pos pos, Pos moveCell) const;
 	std::vector<Pos> HandleBasicMovement(int xDifferenceRaw, int yDifferenceRaw, Pos pos, Pos moveCell) const;
 
-	virtual bool IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const = 0;
-
-	const int m_directions[4][2];
+	std::vector<Pos> m_directions;
 };
 

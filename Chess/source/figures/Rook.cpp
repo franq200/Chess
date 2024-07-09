@@ -3,9 +3,15 @@
 
 Rook::Rook(const ITexture& texture, Pos pos, Size size) : Figure(texture, pos, size)
 {
+    m_directions = {
+           Pos(1, 0),
+           Pos(0, 1),
+           Pos(-1, 0),
+           Pos(0, -1)
+    };
 }
 
-bool Rook::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures)
+bool Rook::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const 
 {
     Pos pos = GetCellPosFromPixelPos(m_figure->GetPosition());
     uint8_t yDifference = std::abs(moveCell.y - pos.y);
@@ -23,14 +29,4 @@ bool Rook::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, Figu
         }
     }
     return xDifference == 0 ^ yDifference == 0;
-}
-
-std::vector<Pos> Rook::GetEveryPossibleMoves(FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const
-{
-    return std::vector<Pos>();
-}
-
-bool Rook::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const
-{
-    return false;
 }

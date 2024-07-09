@@ -1,7 +1,21 @@
 #include "figures/Queen.h"
 #include "interface/IRectangleShape.h"
 
-bool Queen::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures)
+Queen::Queen(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, size)
+{
+    m_directions = {
+            Pos(1, 0),
+            Pos(0, 1),
+            Pos(-1, 0),
+            Pos(0, -1),
+            Pos(1, 1),
+            Pos(1, -1),
+            Pos(-1, 1),
+            Pos(-1, -1)
+    };
+}
+
+bool Queen::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const
 {
     Pos pos = GetCellPosFromPixelPos(m_figure->GetPosition());
     uint8_t yDifference = std::abs(moveCell.y - pos.y);
@@ -26,9 +40,4 @@ bool Queen::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, Fig
         }
     }
     return (xDifference == yDifference && xDifference != 0) || (xDifference == 0 ^ yDifference == 0);
-}
-
-std::vector<Pos> Queen::GetEveryPossibleMoves(FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const
-{
-    return std::vector<Pos>();
 }

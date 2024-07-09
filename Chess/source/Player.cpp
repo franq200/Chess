@@ -32,11 +32,11 @@ const FiguresVector& Player::GetFigures() const
 	return m_figures;
 }
 
-bool Player::IsAnyMovePossible() const
+bool Player::IsAnyMovePossible(FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const
 {
 	for (auto figure : m_figures)
 	{
-		if (!figure->GetEveryPossibleMoves().empty())
+		if (!figure->GetEveryPossibleMoves(currentPlayerFigures, opponentPlayerFigures).empty())
 		{
 			return true;
 		}

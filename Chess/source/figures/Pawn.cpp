@@ -1,10 +1,19 @@
 #include "figures/Pawn.h"
 #include "interface/IRectangleShape.h"
 
-bool Pawn::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) {
+Pawn::Pawn(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, size)
+{
     if (m_dir == MoveDirection::unknown) {
         SetDirectionBasedOnStartingPos();
     }
+    m_directions = {
+            Pos(static_cast<int>(MoveDirection::up), 0),
+            Pos(2 * static_cast<int>(MoveDirection::up), 0)
+    };
+}
+
+bool Pawn::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const
+{
     Pos pos = GetCellPosFromPixelPos(m_figure->GetPosition());
     int yDifference = moveCell.y - pos.y;
     int xDifference = moveCell.x - pos.x;
@@ -63,7 +72,27 @@ bool Pawn::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, Figu
 
 std::vector<Pos> Pawn::GetEveryPossibleMoves(FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const
 {
-    return std::vector<Pos>();
+    std::vector<Pos> possibleMoves;
+    Pos currentPos = GetCellPosFromPixelPos(m_figure->GetPosition());
+
+    for (const auto& direction : m_directions) {
+        for (int i = 1; i < 8; ++i) {
+            Pos newPos = {
+                static_cast<uint16_t>(currentPos.x + static_cast<int>(direction.x) * static_cast<int>(i)),
+                static_cast<uint16_t>(currentPos.y + static_cast<int>(direction.y) * static_cast<int>(i))
+            };
+            if (newPos.x >= 0 && newPos.x < 8 && newPos.y >= 0 && newPos.y < 8) {
+                if (IsMovePossible(newPos, currentPlayerFigures, opponentPlayerFigures)) {
+                    possibleMoves.push_back(newPos);
+                }
+            }
+            else {
+                break;
+            }
+        }
+    }
+
+    return possibleMoves;
 }
 
 void Pawn::SetDirectionBasedOnStartingPos() {

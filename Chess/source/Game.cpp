@@ -37,9 +37,19 @@ void Game::Update()
 	}
 }
 
+const FiguresVector& Game::GetOpponentFigures() const
+{
+	if (*m_currentPlayer == m_whitePlayer)
+	{
+		return m_blackPlayer->GetFigures();
+	}
+	return m_whitePlayer->GetFigures();
+}
+
 bool Game::TryEndGame() const
 {
-	return m_currentPlayer->get()->IsAnyMovePossible();
+	FiguresVector opponentFigures = GetOpponentFigures();
+	return m_currentPlayer->get()->IsAnyMovePossible(m_currentPlayer->get()->GetFigures(), opponentFigures);
 }
 
 void Game::MoveAndSetCurrentFigure()
@@ -49,8 +59,8 @@ void Game::MoveAndSetCurrentFigure()
 	{
 		if (!m_isMoveButtonPressed)
 		{
-			std::unique_ptr<IPlayer>* opponentFigures = (*m_currentPlayer == m_whitePlayer) ? &m_blackPlayer : &m_whitePlayer;
-			if (m_board->IsMovePossible(mouseCell, m_currentPlayer->get()->GetFigures(), opponentFigures->get()->GetFigures()))
+			FiguresVector opponentFigures = GetOpponentFigures();
+			if (m_board->IsMovePossible(mouseCell, m_currentPlayer->get()->GetFigures(), opponentFigures))
 			{
 				Move(mouseCell);
 			}

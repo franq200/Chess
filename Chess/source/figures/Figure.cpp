@@ -54,7 +54,10 @@ std::vector<Pos> Figure::GetEveryPossibleMoves(FiguresVector currentPlayerFigure
     
     for (const auto& direction : m_directions) {
         for (int i = 1; i < 8; ++i) {
-            Pos newPos = { currentPos.x + direction[0] * i, currentPos.y + direction[1] * i };
+            Pos newPos = {
+                static_cast<uint16_t>(currentPos.x + static_cast<int>(direction.x) * static_cast<int>(i)),
+                static_cast<uint16_t>(currentPos.y + static_cast<int>(direction.y) * static_cast<int>(i))
+                };
             if (newPos.x >= 0 && newPos.x < 8 && newPos.y >= 0 && newPos.y < 8) {
                 if (IsMovePossible(newPos, currentPlayerFigures, opponentPlayerFigures)) {
                     possibleMoves.push_back(newPos);
