@@ -1,6 +1,10 @@
 #include "figures/Rook.h"
 #include "interface/IRectangleShape.h"
 
+Rook::Rook(const ITexture& texture, Pos pos, Size size) : Figure(texture, pos, size)
+{
+}
+
 bool Rook::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures)
 {
     Pos pos = GetCellPosFromPixelPos(m_figure->GetPosition());
@@ -19,4 +23,14 @@ bool Rook::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, Figu
         }
     }
     return xDifference == 0 ^ yDifference == 0;
+}
+
+std::vector<Pos> Rook::GetEveryPossibleMoves(FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const
+{
+    return std::vector<Pos>();
+}
+
+bool Rook::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const
+{
+    return false;
 }

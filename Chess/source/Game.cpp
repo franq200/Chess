@@ -37,6 +37,11 @@ void Game::Update()
 	}
 }
 
+bool Game::TryEndGame() const
+{
+	return m_currentPlayer->get()->IsAnyMovePossible();
+}
+
 void Game::MoveAndSetCurrentFigure()
 {
 	Pos mouseCell = m_mouse->GetPosition(m_window);

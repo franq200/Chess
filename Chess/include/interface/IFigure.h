@@ -16,5 +16,6 @@ public:
 	virtual void SetPosition(Pos pos) = 0;
 	virtual Pos GetPosition() const = 0;
 	virtual bool IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) = 0;
+	virtual std::vector<Pos> GetEveryPossibleMoves(FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const = 0;
 };
 

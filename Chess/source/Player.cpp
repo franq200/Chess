@@ -32,6 +32,18 @@ const FiguresVector& Player::GetFigures() const
 	return m_figures;
 }
 
+bool Player::IsAnyMovePossible() const
+{
+	for (auto figure : m_figures)
+	{
+		if (!figure->GetEveryPossibleMoves().empty())
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 void Player::UpdateCurrentFigure()
 {
 	m_currentFigure->SetOutlineThickness(2);

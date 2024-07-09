@@ -14,6 +14,7 @@ public:
 	virtual void TryChangeCurrentFigure(Pos mousePos) = 0;
 	virtual bool HasFigure(const std::shared_ptr<IFigure>& figure) const = 0;
 	virtual const FiguresVector& GetFigures() const = 0;
+	virtual bool IsAnyMovePossible() const = 0;
 private:
 };
 

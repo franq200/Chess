@@ -20,6 +20,7 @@ public:
 	__declspec(dllexport) Game(TextureContainer& textures, std::unique_ptr<IBoard> board, std::unique_ptr<IWindow> window, std::unique_ptr<IMouse> mouse, std::unique_ptr<IPlayer> white, std::unique_ptr<IPlayer> black);
 	__declspec(dllexport) void Update() override;
 private:
+	bool TryEndGame() const;
 	void MoveAndSetCurrentFigure();
 	void Draw();
 	void Events();

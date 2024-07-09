@@ -16,3 +16,8 @@ bool Knight::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, Fi
     }
     return xDifference + yDifference == 3 && xDifference != 0 && yDifference != 0;
 }
+
+std::vector<Pos> Knight::GetEveryPossibleMoves(FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const
+{
+    return std::vector<Pos>();
+}

@@ -47,6 +47,28 @@ Pos Figure::GetPosition() const
     return GetCellPosFromPixelPos(m_figure->GetPosition());
 }
 
+std::vector<Pos> Figure::GetEveryPossibleMoves(FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const
+{
+    std::vector<Pos> possibleMoves;
+    Pos currentPos = GetCellPosFromPixelPos(m_figure->GetPosition());
+    
+    for (const auto& direction : m_directions) {
+        for (int i = 1; i < 8; ++i) {
+            Pos newPos = { currentPos.x + direction[0] * i, currentPos.y + direction[1] * i };
+            if (newPos.x >= 0 && newPos.x < 8 && newPos.y >= 0 && newPos.y < 8) {
+                if (IsMovePossible(newPos, currentPlayerFigures, opponentPlayerFigures)) {
+                    possibleMoves.push_back(newPos);
+                }
+            }
+            else {
+                break;
+            }
+        }
+    }
+    
+    return possibleMoves;
+}
+
 Positions Figure::GetTopPath(const Pos pos, const Pos moveCell) const
 {
     Positions positions;

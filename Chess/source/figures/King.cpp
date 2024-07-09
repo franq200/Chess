@@ -17,3 +17,8 @@ bool King::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, Figu
     }
     return xDifference + yDifference == 1 || (xDifference == 1 && yDifference == 1);
 }
+
+std::vector<Pos> King::GetEveryPossibleMoves(FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const
+{
+    return std::vector<Pos>();
+}

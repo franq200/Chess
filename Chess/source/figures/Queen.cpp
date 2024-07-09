@@ -27,3 +27,8 @@ bool Queen::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, Fig
     }
     return (xDifference == yDifference && xDifference != 0) || (xDifference == 0 ^ yDifference == 0);
 }
+
+std::vector<Pos> Queen::GetEveryPossibleMoves(FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const
+{
+    return std::vector<Pos>();
+}
