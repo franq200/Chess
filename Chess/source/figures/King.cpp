@@ -18,7 +18,7 @@ King::King(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, si
 
 bool King::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const
 {
-    Pos pos = GetCellPosFromPixelPos(m_figure->GetPosition());
+    Pos pos = GetPosition();
     uint8_t yDifference = std::abs(moveCell.y - pos.y);
     uint8_t xDifference = std::abs(moveCell.x - pos.x);
     for (auto playerFigure : currentPlayerFigures)

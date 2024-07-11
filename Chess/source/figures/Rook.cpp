@@ -13,7 +13,7 @@ Rook::Rook(const ITexture& texture, Pos pos, Size size) : Figure(texture, pos, s
 
 bool Rook::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const 
 {
-    Pos pos = GetCellPosFromPixelPos(m_figure->GetPosition());
+    Pos pos = GetPosition();
     uint8_t yDifference = std::abs(moveCell.y - pos.y);
     uint8_t xDifference = std::abs(moveCell.x - pos.x);
     std::vector<Pos> positionsToPass;

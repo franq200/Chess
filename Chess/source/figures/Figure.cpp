@@ -50,7 +50,7 @@ Pos Figure::GetPosition() const
 std::vector<Pos> Figure::GetEveryPossibleMoves(FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const
 {
     std::vector<Pos> possibleMoves;
-    Pos currentPos = GetCellPosFromPixelPos(m_figure->GetPosition());
+    Pos currentPos = m_figure->GetPosition();
     
     for (const auto& direction : m_directions) {
         for (int i = 1; i < 8; ++i) {
@@ -166,7 +166,7 @@ std::vector<Pos> Figure::HandleDiagonalMovement(int xDifferenceRaw, int yDiffere
     {
         return GetLeftTopPath(pos, moveCell);
     }
-    else
+    else if(xDifferenceRaw < 0 && yDifferenceRaw > 0)
     {
         return GetLeftDownPath(pos, moveCell);
     }

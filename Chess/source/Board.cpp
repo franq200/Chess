@@ -37,18 +37,31 @@ void Board::SetCurrentFigure(Pos mouseCell)
 	m_selectedFigureCell = mouseCell;
 }
 
-bool Board::IsCurrentFigureSet() const
-{
-	return m_selectedFigureCell.has_value();
-}
-
-bool Board::IsMovePossible(Pos mouseCell, FiguresVector currentPlayerFigures, FiguresVector opponentFigures) const
+bool Board::IsMovePossible(Pos mouseCell, PlayerColor currentPlayer) const
 {
 	if (IsCurrentFigureSet())
 	{
-		return m_board.at(m_selectedFigureCell.value().x).at(m_selectedFigureCell.value().y)->IsMovePossible(mouseCell, currentPlayerFigures, opponentFigures);
+		const int x = m_selectedFigureCell.value().x;
+		const int y = m_selectedFigureCell.value().y;
+		const std::shared_ptr<IFigure> currentFigure = m_board.at(x).at(y)->GetFigure();
+		const Figures& currentPlayerFigures = m_figures.at(currentPlayer);
+		Figures opponentFigures;
+		if (currentPlayer == PlayerColor::white)
+		{
+			opponentFigures = m_figures.at(PlayerColor::black);
+		}
+		else
+		{
+			opponentFigures = m_figures.at(PlayerColor::white);
+		}
+		return currentFigure->IsMovePossible(mouseCell, currentPlayerFigures, opponentFigures);
 	}
 	return false;
+}
+
+bool Board::IsCurrentFigureSet() const
+{
+	return m_selectedFigureCell.has_value();
 }
 
 void Board::MoveCurrentFiguresToNewCell(Pos mouseCell)

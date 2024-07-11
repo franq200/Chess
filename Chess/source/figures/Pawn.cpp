@@ -14,8 +14,8 @@ Pawn::Pawn(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, si
 
 bool Pawn::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const
 {
-    Pos pos = GetCellPosFromPixelPos(m_figure->GetPosition());
-    int yDifference = moveCell.y - pos.y;
+    Pos pos = GetPosition();
+    int yDifference = moveCell.y - pos.y; // std::abs() ?
     int xDifference = moveCell.x - pos.x;
 
     // Check if moving to a cell occupied by the current player's figure
