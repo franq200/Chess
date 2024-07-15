@@ -12,25 +12,7 @@ Bishop::Bishop(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos
     };
 }
 
-bool Bishop::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const
+bool Bishop::IsMoveAllowedForThisFigure(uint8_t xDifference, uint8_t yDifference) const
 {
-    Pos pos = GetPosition();
-    uint8_t yDifference = std::abs(moveCell.y - pos.y);
-    uint8_t xDifference = std::abs(moveCell.x - pos.x);
-    if (xDifference == yDifference && xDifference != 0)
-    {
-        int8_t xDifferenceRaw = moveCell.x - pos.x;
-        int8_t yDifferenceRaw = moveCell.y - pos.y;
-        std::vector<Pos> positionsToPass = HandleDiagonalMovement(xDifferenceRaw, yDifferenceRaw, pos, moveCell);
-        for (const auto& playerFigure : currentPlayerFigures)
-        {
-            Pos playerFigurePos = playerFigure->GetPosition();
-            if (std::find(positionsToPass.begin(), positionsToPass.end(), playerFigurePos) != positionsToPass.end())
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-    return false;
+    return xDifference == yDifference && xDifference != 0;
 }

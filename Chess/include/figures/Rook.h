@@ -7,6 +7,6 @@ class Rook: public Figure
 public:
 	Rook() = default;
 	Rook(const ITexture& texture, Pos pos, Size size);
-	__declspec(dllexport) bool IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const override;
 protected:
+	bool IsMoveAllowedForThisFigure(uint8_t yDifference, uint8_t xDifference) const;
 };

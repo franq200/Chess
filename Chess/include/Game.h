@@ -7,12 +7,14 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <cstdint>
 
 class ITexture;
 class IBoard;
 class IMouse;
 using FigureName = std::string;
 using TextureContainer = std::map<FigureName, std::unique_ptr<ITexture>>;
+enum class PlayerColor : uint8_t;
 
 class Game : public IGame
 {
@@ -21,6 +23,7 @@ public:
 	__declspec(dllexport) void Update() override;
 private:
 	const FiguresVector& GetOpponentFigures() const;
+	PlayerColor GetCurrentPlayer() const;
 	bool TryEndGame() const;
 	void MoveAndSetCurrentFigure();
 	void Draw();

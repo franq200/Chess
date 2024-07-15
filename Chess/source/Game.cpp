@@ -46,6 +46,15 @@ const FiguresVector& Game::GetOpponentFigures() const
 	return m_whitePlayer->GetFigures();
 }
 
+PlayerColor Game::GetCurrentPlayer() const
+{
+	if (*m_currentPlayer == m_whitePlayer)
+	{
+		return PlayerColor::white;
+	}
+	return PlayerColor::black;
+}
+
 bool Game::TryEndGame() const
 {
 	FiguresVector opponentFigures = GetOpponentFigures();
@@ -60,7 +69,7 @@ void Game::MoveAndSetCurrentFigure()
 		if (!m_isMoveButtonPressed)
 		{
 			FiguresVector opponentFigures = GetOpponentFigures();
-			if (m_board->IsMovePossible(mouseCell, m_currentPlayer->get()->GetFigures(), opponentFigures))
+			if (m_board->IsMovePossible(mouseCell, GetCurrentPlayer()))
 			{
 				Move(mouseCell);
 			}

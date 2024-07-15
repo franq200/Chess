@@ -21,10 +21,17 @@ public:
 	__declspec(dllexport) void Draw(std::unique_ptr<IWindow>& window) override;
 	__declspec(dllexport) void SetPosition(Pos pos) override;
 	__declspec(dllexport) Pos GetPosition() const override;
-	__declspec(dllexport) bool IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const override = 0;
+	__declspec(dllexport) bool IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const;
 	__declspec(dllexport) virtual std::vector<Pos> GetEveryPossibleMoves(FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const override;
+	__declspec(dllexport) std::vector<Pos> GetMovePath(Pos destinationCell, Pos currentPos) const;
+	__declspec(dllexport) bool IsCollisionWithCurrentPlayer(const std::vector<Pos>& movePath, const FiguresVector& currentPlayerFigures) const;
+	__declspec(dllexport) bool IsCollisionWithOpponent(const std::vector<Pos>& movePath, const FiguresVector& opponentPlayerFigures) const;
+	__declspec(dllexport) bool IsFigureTaking(Pos destinationCell, const FiguresVector& opponentPlayerFigures);
 protected:
 	std::unique_ptr<IRectangleShape> m_figure;
+
+	virtual bool IsMoveAllowedForThisFigure(uint8_t yDifference, uint8_t xDifference) const = 0;
+
 	Positions GetTopPath(const Pos pos, const Pos moveCell) const;
 	Positions GetDownPath(const Pos pos, const Pos moveCell) const;
 	Positions GetLeftPath(const Pos pos, const Pos moveCell) const;

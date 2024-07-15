@@ -31,7 +31,7 @@ Pos::Pos(uint16_t newX, uint16_t newY):
 {
 }
 
-bool Pos::operator==(const Pos& pos)
+bool Pos::operator==(const Pos& pos) const
 {
 	return pos.x == x && pos.y == y;
 }

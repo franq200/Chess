@@ -17,5 +17,9 @@ public:
 	virtual Pos GetPosition() const = 0;
 	virtual bool IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const = 0;
 	virtual std::vector<Pos> GetEveryPossibleMoves(FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const = 0;
+	virtual std::vector<Pos> GetMovePath(Pos destinationCell, Pos currentPos) const = 0;
+	virtual bool IsCollisionWithCurrentPlayer(const std::vector<Pos>& movePath, const FiguresVector& currentPlayerFigures) const = 0;
+	virtual bool IsCollisionWithOpponent(const std::vector<Pos>& movePath, const FiguresVector& opponentPlayerFigures) const = 0;
+	virtual bool IsFigureTaking(Pos destinationCell, const FiguresVector& opponentPlayerFigures) = 0;
 };
 

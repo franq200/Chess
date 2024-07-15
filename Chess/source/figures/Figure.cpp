@@ -47,6 +47,23 @@ Pos Figure::GetPosition() const
     return GetCellPosFromPixelPos(m_figure->GetPosition());
 }
 
+bool Figure::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const
+{
+    Pos pos = GetPosition();
+    uint8_t yDifference = std::abs(moveCell.y - pos.y);
+    uint8_t xDifference = std::abs(moveCell.x - pos.x);
+    std::vector<Pos> positionsToPass = GetMovePath(moveCell, pos);
+    if (IsMoveAllowedForThisFigure(xDifference, yDifference))
+    {
+        if (IsCollisionWithCurrentPlayer(positionsToPass, currentPlayerFigures) || IsCollisionWithOpponent(positionsToPass, opponentPlayerFigures))
+        {
+            return false;
+        }
+        return true;
+    }
+    return false;
+}
+
 std::vector<Pos> Figure::GetEveryPossibleMoves(FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const
 {
     std::vector<Pos> possibleMoves;
@@ -70,6 +87,64 @@ std::vector<Pos> Figure::GetEveryPossibleMoves(FiguresVector currentPlayerFigure
     }
     
     return possibleMoves;
+}
+
+std::vector<Pos> Figure::GetMovePath(Pos destinationCell, Pos currentPos) const
+{
+    int8_t xDifferenceRaw = destinationCell.x - currentPos.x;
+    int8_t yDifferenceRaw = destinationCell.y - currentPos.y;
+    if (xDifferenceRaw != 0 && yDifferenceRaw != 0)
+    {
+        return HandleDiagonalMovement(xDifferenceRaw, yDifferenceRaw, currentPos, destinationCell);
+    }
+    else
+    {
+        return HandleBasicMovement(xDifferenceRaw, yDifferenceRaw, currentPos, destinationCell);
+    }
+}
+
+bool Figure::IsCollisionWithCurrentPlayer(const std::vector<Pos>& movePath, const FiguresVector& currentPlayerFigures) const
+{
+    for (auto playerFigure : currentPlayerFigures)
+    {
+        Pos playerFigurePos = playerFigure->GetPosition();
+        if (std::find(movePath.begin(), movePath.end(), playerFigurePos) != movePath.end())
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Figure::IsCollisionWithOpponent(const std::vector<Pos>& movePath, const FiguresVector& opponentPlayerFigures) const
+{
+    int collisionConunter = 0;
+    for (auto playerFigure : opponentPlayerFigures)
+    {
+        Pos opponentFigurePos = playerFigure->GetPosition();
+        if (std::find(movePath.begin(), movePath.end(), opponentFigurePos) != movePath.end())
+        {
+            if (collisionConunter > 1)
+            {
+                return true;
+            }
+            collisionConunter++;
+        }
+    }
+    return false;
+}
+
+bool Figure::IsFigureTaking(Pos destinationCell, const FiguresVector& opponentPlayerFigures)
+{
+    for (auto playerFigure : opponentPlayerFigures)
+    {
+        const Pos& opponentFigurePos = playerFigure->GetPosition();
+        if (destinationCell == opponentFigurePos)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 Positions Figure::GetTopPath(const Pos pos, const Pos moveCell) const
