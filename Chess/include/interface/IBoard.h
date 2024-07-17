@@ -24,7 +24,7 @@ class IBoard
 {
 public:
 	virtual ~IBoard() = default;
-	virtual void Draw(std::unique_ptr<IWindow>& window) = 0;
+	virtual void Draw(std::unique_ptr<IWindow>& window, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) = 0;
 	virtual bool IsCellOccupied(Pos mouseCell, const std::unique_ptr<IPlayer>& currentPlayer) const = 0;
 	virtual void SetCurrentFigure(Pos mouseCell) = 0;
 	virtual bool IsMovePossible(Pos mouseCell, PlayerColor currentPlayer) const = 0;

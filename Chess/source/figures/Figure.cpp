@@ -67,13 +67,13 @@ bool Figure::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, Fi
 std::vector<Pos> Figure::GetEveryPossibleMoves(FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const
 {
     std::vector<Pos> possibleMoves;
-    Pos currentPos = m_figure->GetPosition();
+    Pos currentPos = GetPosition();
     
     for (const auto& direction : m_directions) {
         for (int i = 1; i < 8; ++i) {
             Pos newPos = {
-                static_cast<uint16_t>(currentPos.x + static_cast<int>(direction.x) * static_cast<int>(i)),
-                static_cast<uint16_t>(currentPos.y + static_cast<int>(direction.y) * static_cast<int>(i))
+                static_cast<int16_t>(currentPos.x + static_cast<int>(direction.x) * static_cast<int>(i)),
+                static_cast<int16_t>(currentPos.y + static_cast<int>(direction.y) * static_cast<int>(i))
                 };
             if (newPos.x >= 0 && newPos.x < 8 && newPos.y >= 0 && newPos.y < 8) {
                 if (IsMovePossible(newPos, currentPlayerFigures, opponentPlayerFigures)) {

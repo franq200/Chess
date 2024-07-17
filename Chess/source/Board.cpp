@@ -16,7 +16,7 @@ Board::Board(std::array<std::unique_ptr<ICell>, 64> cells, TextureContainer& tex
 	CreateBoard(cells);
 }
 
-void Board::Draw(std::unique_ptr<IWindow>& window)
+void Board::Draw(std::unique_ptr<IWindow>& window, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures)
 {
 	for (int x = 0; x < m_board.size(); x++)
 	{
@@ -25,6 +25,7 @@ void Board::Draw(std::unique_ptr<IWindow>& window)
 			m_board[x][y]->Draw(window);
 		}
 	}
+	DrawPossibleMoves(window, currentPlayerFigures, opponentPlayerFigures);
 }
 
 bool Board::IsCellOccupied(Pos mouseCell, const std::unique_ptr<IPlayer>& currentPlayer) const
@@ -34,6 +35,7 @@ bool Board::IsCellOccupied(Pos mouseCell, const std::unique_ptr<IPlayer>& curren
 
 void Board::SetCurrentFigure(Pos mouseCell)
 {
+	RemoveHighlights();
 	m_selectedFigureCell = mouseCell;
 }
 
@@ -41,9 +43,7 @@ bool Board::IsMovePossible(Pos mouseCell, PlayerColor currentPlayer) const
 {
 	if (IsCurrentFigureSet())
 	{
-		const int x = m_selectedFigureCell.value().x;
-		const int y = m_selectedFigureCell.value().y;
-		const std::shared_ptr<IFigure> currentFigure = m_board.at(x).at(y)->GetFigure();
+		const std::shared_ptr<IFigure> currentFigure = GetCurrentFigure();
 		const Figures& currentPlayerFigures = m_figures.at(currentPlayer);
 		Figures opponentFigures;
 		if (currentPlayer == PlayerColor::white)
@@ -59,6 +59,19 @@ bool Board::IsMovePossible(Pos mouseCell, PlayerColor currentPlayer) const
 	return false;
 }
 
+void Board::DrawPossibleMoves(std::unique_ptr<IWindow>& window, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures)
+{
+	if (m_selectedFigureCell.has_value())
+	{
+		const std::shared_ptr<IFigure> currentFigure = GetCurrentFigure();
+		Positions possibleMoves = currentFigure->GetEveryPossibleMoves(currentPlayerFigures, opponentPlayerFigures);
+		for (auto move : possibleMoves)
+		{
+			m_board.at(move.x).at(move.y)->Highlight();
+		}
+	}
+}
+
 bool Board::IsCurrentFigureSet() const
 {
 	return m_selectedFigureCell.has_value();
@@ -69,6 +82,7 @@ void Board::MoveCurrentFiguresToNewCell(Pos mouseCell)
 	m_board[mouseCell.x][mouseCell.y]->SetFigure(m_board[m_selectedFigureCell.value().x][m_selectedFigureCell.value().y]->GetFigure());
 	m_board[m_selectedFigureCell.value().x][m_selectedFigureCell.value().y]->RemoveFigure();
 	m_selectedFigureCell.reset();
+	RemoveHighlights();
 }
 
 void Board::CreateFigures(TextureContainer& textures, std::unique_ptr<IPlayer>& white, std::unique_ptr<IPlayer>& black)
@@ -202,4 +216,22 @@ void Board::CreateBlack(TextureContainer& textures)
 		const auto& blackPawn = m_figures[PlayerColor::black].emplace_back(std::make_shared<Pawn>(*textures["blackPawn"], Pos(i, pawnStartRow), size));
 		m_board[i][pawnStartRow]->SetFigure(blackPawn);
 	}
+}
+
+void Board::RemoveHighlights()
+{
+	for (int x = 0; x < m_board.size(); x++)
+	{
+		for (int y = 0; y < m_board[x].size(); y++)
+		{
+			m_board[x][y]->RemoveHighlight();
+		}
+	}
+}
+
+const std::shared_ptr<IFigure> Board::GetCurrentFigure() const
+{
+	const int x = m_selectedFigureCell.value().x;
+	const int y = m_selectedFigureCell.value().y;
+	return m_board.at(x).at(y)->GetFigure();
 }

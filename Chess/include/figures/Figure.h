@@ -21,7 +21,7 @@ public:
 	__declspec(dllexport) void Draw(std::unique_ptr<IWindow>& window) override;
 	__declspec(dllexport) void SetPosition(Pos pos) override;
 	__declspec(dllexport) Pos GetPosition() const override;
-	__declspec(dllexport) bool IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const;
+	__declspec(dllexport) virtual bool IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const override;
 	__declspec(dllexport) virtual std::vector<Pos> GetEveryPossibleMoves(FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const override;
 	__declspec(dllexport) std::vector<Pos> GetMovePath(Pos destinationCell, Pos currentPos) const;
 	__declspec(dllexport) bool IsCollisionWithCurrentPlayer(const std::vector<Pos>& movePath, const FiguresVector& currentPlayerFigures) const;
@@ -45,6 +45,6 @@ protected:
 	std::vector<Pos> HandleDiagonalMovement(int xDifferenceRaw, int yDifferenceRaw, Pos pos, Pos moveCell) const;
 	std::vector<Pos> HandleBasicMovement(int xDifferenceRaw, int yDifferenceRaw, Pos pos, Pos moveCell) const;
 
-	std::vector<Pos> m_directions;
+	Positions m_directions;
 };
 

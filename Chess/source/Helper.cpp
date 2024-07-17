@@ -26,7 +26,7 @@ namespace textures
 	}
 }
 
-Pos::Pos(uint16_t newX, uint16_t newY):
+Pos::Pos(int16_t newX, int16_t newY):
 	x(newX), y(newY)
 {
 }

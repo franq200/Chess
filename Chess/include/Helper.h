@@ -34,10 +34,10 @@ namespace textures
 struct Pos
 {
 	Pos() = default;
-	__declspec(dllexport) Pos(uint16_t newX, uint16_t newY);
+	__declspec(dllexport) Pos(int16_t newX, int16_t newY);
 	__declspec(dllexport) bool operator == (const Pos& pos) const;
-	uint16_t x = 0;
-	uint16_t y = 0;
+	int16_t x = 0;
+	int16_t y = 0;
 };
 
 struct Color

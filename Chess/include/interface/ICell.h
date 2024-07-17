@@ -21,4 +21,6 @@ public:
 	virtual void RemoveFigure() = 0;
 	virtual std::shared_ptr<IFigure> GetFigure() const = 0;
 	virtual bool IsOccupiedByPlayer(const std::unique_ptr<IPlayer>& currentColor) const = 0;
+	virtual void Highlight() = 0;
+	virtual void RemoveHighlight() = 0;
 };

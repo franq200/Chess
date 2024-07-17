@@ -15,12 +15,12 @@ public:
 	Pawn() = default;
 	Pawn(const ITexture& texture, Pos pos, Size size);
 	__declspec(dllexport) bool IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const override;
-	__declspec(dllexport) std::vector<Pos> GetEveryPossibleMoves(FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const override;
 private:
 	bool IsPromotion(Pos moveCell);
 	void SetDirectionBasedOnStartingPos();
 	MoveDirection m_dir = MoveDirection::unknown;
 	uint8_t m_startingHeight = 0;
 protected:
+	bool IsMoveAllowedForThisFigure(uint8_t yDifference, uint8_t xDifference) const override;
 };
 

@@ -18,8 +18,11 @@ public:
 	__declspec(dllexport) void RemoveFigure() override;
 	__declspec(dllexport) std::shared_ptr<IFigure> GetFigure() const override;
 	__declspec(dllexport) bool IsOccupiedByPlayer(const std::unique_ptr<IPlayer>& currentPlayer) const override;
+	__declspec(dllexport) void Highlight() override;
+	__declspec(dllexport) void RemoveHighlight() override;
 private:
 	 std::unique_ptr<IRectangleShape> m_cell;
+	 std::unique_ptr<IRectangleShape> m_highlight;
 	 std::shared_ptr<IFigure> m_figure = nullptr;
 	 int m_pos = 0;
 };
