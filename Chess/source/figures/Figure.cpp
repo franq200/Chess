@@ -47,15 +47,14 @@ Pos Figure::GetPosition() const
     return GetCellPosFromPixelPos(m_figure->GetPosition());
 }
 
-bool Figure::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const
+bool Figure::IsMovePossible(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const
 {
     Pos pos = GetPosition();
-    uint8_t yDifference = std::abs(moveCell.y - pos.y);
-    uint8_t xDifference = std::abs(moveCell.x - pos.x);
-    std::vector<Pos> positionsToPass = GetMovePath(moveCell, pos);
+    uint8_t yDifference = std::abs(destinationCell.y - pos.y);
+    uint8_t xDifference = std::abs(destinationCell.x - pos.x);
     if (IsMoveAllowedForThisFigure(xDifference, yDifference))
     {
-        if (IsCollisionWithCurrentPlayer(positionsToPass, currentPlayerFigures) || IsCollisionWithOpponent(positionsToPass, opponentPlayerFigures))
+        if (IsCollisionWithAnyPlayer(destinationCell, currentPlayerFigures, opponentPlayerFigures))
         {
             return false;
         }
@@ -64,7 +63,7 @@ bool Figure::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, Fi
     return false;
 }
 
-std::vector<Pos> Figure::GetEveryPossibleMoves(FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const
+std::vector<Pos> Figure::GetEveryPossibleMoves(const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const
 {
     std::vector<Pos> possibleMoves;
     Pos currentPos = GetPosition();
@@ -118,20 +117,31 @@ bool Figure::IsCollisionWithCurrentPlayer(const std::vector<Pos>& movePath, cons
 
 bool Figure::IsCollisionWithOpponent(const std::vector<Pos>& movePath, const FiguresVector& opponentPlayerFigures) const
 {
-    int collisionConunter = 0;
-    for (auto playerFigure : opponentPlayerFigures)
+    std::shared_ptr<IFigure> collisionFigure = nullptr;
+    for (auto opponentFigure : opponentPlayerFigures)
     {
-        Pos opponentFigurePos = playerFigure->GetPosition();
+        Pos opponentFigurePos = opponentFigure->GetPosition();
         if (std::find(movePath.begin(), movePath.end(), opponentFigurePos) != movePath.end())
         {
-            if (collisionConunter > 1)
+            if (collisionFigure != nullptr)
             {
                 return true;
             }
-            collisionConunter++;
+            collisionFigure = opponentFigure;
         }
     }
+    bool isCollision = !movePath.empty() && collisionFigure != nullptr && collisionFigure->GetPosition() != movePath.back();
+    if (isCollision)
+    {
+        return true;
+    }
     return false;
+}
+
+bool Figure::IsCollisionWithAnyPlayer(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const
+{
+    Positions movePath = GetMovePath(destinationCell, GetPosition());
+    return IsCollisionWithCurrentPlayer(movePath, currentPlayerFigures) || IsCollisionWithOpponent(movePath, opponentPlayerFigures);
 }
 
 bool Figure::IsFigureTaking(Pos destinationCell, const FiguresVector& opponentPlayerFigures)
@@ -147,128 +157,128 @@ bool Figure::IsFigureTaking(Pos destinationCell, const FiguresVector& opponentPl
     return false;
 }
 
-Positions Figure::GetTopPath(const Pos pos, const Pos moveCell) const
+Positions Figure::GetTopPath(const Pos pos, const Pos destinationCell) const
 {
     Positions positions;
-    for (int i = 1; pos.y - i >= moveCell.y; ++i)
+    for (int i = 1; pos.y - i >= destinationCell.y; ++i)
     {
         positions.push_back(Pos(pos.x, pos.y - i));
     }
     return positions;
 }
 
-Positions Figure::GetDownPath(const Pos pos, const Pos moveCell) const
+Positions Figure::GetDownPath(const Pos pos, const Pos destinationCell) const
 {
     Positions positions;
-    for (int i = 1; i + pos.y <= moveCell.y; ++i)
+    for (int i = 1; i + pos.y <= destinationCell.y; ++i)
     {
         positions.push_back(Pos(pos.x, pos.y + i));
     }
     return positions;
 }
 
-Positions Figure::GetLeftPath(const Pos pos, const Pos moveCell) const
+Positions Figure::GetLeftPath(const Pos pos, const Pos destinationCell) const
 {
     Positions positions;
-    for (int i = 1; pos.x - i >= moveCell.x; ++i)
+    for (int i = 1; pos.x - i >= destinationCell.x; ++i)
     {
         positions.push_back(Pos(pos.x - i, pos.y));
     }
     return positions;
 }
 
-Positions Figure::GetRightPath(const Pos pos, const Pos moveCell) const
+Positions Figure::GetRightPath(const Pos pos, const Pos destinationCell) const
 {
     Positions positions;
-    for (int i = 1; i + pos.x <= moveCell.x; ++i)
+    for (int i = 1; i + pos.x <= destinationCell.x; ++i)
     {
         positions.push_back(Pos(pos.x + i, pos.y));
     }
     return positions;
 }
 
-Positions Figure::GetRightTopPath(const Pos pos, const Pos moveCell) const
+Positions Figure::GetRightTopPath(const Pos pos, const Pos destinationCell) const
 {
     Positions positions;
-    for (int i = 1; i + pos.x <= moveCell.x; ++i)
+    for (int i = 1; i + pos.x <= destinationCell.x; ++i)
     {
         positions.push_back(Pos(pos.x + i, pos.y - i));
     }
     return positions;
 }
 
-Positions Figure::GetRightDownPath(const Pos pos, const Pos moveCell) const
+Positions Figure::GetRightDownPath(const Pos pos, const Pos destinationCell) const
 {
     Positions positions;
-    for (int i = 1; i + pos.x <= moveCell.x; ++i)
+    for (int i = 1; i + pos.x <= destinationCell.x; ++i)
     {
         positions.push_back(Pos(pos.x + i, pos.y + i));
     }
     return positions;
 }
 
-Positions Figure::GetLeftTopPath(const Pos pos, const Pos moveCell) const
+Positions Figure::GetLeftTopPath(const Pos pos, const Pos destinationCell) const
 {
     Positions positions;
-    for (int i = 1; pos.x - i >= moveCell.x; ++i)
+    for (int i = 1; pos.x - i >= destinationCell.x; ++i)
     {
         positions.push_back(Pos(pos.x - i, pos.y - i));
     }
     return positions;
 }
 
-Positions Figure::GetLeftDownPath(const Pos pos, const Pos moveCell) const
+Positions Figure::GetLeftDownPath(const Pos pos, const Pos destinationCell) const
 {
     Positions positions;
-    for (int i = 1; pos.x - i >= moveCell.x; ++i)
+    for (int i = 1; pos.x - i >= destinationCell.x; ++i)
     {
         positions.push_back(Pos(pos.x - i, pos.y + i));
     }
     return positions;
 }
 
-std::vector<Pos> Figure::HandleDiagonalMovement(int xDifferenceRaw, int yDifferenceRaw, Pos pos, Pos moveCell) const
+std::vector<Pos> Figure::HandleDiagonalMovement(int xDifferenceRaw, int yDifferenceRaw, Pos pos, Pos destinationCell) const
 {
     if (xDifferenceRaw > 0 && yDifferenceRaw < 0)
     {
-        return GetRightTopPath(pos, moveCell);
+        return GetRightTopPath(pos, destinationCell);
     }
     else if (xDifferenceRaw > 0 && yDifferenceRaw > 0)
     {
-        return GetRightDownPath(pos, moveCell);
+        return GetRightDownPath(pos, destinationCell);
     }
     else if (xDifferenceRaw < 0 && yDifferenceRaw < 0)
     {
-        return GetLeftTopPath(pos, moveCell);
+        return GetLeftTopPath(pos, destinationCell);
     }
     else if(xDifferenceRaw < 0 && yDifferenceRaw > 0)
     {
-        return GetLeftDownPath(pos, moveCell);
+        return GetLeftDownPath(pos, destinationCell);
     }
 }
 
-std::vector<Pos> Figure::HandleBasicMovement(int xDifferenceRaw, int yDifferenceRaw, Pos pos, Pos moveCell) const
+std::vector<Pos> Figure::HandleBasicMovement(int xDifferenceRaw, int yDifferenceRaw, Pos pos, Pos destinationCell) const
 {
     if (xDifferenceRaw == 0)
     {
         if (yDifferenceRaw < 0)
         {
-            return GetTopPath(pos, moveCell);
+            return GetTopPath(pos, destinationCell);
         }
         else
         {
-            return GetDownPath(pos, moveCell);
+            return GetDownPath(pos, destinationCell);
         }
     }
     else
     {
         if (xDifferenceRaw < 0)
         {
-            return GetLeftPath(pos, moveCell);
+            return GetLeftPath(pos, destinationCell);
         }
         else
         {
-            return GetRightPath(pos, moveCell);
+            return GetRightPath(pos, destinationCell);
         }
     }
 }

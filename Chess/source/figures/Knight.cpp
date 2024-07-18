@@ -19,3 +19,8 @@ bool Knight::IsMoveAllowedForThisFigure(uint8_t xDifference, uint8_t yDifference
 {
     return xDifference + yDifference == 3 && xDifference != 0 && yDifference != 0;
 }
+
+std::vector<Pos> Knight::GetMovePath(Pos destinationCell, Pos currentPos) const
+{
+    return { destinationCell };
+}

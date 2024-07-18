@@ -12,7 +12,7 @@ Pawn::Pawn(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, si
     };
 }
 
-bool Pawn::IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const
+bool Pawn::IsMovePossible(Pos moveCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const
 {
     Pos pos = GetPosition();
     int yDifference = moveCell.y - pos.y; // std::abs() ?

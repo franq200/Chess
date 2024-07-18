@@ -14,7 +14,7 @@ class Pawn : public Figure
 public:
 	Pawn() = default;
 	Pawn(const ITexture& texture, Pos pos, Size size);
-	__declspec(dllexport) bool IsMovePossible(Pos moveCell, FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const override;
+	__declspec(dllexport) bool IsMovePossible(Pos moveCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const override;
 private:
 	bool IsPromotion(Pos moveCell);
 	void SetDirectionBasedOnStartingPos();
