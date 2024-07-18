@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="test.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gmock\gmock-all.cc">
+      <Filter>Gtest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\gmock.1.11.0\lib\native\src\gtest\src\gtest_main.cc">
+      <Filter>Gtest</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gtest\gtest-all.cc">
+      <Filter>Gtest</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BoardMock.h">
+      <Filter>Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="CellMock.h">
+      <Filter>Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="FigureMock.h">
+      <Filter>Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMock.h">
+      <Filter>Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseMock.h">
+      <Filter>Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMock.h">
+      <Filter>Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureMock.h">
+      <Filter>Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowMock.h">
+      <Filter>Mocks</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Mocks">
+      <UniqueIdentifier>{aa017a81-81b7-4984-81cd-adce707512c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gtest">
+      <UniqueIdentifier>{3d21bbe1-293a-4c76-8d8a-f3d8535cd8b6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <Filter>Gtest</Filter>
+    </None>
+  </ItemGroup>
+</Project>

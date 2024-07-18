@@ -15,8 +15,11 @@ Knight::Knight(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos
     };
 }
 
-bool Knight::IsMoveAllowedForThisFigure(uint8_t xDifference, uint8_t yDifference) const
+bool Knight::IsMoveAllowedForThisFigure(const Pos& destinationCell) const
 {
+    Pos pos = GetPosition();
+    uint8_t yDifference = std::abs(destinationCell.y - pos.y);
+    uint8_t xDifference = std::abs(destinationCell.x - pos.x);
     return xDifference + yDifference == 3 && xDifference != 0 && yDifference != 0;
 }
 

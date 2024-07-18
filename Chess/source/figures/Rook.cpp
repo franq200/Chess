@@ -11,7 +11,10 @@ Rook::Rook(const ITexture& texture, Pos pos, Size size) : Figure(texture, pos, s
     };
 }
 
-bool Rook::IsMoveAllowedForThisFigure(uint8_t xDifference, uint8_t yDifference) const
+bool Rook::IsMoveAllowedForThisFigure(const Pos& destinationCell) const
 {
-    return xDifference == 0 ^ yDifference == 0;
+    Pos pos = GetPosition();
+    uint8_t yDifference = std::abs(destinationCell.y - pos.y);
+    uint8_t xDifference = std::abs(destinationCell.x - pos.x);
+    return (xDifference == 0) ^ (yDifference == 0);
 }

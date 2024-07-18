@@ -15,7 +15,10 @@ Queen::Queen(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, 
     };
 }
 
-bool Queen::IsMoveAllowedForThisFigure(uint8_t xDifference, uint8_t yDifference) const
+bool Queen::IsMoveAllowedForThisFigure(const Pos& destinationCell) const
 {
+    Pos pos = GetPosition();
+    uint8_t yDifference = std::abs(destinationCell.y - pos.y);
+    uint8_t xDifference = std::abs(destinationCell.x - pos.x);
     return (xDifference == yDifference && xDifference != 0) || ((xDifference == 0) ^ (yDifference == 0));
 }

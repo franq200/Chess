@@ -105,15 +105,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\packages\gmock.1.11.0\lib\native\src\gtest\src\gtest_main.cc" />
-    <ClCompile Include="BoardMock.cpp" />
-    <ClCompile Include="CellMock.cpp" />
-    <ClCompile Include="FigureMock.cpp" />
-    <ClCompile Include="GameMock.cpp" />
-    <ClCompile Include="MouseMock.cpp" />
-    <ClCompile Include="PlayerMock.cpp" />
     <ClCompile Include="test.cpp" />
-    <ClCompile Include="TextureMock.cpp" />
-    <ClCompile Include="WindowMock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

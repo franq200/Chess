@@ -49,10 +49,7 @@ Pos Figure::GetPosition() const
 
 bool Figure::IsMovePossible(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const
 {
-    Pos pos = GetPosition();
-    uint8_t yDifference = std::abs(destinationCell.y - pos.y);
-    uint8_t xDifference = std::abs(destinationCell.x - pos.x);
-    if (IsMoveAllowedForThisFigure(xDifference, yDifference))
+    if (IsMoveAllowedForThisFigure(destinationCell))
     {
         if (IsCollisionWithAnyPlayer(destinationCell, currentPlayerFigures, opponentPlayerFigures))
         {
@@ -130,12 +127,8 @@ bool Figure::IsCollisionWithOpponent(const std::vector<Pos>& movePath, const Fig
             collisionFigure = opponentFigure;
         }
     }
-    bool isCollision = !movePath.empty() && collisionFigure != nullptr && collisionFigure->GetPosition() != movePath.back();
-    if (isCollision)
-    {
-        return true;
-    }
-    return false;
+    const bool isCollision = !movePath.empty() && collisionFigure != nullptr && collisionFigure->GetPosition() != movePath.back();
+    return isCollision;
 }
 
 bool Figure::IsCollisionWithAnyPlayer(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const
@@ -255,6 +248,7 @@ std::vector<Pos> Figure::HandleDiagonalMovement(int xDifferenceRaw, int yDiffere
     {
         return GetLeftDownPath(pos, destinationCell);
     }
+    return{};
 }
 
 std::vector<Pos> Figure::HandleBasicMovement(int xDifferenceRaw, int yDifferenceRaw, Pos pos, Pos destinationCell) const

@@ -21,6 +21,6 @@ private:
 	MoveDirection m_dir = MoveDirection::unknown;
 	uint8_t m_startingHeight = 0;
 protected:
-	bool IsMoveAllowedForThisFigure(uint8_t yDifference, uint8_t xDifference) const override;
+	bool IsMoveAllowedForThisFigure(const Pos& destinationCell) const override;
 };
 

@@ -10,6 +10,6 @@ public:
 	Knight() = default;
 	Knight(const ITexture& texture, Pos pos, Size size);
 protected:
-	bool IsMoveAllowedForThisFigure(uint8_t yDifference, uint8_t xDifference) const;
+	bool IsMoveAllowedForThisFigure(const Pos& destinationCell) const;
 	std::vector<Pos> GetMovePath(Pos destinationCell, Pos currentPos) const;
 };

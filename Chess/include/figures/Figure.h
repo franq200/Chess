@@ -26,7 +26,7 @@ public:
 protected:
 	std::unique_ptr<IRectangleShape> m_figure;
 
-	virtual bool IsMoveAllowedForThisFigure(uint8_t yDifference, uint8_t xDifference) const = 0;
+	virtual bool IsMoveAllowedForThisFigure(const Pos& destinationCell) const = 0;
 
 	Positions GetTopPath(const Pos pos, const Pos destinationCell) const;
 	Positions GetDownPath(const Pos pos, const Pos destinationCell) const;

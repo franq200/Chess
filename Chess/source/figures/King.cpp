@@ -16,7 +16,10 @@ King::King(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, si
     };
 }
 
-bool King::IsMoveAllowedForThisFigure(uint8_t xDifference, uint8_t yDifference) const
+bool King::IsMoveAllowedForThisFigure(const Pos& destinationCell) const
 {
+    Pos pos = GetPosition();
+    uint8_t yDifference = std::abs(destinationCell.y - pos.y);
+    uint8_t xDifference = std::abs(destinationCell.x - pos.x);
     return xDifference + yDifference == 1 || (xDifference == 1 && yDifference == 1);
 }

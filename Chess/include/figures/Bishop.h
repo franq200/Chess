@@ -10,5 +10,5 @@ public:
 	Bishop() = default;
 	Bishop(const ITexture& texture, Pos pos, Size size);
 protected:
-	bool IsMoveAllowedForThisFigure(uint8_t yDifference, uint8_t xDifference) const;
+	bool IsMoveAllowedForThisFigure(const Pos& destinationCell) const override;
 };

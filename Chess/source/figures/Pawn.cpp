@@ -81,7 +81,7 @@ void Pawn::SetDirectionBasedOnStartingPos() {
     }
 }
 
-bool Pawn::IsMoveAllowedForThisFigure(uint8_t yDifference, uint8_t xDifference) const
+bool Pawn::IsMoveAllowedForThisFigure(const Pos& destinationCell) const
 {
     return false;
 }
