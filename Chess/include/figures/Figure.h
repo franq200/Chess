@@ -45,8 +45,9 @@ protected:
 	bool IsCollisionWithCurrentPlayer(const std::vector<Pos>& movePath, const FiguresVector& currentPlayerFigures) const;
 	bool IsCollisionWithOpponent(const std::vector<Pos>& movePath, const FiguresVector& opponentPlayerFigures) const;
 	bool IsCollisionWithAnyPlayer(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const;
-	bool IsFigureTaking(Pos destinationCell, const FiguresVector& opponentPlayerFigures);
+	bool IsFigureTaking(Pos destinationCell, const FiguresVector& opponentPlayerFigures) const;
 
 	Positions m_directions;
+	int m_moveCounter = 0;
 };
 

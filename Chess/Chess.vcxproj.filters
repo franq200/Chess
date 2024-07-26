@@ -1,162 +1,204 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="GameFiles">
+      <UniqueIdentifier>{7e0ebd66-500c-4587-9a7d-bd950ba83941}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="GameFiles\Player">
+      <UniqueIdentifier>{2a3644b0-6d40-4b28-9f20-b2ab9ea8eef4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="GameFiles\Helper">
+      <UniqueIdentifier>{a48f9058-8a88-4144-ae38-4f76f78f9ae6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Header Files/Interface">
-      <UniqueIdentifier>{40a997b5-cf96-4a34-98ad-da30960402db}</UniqueIdentifier>
+    <Filter Include="GameFiles\Cell">
+      <UniqueIdentifier>{acd62a29-4b22-4ec1-82c0-e79aa2c524c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Figures">
-      <UniqueIdentifier>{795f15df-a742-4479-a0b0-3d4b7fe740e6}</UniqueIdentifier>
+    <Filter Include="GameFiles\Board">
+      <UniqueIdentifier>{a06843ae-f503-473a-9c41-113ee512c368}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Figures">
-      <UniqueIdentifier>{9e7763a9-556b-4cb0-80e1-d0019e39bf0e}</UniqueIdentifier>
+    <Filter Include="GameFiles\Game">
+      <UniqueIdentifier>{bb7bded0-d7ac-43c4-acfb-72ea259f4336}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewFilter1">
+      <UniqueIdentifier>{cc5c88bf-2d6c-4664-bb58-f3df6dda40a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFiles\Figures">
+      <UniqueIdentifier>{ede2b93a-e1b0-424f-a5f5-c1281f95d75d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFiles\Figures\Bishop">
+      <UniqueIdentifier>{db6bd129-7267-497f-ba5b-44b910006252}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFiles\Figures\Knight">
+      <UniqueIdentifier>{8d7a425c-09b4-44c1-add6-74976150a7ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFiles\Figures\King">
+      <UniqueIdentifier>{4d6f6325-a200-4df9-9073-eefedd4e8ffa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFiles\Figures\Figure">
+      <UniqueIdentifier>{6b253eb8-b684-4c63-8ed6-c4fb139f1ba5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFiles\Figures\Pawn">
+      <UniqueIdentifier>{36799276-f570-49ac-ad2b-ca40dd54d4e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFiles\Figures\Queen">
+      <UniqueIdentifier>{6ca7462b-24bc-47ca-9c02-79cfbcda6cb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFiles\Figures\Rook">
+      <UniqueIdentifier>{76cfa402-5d4c-4693-a80e-657cbd7ef6fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFiles\FromSfml">
+      <UniqueIdentifier>{ca144e2c-b30f-4eac-9e05-6955518dcdd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFiles\FromSfml\Window">
+      <UniqueIdentifier>{c2169824-ae8c-4c51-9c08-81aa0c5968d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFiles\FromSfml\Texture">
+      <UniqueIdentifier>{6614ed9a-2c12-4189-97ed-5dbf77e5e329}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFiles\FromSfml\RectangleShape">
+      <UniqueIdentifier>{a7f86a9d-0937-4e66-b4cf-35b52ae474c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFiles\FromSfml\Mouse">
+      <UniqueIdentifier>{7e2e718f-b205-4436-b4af-d58f574afadf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFiles\FromSfml\Event">
+      <UniqueIdentifier>{3f7ec6cd-f3cb-4bfe-83c1-41ee58915376}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source/Helper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source/Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source/Texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source/Cell.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source/Board.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source/Window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source/RectangleShape.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source/Event.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source/Player.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="source/figures/Figure.cpp">
+      <Filter>GameFiles\Figures\Figure</Filter>
     </ClCompile>
     <ClCompile Include="source\figures\King.cpp">
-      <Filter>Source Files\Figures</Filter>
-    </ClCompile>
-    <ClCompile Include="source/figures/Figure.cpp">
-      <Filter>Source Files\Figures</Filter>
-    </ClCompile>
-    <ClCompile Include="source\figures\Pawn.cpp">
-      <Filter>Source Files\Figures</Filter>
-    </ClCompile>
-    <ClCompile Include="source\figures\Queen.cpp">
-      <Filter>Source Files\Figures</Filter>
-    </ClCompile>
-    <ClCompile Include="source/figures/Bishop.cpp">
-      <Filter>Source Files\Figures</Filter>
+      <Filter>GameFiles\Figures\King</Filter>
     </ClCompile>
     <ClCompile Include="source/figures/Knight.cpp">
-      <Filter>Source Files\Figures</Filter>
+      <Filter>GameFiles\Figures\Knight</Filter>
+    </ClCompile>
+    <ClCompile Include="source/figures/Bishop.cpp">
+      <Filter>GameFiles\Figures\Bishop</Filter>
+    </ClCompile>
+    <ClCompile Include="source\figures\Pawn.cpp">
+      <Filter>GameFiles\Figures\Pawn</Filter>
+    </ClCompile>
+    <ClCompile Include="source\figures\Queen.cpp">
+      <Filter>GameFiles\Figures\Queen</Filter>
     </ClCompile>
     <ClCompile Include="source/figures/Rook.cpp">
-      <Filter>Source Files\Figures</Filter>
+      <Filter>GameFiles\Figures\Rook</Filter>
     </ClCompile>
     <ClCompile Include="source/Mouse.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>GameFiles\FromSfml\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="source/RectangleShape.cpp">
+      <Filter>GameFiles\FromSfml\RectangleShape</Filter>
+    </ClCompile>
+    <ClCompile Include="source/Texture.cpp">
+      <Filter>GameFiles\FromSfml\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="source/Window.cpp">
+      <Filter>GameFiles\FromSfml\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="source/Event.cpp">
+      <Filter>GameFiles\FromSfml\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="source/Cell.cpp">
+      <Filter>GameFiles\Cell</Filter>
+    </ClCompile>
+    <ClCompile Include="source/Board.cpp">
+      <Filter>GameFiles\Board</Filter>
+    </ClCompile>
+    <ClCompile Include="source/Game.cpp">
+      <Filter>GameFiles\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="source/Player.cpp">
+      <Filter>GameFiles\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="source/Helper.cpp">
+      <Filter>GameFiles\Helper</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include/Helper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include/Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include/Texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include/Cell.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include/Board.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include/Window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include/interface/IBoard.h">
-      <Filter>Header Files\Header Files/Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="include/interface/ITexture.h">
-      <Filter>Header Files\Header Files/Interface</Filter>
+    <ClInclude Include="include/figures/Figure.h">
+      <Filter>GameFiles\Figures\Figure</Filter>
     </ClInclude>
     <ClInclude Include="include/interface/IFigure.h">
-      <Filter>Header Files\Header Files/Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="include/interface/ICell.h">
-      <Filter>Header Files\Header Files/Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="include/interface/IGame.h">
-      <Filter>Header Files\Header Files/Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="include/interface/IWindow.h">
-      <Filter>Header Files\Header Files/Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="include/RectangleShape.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include/interface/IRectangleShape.h">
-      <Filter>Header Files\Header Files/Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="include/interface/IEvent.h">
-      <Filter>Header Files\Header Files/Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="include/Event.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include/interface/IPlayer.h">
-      <Filter>Header Files\Header Files/Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="include/Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include/figures/Figure.h">
-      <Filter>Header Files\Figures</Filter>
+      <Filter>GameFiles\Figures\Figure</Filter>
     </ClInclude>
     <ClInclude Include="include\figures\King.h">
-      <Filter>Header Files\Figures</Filter>
-    </ClInclude>
-    <ClInclude Include="include\figures\Pawn.h">
-      <Filter>Header Files\Figures</Filter>
+      <Filter>GameFiles\Figures\King</Filter>
     </ClInclude>
     <ClInclude Include="include/figures/Knight.h">
-      <Filter>Header Files\Figures</Filter>
-    </ClInclude>
-    <ClInclude Include="include\figures\Queen.h">
-      <Filter>Header Files\Figures</Filter>
-    </ClInclude>
-    <ClInclude Include="include/figures/Rook.h">
-      <Filter>Header Files\Figures</Filter>
+      <Filter>GameFiles\Figures\Knight</Filter>
     </ClInclude>
     <ClInclude Include="include/figures/Bishop.h">
-      <Filter>Header Files\Figures</Filter>
+      <Filter>GameFiles\Figures\Bishop</Filter>
     </ClInclude>
-    <ClInclude Include="include/Mouse.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="include\figures\Pawn.h">
+      <Filter>GameFiles\Figures\Pawn</Filter>
+    </ClInclude>
+    <ClInclude Include="include\figures\Queen.h">
+      <Filter>GameFiles\Figures\Queen</Filter>
+    </ClInclude>
+    <ClInclude Include="include/figures/Rook.h">
+      <Filter>GameFiles\Figures\Rook</Filter>
+    </ClInclude>
+    <ClInclude Include="include/interface/ITexture.h">
+      <Filter>GameFiles\FromSfml\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="include/interface/IWindow.h">
+      <Filter>GameFiles\FromSfml\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="include/interface/IRectangleShape.h">
+      <Filter>GameFiles\FromSfml\RectangleShape</Filter>
     </ClInclude>
     <ClInclude Include="include\interface\IMouse.h">
-      <Filter>Header Files\Header Files/Interface</Filter>
+      <Filter>GameFiles\FromSfml\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="include/interface/IEvent.h">
+      <Filter>GameFiles\FromSfml\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="include/Event.h">
+      <Filter>GameFiles\FromSfml\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="include/RectangleShape.h">
+      <Filter>GameFiles\FromSfml\RectangleShape</Filter>
+    </ClInclude>
+    <ClInclude Include="include/Texture.h">
+      <Filter>GameFiles\FromSfml\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="include/Window.h">
+      <Filter>GameFiles\FromSfml\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="include/Mouse.h">
+      <Filter>GameFiles\FromSfml\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="include/interface/ICell.h">
+      <Filter>GameFiles\Cell</Filter>
+    </ClInclude>
+    <ClInclude Include="include/Cell.h">
+      <Filter>GameFiles\Cell</Filter>
+    </ClInclude>
+    <ClInclude Include="include/Board.h">
+      <Filter>GameFiles\Board</Filter>
+    </ClInclude>
+    <ClInclude Include="include/interface/IBoard.h">
+      <Filter>GameFiles\Board</Filter>
+    </ClInclude>
+    <ClInclude Include="include/interface/IGame.h">
+      <Filter>GameFiles\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include/Game.h">
+      <Filter>GameFiles\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include/interface/IPlayer.h">
+      <Filter>GameFiles\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="include/Player.h">
+      <Filter>GameFiles\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="include/Helper.h">
+      <Filter>GameFiles\Helper</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

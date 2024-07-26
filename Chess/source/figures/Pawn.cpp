@@ -6,64 +6,39 @@ Pawn::Pawn(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, si
     if (m_dir == MoveDirection::unknown) {
         SetDirectionBasedOnStartingPos();
     }
-    m_directions = {
-            Pos(static_cast<int>(MoveDirection::up), 0),
-            Pos(2 * static_cast<int>(MoveDirection::up), 0)
-    };
 }
+
 
 bool Pawn::IsMovePossible(Pos moveCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const
 {
     Pos pos = GetPosition();
-    int yDifference = moveCell.y - pos.y; // std::abs() ?
+    int yDifference = moveCell.y - pos.y;
     int xDifference = moveCell.x - pos.x;
 
-    // Check if moving to a cell occupied by the current player's figure
-    for (auto playerFigure : currentPlayerFigures) {
-        Pos playerFigurePos = playerFigure->GetPosition();
-        if (playerFigurePos.x == moveCell.x && playerFigurePos.y == moveCell.y) {
+    if (IsCollisionWithCurrentPlayer({ moveCell }, currentPlayerFigures)) {
+        return false;
+    }
+
+    if (yDifference == static_cast<int8_t>(m_dir) && xDifference == 0) {
+        for (auto figure : opponentPlayerFigures) {
+            Pos figurePos = figure->GetPosition();
+            if (figurePos.x == moveCell.x && figurePos.y == moveCell.y) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    if (pos.y == m_startingHeight && yDifference == 2 * static_cast<int8_t>(m_dir) && xDifference == 0) {
+        if (IsCollisionWithAnyPlayer({ moveCell }, currentPlayerFigures, opponentPlayerFigures)) {
             return false;
         }
-    }
-
-    // Check for normal move (one or two squares forward)
-    if ((yDifference == static_cast<int8_t>(m_dir)) && xDifference == 0) {
-        // Check if the move cell is occupied by any figure
-        for (auto figure : opponentPlayerFigures) {
-            Pos figurePos = figure->GetPosition();
-            if (figurePos.x == moveCell.x && figurePos.y == moveCell.y) {
-                return false;
-            }
-        }
-        return true;
-    }
-    if ((pos.y == m_startingHeight && yDifference == 2 * static_cast<int8_t>(m_dir)) && xDifference == 0) {
-        // Check if the intermediate cell and the move cell are occupied by any figure
-        Pos intermediatePos = { pos.x, static_cast<int16_t>(pos.y + static_cast<int8_t>(m_dir)) };
-        for (auto figure : currentPlayerFigures) {
-            Pos figurePos = figure->GetPosition();
-            if ((figurePos.x == moveCell.x && figurePos.y == moveCell.y) ||
-                (figurePos.x == intermediatePos.x && figurePos.y == intermediatePos.y)) {
-                return false;
-            }
-        }
-        for (auto figure : opponentPlayerFigures) {
-            Pos figurePos = figure->GetPosition();
-            if ((figurePos.x == moveCell.x && figurePos.y == moveCell.y) ||
-                (figurePos.x == intermediatePos.x && figurePos.y == intermediatePos.y)) {
-                return false;
-            }
-        }
         return true;
     }
 
-    // Check for capture
-    if ((yDifference == static_cast<int8_t>(m_dir)) && (xDifference == 1 || xDifference == -1)) {
-        for (auto figure : opponentPlayerFigures) {
-            Pos figurePos = figure->GetPosition();
-            if (figurePos.x == moveCell.x && figurePos.y == moveCell.y) {
-                return true;
-            }
+    if (yDifference == static_cast<int8_t>(m_dir) && std::abs(xDifference) == 1) {
+        if (IsFigureTaking(moveCell, opponentPlayerFigures)) {
+            return true;
         }
     }
 
@@ -72,10 +47,22 @@ bool Pawn::IsMovePossible(Pos moveCell, const FiguresVector& currentPlayerFigure
 
 void Pawn::SetDirectionBasedOnStartingPos() {
     if (GetPosition().y == 6) {
+        m_directions = {
+            Pos(0, -1),
+            Pos(0, 2 * -1),
+            Pos(-1, -1),
+            Pos(1, -1)
+        };
         m_dir = MoveDirection::up;
         m_startingHeight = 6;
     }
     else {
+        m_directions = {
+           Pos(0, 1),
+           Pos(0, 2 * 1),
+           Pos(-1, 1),
+           Pos(1, 1)
+        };
         m_dir = MoveDirection::down;
         m_startingHeight = 1;
     }

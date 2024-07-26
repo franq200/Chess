@@ -137,7 +137,7 @@ bool Figure::IsCollisionWithAnyPlayer(Pos destinationCell, const FiguresVector& 
     return IsCollisionWithCurrentPlayer(movePath, currentPlayerFigures) || IsCollisionWithOpponent(movePath, opponentPlayerFigures);
 }
 
-bool Figure::IsFigureTaking(Pos destinationCell, const FiguresVector& opponentPlayerFigures)
+bool Figure::IsFigureTaking(Pos destinationCell, const FiguresVector& opponentPlayerFigures) const
 {
     for (auto playerFigure : opponentPlayerFigures)
     {
