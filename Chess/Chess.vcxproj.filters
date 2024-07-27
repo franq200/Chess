@@ -185,9 +185,6 @@
     <ClInclude Include="include/interface/IBoard.h">
       <Filter>GameFiles\Board</Filter>
     </ClInclude>
-    <ClInclude Include="include/interface/IGame.h">
-      <Filter>GameFiles\Game</Filter>
-    </ClInclude>
     <ClInclude Include="include/Game.h">
       <Filter>GameFiles\Game</Filter>
     </ClInclude>

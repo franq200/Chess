@@ -79,7 +79,7 @@ bool Board::IsCurrentFigureSet() const
 
 void Board::MoveCurrentFiguresToNewCell(Pos mouseCell)
 {
-	m_board[mouseCell.x][mouseCell.y]->SetFigure(m_board[m_selectedFigureCell.value().x][m_selectedFigureCell.value().y]->GetFigure());
+	m_board[mouseCell.x][mouseCell.y]->SetFigure(GetCurrentFigure());
 	m_board[m_selectedFigureCell.value().x][m_selectedFigureCell.value().y]->RemoveFigure();
 	m_selectedFigureCell.reset();
 	RemoveHighlights();
@@ -91,6 +91,42 @@ void Board::CreateFigures(TextureContainer& textures, std::unique_ptr<IPlayer>& 
 	CreateBlack(textures);
 	white->AddFigures(m_figures[PlayerColor::white]);
 	black->AddFigures(m_figures[PlayerColor::black]);
+}
+
+void Board::Animate(const Pos& mousePos)
+{
+	if (IsCurrentFigureSet())
+	{
+		auto currentFigure = GetCurrentFigure();
+		auto currentFigurePos = currentFigure->GetPixelTempPosition();
+		if (m_mousePosInFigure.has_value())
+		{
+			int newXPos = currentFigurePos.x + (mousePos.x - (currentFigurePos.x + m_mousePosInFigure.value().x));
+			int newYPos = currentFigurePos.y + (mousePos.y - (currentFigurePos.y + m_mousePosInFigure.value().y));
+			currentFigure->SetTempPos(Pos(newXPos, newYPos));
+		}
+		else if (!m_mousePosInFigure.has_value())
+		{
+			m_mousePosInFigure = Pos(mousePos.x - currentFigurePos.x, mousePos.y - currentFigurePos.y);
+		}
+	}
+}
+
+void Board::EndAnimation()
+{
+	if (IsCurrentFigureSet())
+	{
+		auto currentFigure = GetCurrentFigure();
+		auto currentFigurePos = currentFigure->GetCellTempPosition();
+		if (currentFigure->IsInPossibleMoves(currentFigurePos))
+		{
+			MoveCurrentFiguresToNewCell(currentFigurePos);
+		}
+		else
+		{
+			currentFigure->SetCurrentPos();
+		}
+	}
 }
 
 void Board::CreateBoard(std::array<std::unique_ptr<ICell>, 64>& cells)
@@ -229,9 +265,12 @@ void Board::RemoveHighlights()
 	}
 }
 
-const std::shared_ptr<IFigure> Board::GetCurrentFigure() const
+std::shared_ptr<IFigure> Board::GetCurrentFigure() const
 {
-	const int x = m_selectedFigureCell.value().x;
-	const int y = m_selectedFigureCell.value().y;
-	return m_board.at(x).at(y)->GetFigure();
+	if (IsCurrentFigureSet())
+	{
+		const int x = m_selectedFigureCell.value().x;
+		const int y = m_selectedFigureCell.value().y;
+		return m_board.at(x).at(y)->GetFigure();
+	}
 }

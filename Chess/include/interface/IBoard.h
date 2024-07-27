@@ -30,5 +30,7 @@ public:
 	virtual bool IsMovePossible(Pos mouseCell, PlayerColor currentPlayer) const = 0;
 	virtual void MoveCurrentFiguresToNewCell(Pos mouseCell) = 0;
 	virtual void CreateFigures(TextureContainer& textures, std::unique_ptr<IPlayer>& white, std::unique_ptr<IPlayer>& black) = 0;
+	virtual void Animate(const Pos& mousePos) = 0;
+	virtual void EndAnimation() = 0;
 };
 

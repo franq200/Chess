@@ -41,3 +41,26 @@ void RectangleShape::draw(sf::RenderTarget& target, sf::RenderStates states) con
 {
 	target.draw(m_shape, states);
 }
+
+void RectangleShape::SetTempPos(const Pos& tempPos)
+{
+	m_currentPos = GetPosition();
+	m_shape.setPosition({ static_cast<float>(tempPos.x) , static_cast<float>(tempPos.y) });
+}
+
+void RectangleShape::SetCurrentPos()
+{
+	m_shape.setPosition({ static_cast<float>(m_currentPos.x) , static_cast<float>(m_currentPos.y) });
+}
+
+const Pos& RectangleShape::GetPixelTempPosition() const
+{
+	sf::Vector2f pos = m_shape.getPosition();
+	return Pos(pos.x, pos.y);
+}
+
+const Pos& RectangleShape::GetCellTempPosition() const
+{
+	sf::Vector2f pos = m_shape.getPosition();
+	return GetCellPosFromPixelPos(Pos(pos.x, pos.y));
+}

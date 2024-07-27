@@ -114,7 +114,6 @@
     <ClInclude Include="BoardMock.h" />
     <ClInclude Include="CellMock.h" />
     <ClInclude Include="FigureMock.h" />
-    <ClInclude Include="GameMock.h" />
     <ClInclude Include="MouseMock.h" />
     <ClInclude Include="PlayerMock.h" />
     <ClInclude Include="TextureMock.h" />

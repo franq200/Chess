@@ -21,8 +21,14 @@ public:
 	__declspec(dllexport) void Draw(std::unique_ptr<IWindow>& window) override;
 	__declspec(dllexport) void SetPosition(Pos pos) override;
 	__declspec(dllexport) Pos GetPosition() const override;
+	__declspec(dllexport) Pos GetPixelPosition() const override;
 	__declspec(dllexport) virtual bool IsMovePossible(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const override;
 	__declspec(dllexport) virtual std::vector<Pos> GetEveryPossibleMoves(const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const override;
+	__declspec(dllexport) void SetTempPos(const Pos& tempPos) override;
+	__declspec(dllexport) void SetCurrentPos() override;
+	__declspec(dllexport) const Pos& GetPixelTempPosition() const override;
+	__declspec(dllexport) bool IsInPossibleMoves(const Pos& destinationPos) const override;
+	__declspec(dllexport) const Pos& GetCellTempPosition() const override;
 protected:
 	std::unique_ptr<IRectangleShape> m_figure;
 
@@ -49,5 +55,6 @@ protected:
 
 	Positions m_directions;
 	int m_moveCounter = 0;
+	std::vector<Pos> m_possibleMoves;
 };
 

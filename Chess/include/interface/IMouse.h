@@ -13,7 +13,8 @@ public:
 		Right
 	};
 	virtual bool IsButtonPressed(Button button) const = 0;
-	virtual Pos GetPosition(const std::unique_ptr<IWindow>& window) = 0;
+	virtual Pos GetCellPosition(const std::unique_ptr<IWindow>& window) = 0;
+	virtual Pos GetPixelPosition(const std::unique_ptr<IWindow>& window) = 0;
 	virtual bool IsMouseInWindow(const std::unique_ptr<IWindow>& window) const = 0;
 };
 

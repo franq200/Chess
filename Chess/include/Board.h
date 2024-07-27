@@ -27,6 +27,8 @@ public:
 	__declspec(dllexport) bool IsMovePossible(Pos mouseCell, PlayerColor currentPlayer) const override;
 	__declspec(dllexport) void MoveCurrentFiguresToNewCell(Pos mouseCell) override;
 	__declspec(dllexport) void CreateFigures(TextureContainer& textures, std::unique_ptr<IPlayer>& white, std::unique_ptr<IPlayer>& black) override;
+	__declspec(dllexport) void Animate(const Pos& mousePos) override;
+	__declspec(dllexport) void EndAnimation() override;
 private:
 	void DrawPossibleMoves(std::unique_ptr<IWindow>& window, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures);
 	bool IsCurrentFigureSet() const;
@@ -34,8 +36,9 @@ private:
 	void CreateWhite(TextureContainer& textures);
 	void CreateBlack(TextureContainer& textures);
 	void RemoveHighlights();
-	const std::shared_ptr<IFigure> GetCurrentFigure() const;
+	std::shared_ptr<IFigure> GetCurrentFigure() const;
 	Cells m_board;
 	FiguresMap m_figures;
 	std::optional<Pos> m_selectedFigureCell;
+	std::optional<Pos> m_mousePosInFigure;
 };

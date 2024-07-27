@@ -22,9 +22,6 @@
     <ClInclude Include="FigureMock.h">
       <Filter>Mocks</Filter>
     </ClInclude>
-    <ClInclude Include="GameMock.h">
-      <Filter>Mocks</Filter>
-    </ClInclude>
     <ClInclude Include="MouseMock.h">
       <Filter>Mocks</Filter>
     </ClInclude>

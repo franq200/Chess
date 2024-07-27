@@ -176,7 +176,6 @@ xcopy /s /Y Chess\SFML-2.6.0\bin\sfml-window-2.dll  x64\Release</Command>
     <ClInclude Include="include/interface/IBoard.h" />
     <ClInclude Include="include/interface/ICell.h" />
     <ClInclude Include="include/interface/IFigure.h" />
-    <ClInclude Include="include/interface/IGame.h" />
     <ClInclude Include="include/interface/ITexture.h" />
     <ClInclude Include="include/interface/IWindow.h" />
     <ClInclude Include="include/Texture.h" />

@@ -47,6 +47,11 @@ Pos Figure::GetPosition() const
     return GetCellPosFromPixelPos(m_figure->GetPosition());
 }
 
+Pos Figure::GetPixelPosition() const
+{
+    return m_figure->GetPosition();
+}
+
 bool Figure::IsMovePossible(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const
 {
     if (IsMoveAllowedForThisFigure(destinationCell))
@@ -83,6 +88,31 @@ std::vector<Pos> Figure::GetEveryPossibleMoves(const FiguresVector& currentPlaye
     }
     
     return possibleMoves;
+}
+
+void Figure::ChangeTempPos(const Pos& tempPos)
+{
+    m_figure->SetTempPos(tempPos);
+}
+
+void Figure::SetCurrentPos()
+{
+    m_figure->SetCurrentPos();
+}
+
+const Pos& Figure::GetPixelTempPosition() const
+{
+    return m_figure->GetPixelTempPosition();
+}
+
+bool Figure::IsInPossibleMoves(const Pos& destinationPos) const
+{
+    return std::find(m_possibleMoves.begin(), m_possibleMoves.end(), destinationPos) != m_possibleMoves.end();
+}
+
+const Pos& Figure::GetCellTempPosition() const
+{
+    return m_figure->GetCellTempPosition();
 }
 
 std::vector<Pos> Figure::GetMovePath(Pos destinationCell, Pos currentPos) const

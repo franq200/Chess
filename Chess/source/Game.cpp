@@ -32,8 +32,21 @@ void Game::Update()
 		if (m_mouse->IsMouseInWindow(m_window))
 		{
 			MoveAndSetCurrentFigure();
+			AnimateMoving();
 		}
 		Draw();
+	}
+}
+
+void Game::AnimateMoving()
+{
+	if (m_mouse->IsButtonPressed(IMouse::Button::Left))
+	{
+		m_board->Animate(m_mouse->GetPixelPosition(m_window));
+	}
+	else
+	{
+		m_board->EndAnimation();
 	}
 }
 
@@ -62,7 +75,7 @@ bool Game::TryEndGame() const
 
 void Game::MoveAndSetCurrentFigure()
 {
-	Pos mouseCell = m_mouse->GetPosition(m_window);
+	Pos mouseCell = m_mouse->GetCellPosition(m_window);
 	if (m_mouse->IsButtonPressed(IMouse::Button::Left))
 	{
 		if (!m_isMoveButtonPressed)
