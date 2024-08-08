@@ -103,7 +103,7 @@ void Board::Animate(const Pos& mousePos)
 		{
 			int newXPos = currentFigurePos.x + (mousePos.x - (currentFigurePos.x + m_mousePosInFigure.value().x));
 			int newYPos = currentFigurePos.y + (mousePos.y - (currentFigurePos.y + m_mousePosInFigure.value().y));
-			currentFigure->SetTempPos(Pos(newXPos, newYPos));
+			currentFigure->ChangeTempPos(Pos(newXPos, newYPos));
 		}
 		else if (!m_mousePosInFigure.has_value())
 		{

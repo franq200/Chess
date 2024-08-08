@@ -18,7 +18,7 @@ public:
 	virtual Pos GetPixelPosition() const = 0;
 	virtual bool IsMovePossible(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const = 0;
 	virtual std::vector<Pos> GetEveryPossibleMoves(const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const = 0;
-	virtual void SetTempPos(const Pos& tempPos) = 0;
+	virtual void ChangeTempPos(const Pos& tempPos) = 0;
 	virtual void SetCurrentPos() = 0;
 	virtual const Pos& GetPixelTempPosition() const = 0;
 	virtual bool IsInPossibleMoves(const Pos& destinationPos) const = 0;
