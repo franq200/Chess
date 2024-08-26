@@ -10,7 +10,6 @@ class Cell : public ICell
 {
 public:
 	__declspec(dllexport) Cell();
-	__declspec(dllexport) void Draw(std::unique_ptr<IWindow>& window) override;
 	__declspec(dllexport) void SetFillColor(Color color) override;
 	__declspec(dllexport) void SetPosition(Pos pos) override;
 	__declspec(dllexport) void SetSize(Size size) override;
@@ -20,6 +19,8 @@ public:
 	__declspec(dllexport) bool IsOccupiedByPlayer(const std::unique_ptr<IPlayer>& currentPlayer) const override;
 	__declspec(dllexport) void Highlight() override;
 	__declspec(dllexport) void RemoveHighlight() override;
+	__declspec(dllexport) void DrawCells(std::unique_ptr<IWindow>& window) override;
+	__declspec(dllexport) void DrawFigures(std::unique_ptr<IWindow>& window) override;
 private:
 	 std::unique_ptr<IRectangleShape> m_cell;
 	 std::unique_ptr<IRectangleShape> m_highlight;

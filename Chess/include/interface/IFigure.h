@@ -20,9 +20,10 @@ public:
 	virtual std::vector<Pos> GetEveryPossibleMoves(const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const = 0;
 	virtual void ChangeTempPos(const Pos& tempPos) = 0;
 	virtual void SetCurrentPos() = 0;
-	virtual const Pos& GetPixelTempPosition() const = 0;
+	virtual Pos GetPixelTempPosition() const = 0;
 	virtual bool IsInPossibleMoves(const Pos& destinationPos) const = 0;
-	virtual const Pos& GetCellTempPosition() const = 0;
+	virtual Pos GetCellTempPosition() const = 0;
+	virtual void OnAnimation() = 0;
 	//virtual std::vector<Pos> GetMovePath(Pos destinationCell, Pos currentPos) const = 0;
 	//virtual bool IsCollisionWithCurrentPlayer(const std::vector<Pos>& movePath, const FiguresVector& currentPlayerFigures) const = 0;
 	//virtual bool IsCollisionWithOpponent(const std::vector<Pos>& movePath, const FiguresVector& opponentPlayerFigures) const = 0;

@@ -87,7 +87,7 @@ void Game::MoveAndSetCurrentFigure()
 			}
 			if (m_board->IsCellOccupied(mouseCell, *m_currentPlayer))
 			{
-				m_board->SetCurrentFigure(mouseCell);
+				m_board->SetCurrentFigure(mouseCell, GetCurrentPlayer());
 			}
 			m_isMoveButtonPressed = true;
 		}
@@ -108,7 +108,7 @@ void Game::Move(Pos mouseCell)
 void Game::Draw()
 {
 	m_window->Clear();
-	m_board->Draw(m_window, m_currentPlayer->get()->GetFigures(), GetOpponentFigures());
+	m_board->Draw(m_window);
 	m_window->Display();
 }
 

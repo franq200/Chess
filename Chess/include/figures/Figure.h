@@ -26,9 +26,10 @@ public:
 	__declspec(dllexport) virtual std::vector<Pos> GetEveryPossibleMoves(const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const override;
 	__declspec(dllexport) void ChangeTempPos(const Pos& tempPos) override;
 	__declspec(dllexport) void SetCurrentPos() override;
-	__declspec(dllexport) const Pos& GetPixelTempPosition() const override;
+	__declspec(dllexport) Pos GetPixelTempPosition() const override;
 	__declspec(dllexport) bool IsInPossibleMoves(const Pos& destinationPos) const override;
-	__declspec(dllexport) const Pos& GetCellTempPosition() const override;
+	__declspec(dllexport) Pos GetCellTempPosition() const override;
+	__declspec(dllexport) void OnAnimation() override;
 protected:
 	std::unique_ptr<IRectangleShape> m_figure;
 

@@ -18,7 +18,8 @@ public:
 	virtual void SetFillColor(Color color) = 0;
 	virtual void SetTempPos(const Pos& tempPos) = 0;
 	virtual void SetCurrentPos() = 0;
-	virtual const Pos& GetPixelTempPosition() const = 0;
-	virtual const Pos& GetCellTempPosition() const = 0;
+	virtual Pos GetPixelTempPosition() const = 0;
+	virtual Pos GetCellTempPosition() const = 0;
+	virtual void OnAnimation() = 0;
 };
 

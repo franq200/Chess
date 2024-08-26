@@ -14,16 +14,6 @@ Cell::Cell()
 	m_highlight->SetFillColor(Color(220, 220, 220));
 }
 
-void Cell::Draw(std::unique_ptr<IWindow>& window)
-{
-	window->Draw(*m_cell);
-	if (m_figure != nullptr)
-	{
-		m_figure->Draw(window);
-	}
-	window->Draw(*m_highlight);
-}
-
 void Cell::SetFillColor(Color color)
 {
 	m_cell->SetFillColor(color);
@@ -69,4 +59,18 @@ void Cell::Highlight()
 void Cell::RemoveHighlight()
 {
 	m_highlight->SetSize(Size(0, 0));
+}
+
+void Cell::DrawCells(std::unique_ptr<IWindow>& window)
+{
+	window->Draw(*m_cell);
+	window->Draw(*m_highlight);
+}
+
+void Cell::DrawFigures(std::unique_ptr<IWindow>& window)
+{
+	if (m_figure != nullptr)
+	{
+		m_figure->Draw(window);
+	}
 }

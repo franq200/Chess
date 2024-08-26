@@ -21,16 +21,19 @@ class Board : public IBoard
 public:
 	__declspec(dllexport) Board() = default;
 	__declspec(dllexport) Board(std::array < std::unique_ptr<ICell>, 64> cells, TextureContainer& textures);
-	__declspec(dllexport) void Draw(std::unique_ptr<IWindow>& window, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) override;
+	__declspec(dllexport) void Draw(std::unique_ptr<IWindow>& window) override;
 	__declspec(dllexport) bool IsCellOccupied(Pos mouseCell, const std::unique_ptr<IPlayer>& currentPlayer) const override;
-	__declspec(dllexport) void SetCurrentFigure(Pos mouseCell) override;
+	__declspec(dllexport) void SetCurrentFigure(Pos mouseCell, PlayerColor currentPlayer) override;
 	__declspec(dllexport) bool IsMovePossible(Pos mouseCell, PlayerColor currentPlayer) const override;
 	__declspec(dllexport) void MoveCurrentFiguresToNewCell(Pos mouseCell) override;
 	__declspec(dllexport) void CreateFigures(TextureContainer& textures, std::unique_ptr<IPlayer>& white, std::unique_ptr<IPlayer>& black) override;
 	__declspec(dllexport) void Animate(const Pos& mousePos) override;
 	__declspec(dllexport) void EndAnimation() override;
 private:
-	void DrawPossibleMoves(std::unique_ptr<IWindow>& window, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures);
+	void DrawCells(std::unique_ptr<IWindow>& window);
+	void DrawFigures(std::unique_ptr<IWindow>& window);
+	std::pair<Figures, Figures> GetPlayersFigures(PlayerColor currentPlayer) const;
+	void UpdatePossibleMoves(PlayerColor currentPlayer);
 	bool IsCurrentFigureSet() const;
 	void CreateBoard(std::array < std::unique_ptr<ICell>, 64>& cells);
 	void CreateWhite(TextureContainer& textures);

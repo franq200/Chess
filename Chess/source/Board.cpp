@@ -16,16 +16,10 @@ Board::Board(std::array<std::unique_ptr<ICell>, 64> cells, TextureContainer& tex
 	CreateBoard(cells);
 }
 
-void Board::Draw(std::unique_ptr<IWindow>& window, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures)
+void Board::Draw(std::unique_ptr<IWindow>& window)
 {
-	for (int x = 0; x < m_board.size(); x++)
-	{
-		for (int y = 0; y < m_board[x].size(); y++)
-		{
-			m_board[x][y]->Draw(window);
-		}
-	}
-	DrawPossibleMoves(window, currentPlayerFigures, opponentPlayerFigures);
+	DrawCells(window);
+	DrawFigures(window);
 }
 
 bool Board::IsCellOccupied(Pos mouseCell, const std::unique_ptr<IPlayer>& currentPlayer) const
@@ -33,10 +27,13 @@ bool Board::IsCellOccupied(Pos mouseCell, const std::unique_ptr<IPlayer>& curren
 	return m_board.at(mouseCell.x).at(mouseCell.y)->IsOccupiedByPlayer(currentPlayer);
 }
 
-void Board::SetCurrentFigure(Pos mouseCell)
+void Board::SetCurrentFigure(Pos mouseCell, PlayerColor currentPlayer)
 {
 	RemoveHighlights();
 	m_selectedFigureCell = mouseCell;
+	auto currentFigure = GetCurrentFigure();
+	currentFigure->OnAnimation();
+	UpdatePossibleMoves(currentPlayer);
 }
 
 bool Board::IsMovePossible(Pos mouseCell, PlayerColor currentPlayer) const
@@ -44,27 +41,19 @@ bool Board::IsMovePossible(Pos mouseCell, PlayerColor currentPlayer) const
 	if (IsCurrentFigureSet())
 	{
 		const std::shared_ptr<IFigure> currentFigure = GetCurrentFigure();
-		const Figures& currentPlayerFigures = m_figures.at(currentPlayer);
-		Figures opponentFigures;
-		if (currentPlayer == PlayerColor::white)
-		{
-			opponentFigures = m_figures.at(PlayerColor::black);
-		}
-		else
-		{
-			opponentFigures = m_figures.at(PlayerColor::white);
-		}
+		auto [currentPlayerFigures, opponentFigures] = GetPlayersFigures(currentPlayer);
 		return currentFigure->IsMovePossible(mouseCell, currentPlayerFigures, opponentFigures);
 	}
 	return false;
 }
 
-void Board::DrawPossibleMoves(std::unique_ptr<IWindow>& window, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures)
+void Board::UpdatePossibleMoves(PlayerColor currentPlayer)
 {
 	if (m_selectedFigureCell.has_value())
 	{
 		const std::shared_ptr<IFigure> currentFigure = GetCurrentFigure();
-		Positions possibleMoves = currentFigure->GetEveryPossibleMoves(currentPlayerFigures, opponentPlayerFigures);
+		auto [currentPlayerFigures, opponentFigures] = GetPlayersFigures(currentPlayer);
+		Positions possibleMoves = currentFigure->GetEveryPossibleMoves(currentPlayerFigures, opponentFigures);
 		for (auto move : possibleMoves)
 		{
 			m_board.at(move.x).at(move.y)->Highlight();
@@ -127,6 +116,47 @@ void Board::EndAnimation()
 			currentFigure->SetCurrentPos();
 		}
 	}
+}
+
+void Board::DrawCells(std::unique_ptr<IWindow>& window)
+{
+	for (int x = 0; x < m_board.size(); x++)
+	{
+		for (int y = 0; y < m_board[x].size(); y++)
+		{
+			m_board[x][y]->DrawCells(window);
+		}
+	}
+}
+
+void Board::DrawFigures(std::unique_ptr<IWindow>& window)
+{
+	for (int x = 0; x < m_board.size(); x++)
+	{
+		for (int y = 0; y < m_board[x].size(); y++)
+		{
+			m_board[x][y]->DrawFigures(window);
+		}
+	}
+	if (m_selectedFigureCell.has_value())
+	{
+		m_board[m_selectedFigureCell.value().x][m_selectedFigureCell.value().y]->DrawFigures(window);
+	}
+}
+
+std::pair<Figures, Figures> Board::GetPlayersFigures(PlayerColor currentPlayer) const
+{
+	Figures currentPlayerFigures = m_figures.at(currentPlayer);
+	Figures opponentFigures;
+	if (currentPlayer == PlayerColor::white)
+	{
+		opponentFigures = m_figures.at(PlayerColor::black);
+	}
+	else
+	{
+		opponentFigures = m_figures.at(PlayerColor::white);
+	}
+	return std::pair<Figures, Figures>(currentPlayerFigures, opponentFigures);
 }
 
 void Board::CreateBoard(std::array<std::unique_ptr<ICell>, 64>& cells)
@@ -273,4 +303,5 @@ std::shared_ptr<IFigure> Board::GetCurrentFigure() const
 		const int y = m_selectedFigureCell.value().y;
 		return m_board.at(x).at(y)->GetFigure();
 	}
+	return nullptr;
 }

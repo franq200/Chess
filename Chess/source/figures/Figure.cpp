@@ -100,7 +100,7 @@ void Figure::SetCurrentPos()
     m_figure->SetCurrentPos();
 }
 
-const Pos& Figure::GetPixelTempPosition() const
+Pos Figure::GetPixelTempPosition() const
 {
     return m_figure->GetPixelTempPosition();
 }
@@ -110,9 +110,14 @@ bool Figure::IsInPossibleMoves(const Pos& destinationPos) const
     return std::find(m_possibleMoves.begin(), m_possibleMoves.end(), destinationPos) != m_possibleMoves.end();
 }
 
-const Pos& Figure::GetCellTempPosition() const
+Pos Figure::GetCellTempPosition() const
 {
     return m_figure->GetCellTempPosition();
+}
+
+void Figure::OnAnimation()
+{
+    m_figure->OnAnimation();
 }
 
 std::vector<Pos> Figure::GetMovePath(Pos destinationCell, Pos currentPos) const
