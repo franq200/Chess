@@ -36,13 +36,11 @@ void Board::SetCurrentFigure(Pos mouseCell, PlayerColor currentPlayer)
 	UpdatePossibleMoves(currentPlayer);
 }
 
-bool Board::IsMovePossible(Pos mouseCell, PlayerColor currentPlayer) const
+bool Board::IsMovePossible(Pos mouseCell) const
 {
 	if (IsCurrentFigureSet())
 	{
 		const std::shared_ptr<IFigure> currentFigure = GetCurrentFigure();
-		auto [currentPlayerFigures, opponentFigures] = GetPlayersFigures(currentPlayer);
-		//return currentFigure->IsMovePossible(mouseCell, currentPlayerFigures, opponentFigures);
 		return currentFigure->IsInPossibleMoves(mouseCell);
 	}
 	return false;
@@ -54,10 +52,18 @@ void Board::UpdatePossibleMoves(PlayerColor currentPlayer)
 	{
 		const std::shared_ptr<IFigure> currentFigure = GetCurrentFigure();
 		auto [currentPlayerFigures, opponentFigures] = GetPlayersFigures(currentPlayer);
-		Positions possibleMoves = currentFigure->GetAndSetEveryPossibleMoves(currentPlayerFigures, opponentFigures);
+		Positions possibleMoves = currentFigure->SetPossibleMoves(currentPlayerFigures, opponentFigures);
 		for (auto move : possibleMoves)
 		{
-			m_board.at(move.x).at(move.y)->Highlight();
+			if (currentFigure->IsFigureTaking(move, opponentFigures))
+			{
+				m_takingMoves.push_back(move);
+				m_board.at(move.x).at(move.y)->HighlightAsTaking();
+			}
+			else
+			{
+				m_board.at(move.x).at(move.y)->Highlight();
+			}
 		}
 	}
 }
@@ -69,9 +75,14 @@ bool Board::IsCurrentFigureSet() const
 
 void Board::MoveCurrentFiguresToNewCell(Pos mouseCell)
 {
+	if (IsItTakingMove(mouseCell))
+	{
+		//taking
+	}
 	m_board[mouseCell.x][mouseCell.y]->SetFigure(GetCurrentFigure());
 	m_board[m_selectedFigureCell.value().x][m_selectedFigureCell.value().y]->RemoveFigure();
 	m_selectedFigureCell.reset();
+	
 	RemoveHighlights();
 }
 
@@ -111,12 +122,7 @@ void Board::EndAnimation(const Pos& mouseCell)
 		if (!currentFigure->IsInPossibleMoves(mouseCell))
 		{
 			currentFigure->SetCurrentPos();
-			//MoveCurrentFiguresToNewCell(mouseCell);
 		}
-		//else
-		//{
-		//	currentFigure->SetCurrentPos();
-		//}
 	}
 	m_isAnimating = false;
 }
@@ -129,6 +135,15 @@ bool Board::IsAnimating() const
 void Board::StartAnimation()
 {
 	m_isAnimating = true;
+}
+
+bool Board::IsItTakingMove(const Pos& move) const
+{
+	if (!m_takingMoves.empty())
+	{
+		return std::find(m_takingMoves.begin(), m_takingMoves.end(), move) != m_takingMoves.end();
+	}
+	return false;
 }
 
 void Board::DrawCells(std::unique_ptr<IWindow>& window)

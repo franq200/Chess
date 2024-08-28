@@ -10,8 +10,7 @@ Cell::Cell()
 	static int pos = 0;
 	m_pos = pos++;
 	m_cell = std::make_unique<RectangleShape>();
-	m_highlight = std::make_unique<RectangleShape>();
-	m_highlight->SetFillColor(Color(220, 220, 220));
+	InitHighlights();
 }
 
 void Cell::SetFillColor(Color color)
@@ -56,9 +55,15 @@ void Cell::Highlight()
 	m_highlight->SetSize(Size(size::cellSizeXPix / 3, size::cellSizeYPix / 3));
 }
 
+void Cell::HighlightAsTaking()
+{
+	m_takingHighlight->SetSize(Size(size::cellSizeXPix / 2, size::cellSizeYPix / 2));
+}
+
 void Cell::RemoveHighlight()
 {
 	m_highlight->SetSize(Size(0, 0));
+	m_takingHighlight->SetSize(Size(0, 0));
 }
 
 void Cell::DrawCells(std::unique_ptr<IWindow>& window)
@@ -73,4 +78,12 @@ void Cell::DrawFigures(std::unique_ptr<IWindow>& window)
 	{
 		m_figure->Draw(window);
 	}
+}
+
+void Cell::InitHighlights()
+{
+	m_highlight = std::make_unique<RectangleShape>();
+	m_highlight->SetFillColor(Color(220, 220, 220));
+	m_takingHighlight = std::make_unique<RectangleShape>();
+	m_takingHighlight->SetFillColor(Color(240, 190, 190));
 }

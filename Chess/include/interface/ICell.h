@@ -21,6 +21,7 @@ public:
 	virtual std::shared_ptr<IFigure> GetFigure() const = 0;
 	virtual bool IsOccupiedByPlayer(const std::unique_ptr<IPlayer>& currentColor) const = 0;
 	virtual void Highlight() = 0;
+	virtual void HighlightAsTaking() = 0;
 	virtual void RemoveHighlight() = 0;
 	virtual void DrawCells(std::unique_ptr<IWindow>& window) = 0;
 	virtual void DrawFigures(std::unique_ptr<IWindow>& window) = 0;

@@ -50,7 +50,7 @@ void Game::AnimateMoving()
 	else
 	{
 		Pos mouseCell = m_mouse->GetCellPosition(m_window);
-		if (m_board->IsMovePossible(mouseCell, GetCurrentPlayer()))
+		if (m_board->IsMovePossible(mouseCell))
 		{
 			Move(mouseCell);
 		}
@@ -89,8 +89,7 @@ void Game::MoveAndSetCurrentFigure()
 		m_board->StartAnimation();
 		if (!m_isMoveButtonPressed)
 		{
-			//FiguresVector opponentFigures = GetOpponentFigures();
-			if (m_board->IsMovePossible(mouseCell, GetCurrentPlayer()))
+			if (m_board->IsMovePossible(mouseCell))
 			{
 				Move(mouseCell);
 			}
