@@ -32,7 +32,10 @@ void Game::Update()
 		if (m_mouse->IsMouseInWindow(m_window))
 		{
 			MoveAndSetCurrentFigure();
-			AnimateMoving();
+			if (m_board->IsAnimating())
+			{
+				AnimateMoving();
+			}
 		}
 		Draw();
 	}
@@ -46,7 +49,12 @@ void Game::AnimateMoving()
 	}
 	else
 	{
-		m_board->EndAnimation();
+		Pos mouseCell = m_mouse->GetCellPosition(m_window);
+		if (m_board->IsMovePossible(mouseCell, GetCurrentPlayer()))
+		{
+			Move(mouseCell);
+		}
+		m_board->EndAnimation(m_mouse->GetCellPosition(m_window));
 	}
 }
 
@@ -78,6 +86,7 @@ void Game::MoveAndSetCurrentFigure()
 	Pos mouseCell = m_mouse->GetCellPosition(m_window);
 	if (m_mouse->IsButtonPressed(IMouse::Button::Left))
 	{
+		m_board->StartAnimation();
 		if (!m_isMoveButtonPressed)
 		{
 			//FiguresVector opponentFigures = GetOpponentFigures();

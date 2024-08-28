@@ -31,6 +31,8 @@ public:
 	virtual void MoveCurrentFiguresToNewCell(Pos mouseCell) = 0;
 	virtual void CreateFigures(TextureContainer& textures, std::unique_ptr<IPlayer>& white, std::unique_ptr<IPlayer>& black) = 0;
 	virtual void Animate(const Pos& mousePos) = 0;
-	virtual void EndAnimation() = 0;
+	virtual void EndAnimation(const Pos& mousePos) = 0;
+	virtual bool IsAnimating() const = 0;
+	virtual void StartAnimation() = 0;
 };
 

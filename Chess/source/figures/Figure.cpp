@@ -65,7 +65,7 @@ bool Figure::IsMovePossible(Pos destinationCell, const FiguresVector& currentPla
     return false;
 }
 
-std::vector<Pos> Figure::GetEveryPossibleMoves(const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const
+std::vector<Pos> Figure::GetAndSetEveryPossibleMoves(const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures)
 {
     std::vector<Pos> possibleMoves;
     Pos currentPos = GetPosition();
@@ -86,7 +86,7 @@ std::vector<Pos> Figure::GetEveryPossibleMoves(const FiguresVector& currentPlaye
             }
         }
     }
-    
+    m_possibleMoves = possibleMoves;
     return possibleMoves;
 }
 

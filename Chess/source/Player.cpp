@@ -36,7 +36,7 @@ bool Player::IsAnyMovePossible(FiguresVector currentPlayerFigures, FiguresVector
 {
 	for (auto figure : m_figures)
 	{
-		if (!figure->GetEveryPossibleMoves(currentPlayerFigures, opponentPlayerFigures).empty())
+		if (!figure->GetAndSetEveryPossibleMoves(currentPlayerFigures, opponentPlayerFigures).empty())
 		{
 			return true;
 		}

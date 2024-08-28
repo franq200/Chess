@@ -28,7 +28,9 @@ public:
 	__declspec(dllexport) void MoveCurrentFiguresToNewCell(Pos mouseCell) override;
 	__declspec(dllexport) void CreateFigures(TextureContainer& textures, std::unique_ptr<IPlayer>& white, std::unique_ptr<IPlayer>& black) override;
 	__declspec(dllexport) void Animate(const Pos& mousePos) override;
-	__declspec(dllexport) void EndAnimation() override;
+	__declspec(dllexport) void EndAnimation(const Pos& mousePos) override;
+	__declspec(dllexport) bool IsAnimating() const override;
+	__declspec(dllexport) void StartAnimation() override;
 private:
 	void DrawCells(std::unique_ptr<IWindow>& window);
 	void DrawFigures(std::unique_ptr<IWindow>& window);
@@ -44,4 +46,5 @@ private:
 	FiguresMap m_figures;
 	std::optional<Pos> m_selectedFigureCell;
 	std::optional<Pos> m_mousePosInFigure;
+	bool m_isAnimating = false;
 };

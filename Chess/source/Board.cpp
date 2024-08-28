@@ -42,7 +42,8 @@ bool Board::IsMovePossible(Pos mouseCell, PlayerColor currentPlayer) const
 	{
 		const std::shared_ptr<IFigure> currentFigure = GetCurrentFigure();
 		auto [currentPlayerFigures, opponentFigures] = GetPlayersFigures(currentPlayer);
-		return currentFigure->IsMovePossible(mouseCell, currentPlayerFigures, opponentFigures);
+		//return currentFigure->IsMovePossible(mouseCell, currentPlayerFigures, opponentFigures);
+		return currentFigure->IsInPossibleMoves(mouseCell);
 	}
 	return false;
 }
@@ -53,7 +54,7 @@ void Board::UpdatePossibleMoves(PlayerColor currentPlayer)
 	{
 		const std::shared_ptr<IFigure> currentFigure = GetCurrentFigure();
 		auto [currentPlayerFigures, opponentFigures] = GetPlayersFigures(currentPlayer);
-		Positions possibleMoves = currentFigure->GetEveryPossibleMoves(currentPlayerFigures, opponentFigures);
+		Positions possibleMoves = currentFigure->GetAndSetEveryPossibleMoves(currentPlayerFigures, opponentFigures);
 		for (auto move : possibleMoves)
 		{
 			m_board.at(move.x).at(move.y)->Highlight();
@@ -101,21 +102,33 @@ void Board::Animate(const Pos& mousePos)
 	}
 }
 
-void Board::EndAnimation()
+void Board::EndAnimation(const Pos& mouseCell)
 {
 	if (IsCurrentFigureSet())
 	{
 		auto currentFigure = GetCurrentFigure();
 		auto currentFigurePos = currentFigure->GetCellTempPosition();
-		if (currentFigure->IsInPossibleMoves(currentFigurePos))
-		{
-			MoveCurrentFiguresToNewCell(currentFigurePos);
-		}
-		else
+		if (!currentFigure->IsInPossibleMoves(mouseCell))
 		{
 			currentFigure->SetCurrentPos();
+			//MoveCurrentFiguresToNewCell(mouseCell);
 		}
+		//else
+		//{
+		//	currentFigure->SetCurrentPos();
+		//}
 	}
+	m_isAnimating = false;
+}
+
+bool Board::IsAnimating() const
+{
+	return m_isAnimating;
+}
+
+void Board::StartAnimation()
+{
+	m_isAnimating = true;
 }
 
 void Board::DrawCells(std::unique_ptr<IWindow>& window)

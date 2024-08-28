@@ -23,7 +23,7 @@ public:
 	__declspec(dllexport) Pos GetPosition() const override;
 	__declspec(dllexport) Pos GetPixelPosition() const override;
 	__declspec(dllexport) virtual bool IsMovePossible(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const override;
-	__declspec(dllexport) virtual std::vector<Pos> GetEveryPossibleMoves(const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const override;
+	__declspec(dllexport) virtual std::vector<Pos> GetAndSetEveryPossibleMoves(const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) override;
 	__declspec(dllexport) void ChangeTempPos(const Pos& tempPos) override;
 	__declspec(dllexport) void SetCurrentPos() override;
 	__declspec(dllexport) Pos GetPixelTempPosition() const override;
