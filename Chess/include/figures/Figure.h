@@ -22,7 +22,6 @@ public:
 	__declspec(dllexport) void SetPosition(Pos pos) override;
 	__declspec(dllexport) Pos GetPosition() const override;
 	__declspec(dllexport) Pos GetPixelPosition() const override;
-	__declspec(dllexport) virtual bool IsMovePossible(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const override;
 	__declspec(dllexport) virtual std::vector<Pos> SetPossibleMoves(const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) override;
 	__declspec(dllexport) void ChangeTempPos(const Pos& tempPos) override;
 	__declspec(dllexport) void SetCurrentPos() override;
@@ -31,9 +30,11 @@ public:
 	__declspec(dllexport) Pos GetCellTempPosition() const override;
 	__declspec(dllexport) void OnAnimation() override;
 	__declspec(dllexport) bool IsFigureTaking(Pos destinationCell, const FiguresVector& opponentPlayerFigures) const;
+	__declspec(dllexport) virtual bool IsKing() const override;
 protected:
 	std::unique_ptr<IRectangleShape> m_figure;
 
+	virtual bool IsMoveAllowed(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const;
 	virtual bool IsMoveAllowedForThisFigure(const Pos& destinationCell) const = 0;
 
 	Positions GetTopPath(const Pos pos, const Pos destinationCell) const;

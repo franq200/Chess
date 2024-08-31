@@ -31,6 +31,7 @@ void Game::Update()
 		Events();
 		if (m_mouse->IsMouseInWindow(m_window))
 		{
+			TryEndGame();
 			MoveAndSetCurrentFigure();
 			if (m_board->IsAnimating())
 			{
@@ -78,7 +79,7 @@ PlayerColor Game::GetCurrentPlayer() const
 
 bool Game::TryEndGame() const
 {
-	return m_currentPlayer->get()->IsAnyMovePossible(m_currentPlayer->get()->GetFigures(), GetOpponentFigures());
+	return m_currentPlayer->get()->IsAnyMovePossible(GetOpponentFigures());
 }
 
 void Game::MoveAndSetCurrentFigure()

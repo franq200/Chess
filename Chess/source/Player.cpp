@@ -32,16 +32,61 @@ const FiguresVector& Player::GetFigures() const
 	return m_figures;
 }
 
-bool Player::IsAnyMovePossible(FiguresVector currentPlayerFigures, FiguresVector opponentPlayerFigures) const
+bool Player::IsAnyMovePossible(FiguresVector opponentPlayerFigures) const
 {
+	std::vector<Pos> opponentTakingMoves = GetOpponentTakingMoves(opponentPlayerFigures);
+	std::shared_ptr<IFigure> king = GetKing();
+	if (std::find(opponentTakingMoves.begin(), opponentTakingMoves.end(), king->GetPosition()) != opponentTakingMoves.end())
+	{
+		std::vector<Pos> kingPossibleMoves = king->SetPossibleMoves(opponentPlayerFigures);
+		for (auto move : kingPossibleMoves)
+		{
+			if (std::find(opponentTakingMoves.begin(), opponentTakingMoves.end(), move) == opponentTakingMoves.end())
+			{
+				return true;
+			}
+		}
+
+		for (auto figure : m_figures)
+		{
+			std::vector<Pos> possibleMoves = figure->SetPossibleMoves(m_figures, opponentPlayerFigures);
+			for (auto move : possibleMoves)
+			{
+				// warto by zrobiæ coœ takiego ¿e do SetPossibleMoves przekazuje tylko pozycje i wtedy by mo¿na zmieniæ pozycje jednej figury i jeszcze trzeba zrobiæ tak ¿eby by³a funkcja getPossibleTakingMoves()
+			}
+		}
+		else if ()//if not is any figure move enough
+		{
+			return true;
+		}
+		return false;
+	}
 	for (auto figure : m_figures)
 	{
-		if (!figure->SetPossibleMoves(currentPlayerFigures, opponentPlayerFigures).empty())
+		if (!figure->SetPossibleMoves(m_figures, opponentPlayerFigures).empty())
 		{
 			return true;
 		}
 	}
 	return false;
+}
+
+std::vector<Pos> Player::GetOpponentTakingMoves(FiguresVector opponentPlayerFigures) const
+{
+	std::vector<Pos> takingMoves;
+	return takingMoves;
+}
+
+std::shared_ptr<IFigure> Player::GetKing() const
+{
+	for (auto figure : m_figures)
+	{
+		if (figure->IsKing())
+		{
+			return figure;
+		}
+	}
+	return std::shared_ptr<IFigure>();
 }
 
 void Player::UpdateCurrentFigure()
