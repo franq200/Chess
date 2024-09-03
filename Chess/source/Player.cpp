@@ -38,7 +38,7 @@ bool Player::IsAnyMovePossible(FiguresVector opponentPlayerFigures) const
 	std::shared_ptr<IFigure> king = GetKing();
 	if (std::find(opponentTakingMoves.begin(), opponentTakingMoves.end(), king->GetPosition()) != opponentTakingMoves.end())
 	{
-		std::vector<Pos> kingPossibleMoves = king->SetPossibleMoves(opponentPlayerFigures);
+		std::vector<Pos> kingPossibleMoves = king->SetPossibleMoves(m_figures, opponentPlayerFigures);
 		for (auto move : kingPossibleMoves)
 		{
 			if (std::find(opponentTakingMoves.begin(), opponentTakingMoves.end(), move) == opponentTakingMoves.end())
@@ -55,10 +55,10 @@ bool Player::IsAnyMovePossible(FiguresVector opponentPlayerFigures) const
 				// warto by zrobiæ coœ takiego ¿e do SetPossibleMoves przekazuje tylko pozycje i wtedy by mo¿na zmieniæ pozycje jednej figury i jeszcze trzeba zrobiæ tak ¿eby by³a funkcja getPossibleTakingMoves()
 			}
 		}
-		else if ()//if not is any figure move enough
-		{
-			return true;
-		}
+		//else if ()//if not is any figure move enough
+		//{
+		//	return true;
+		//}
 		return false;
 	}
 	for (auto figure : m_figures)

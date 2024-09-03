@@ -42,9 +42,9 @@ protected:
 class GameTest : public BasicChessTests
 {
 protected:
-	Game createSut()
+	Gameplay createSut()
 	{
-		Game game(texturesMock, std::move(boardMock), std::move(windowMock), std::move(mouseMock), std::move(white), std::move(black));
+		Gameplay game(texturesMock, std::move(boardMock), std::move(windowMock), std::move(mouseMock), std::move(white), std::move(black));
 		return game;
 		//return { std::move(texturesMock), std::move(boardMock), std::move(windowMock) };
 	}
@@ -78,19 +78,19 @@ void ExpectSomeTexturesToFail(TextureContainer& texturesMock, int amountOfTextur
 TEST_F(GameTest, AreTexturesBeingLoaded)
 {
 	ExpectTexturesLoaded(texturesMock);
-	Game game = createSut();
+	Gameplay game = createSut();
 }
 
 TEST_F(GameTest, DoesTexturesDetectIfOneTextureFailsToLoadAndThrowException)
 {
 	ExpectSomeTexturesToFail(texturesMock, 1);
-	EXPECT_THROW(Game game = createSut(), std::exception);
+	EXPECT_THROW(Gameplay game = createSut(), std::exception);
 }
 
 TEST_F(GameTest, DoesTexturesDetectIfFiveTextureFailsToLoadAndThrowException)
 {
 	ExpectSomeTexturesToFail(texturesMock, 5);
-	EXPECT_THROW(Game game = createSut(), std::exception);
+	EXPECT_THROW(Gameplay game = createSut(), std::exception);
 }
 
 TEST_F(GameTest, WindowClearAndDisplayFunctionsShouldBeCalledAsLongAsFunctionIsOpenReturnTrue)
@@ -103,7 +103,7 @@ TEST_F(GameTest, WindowClearAndDisplayFunctionsShouldBeCalledAsLongAsFunctionIsO
 	EXPECT_CALL(*black, GetFigures()).Times(3);
 	EXPECT_CALL(*windowMock, Display()).Times(3);
 	EXPECT_CALL(*windowMock, PollEvent(testing::_)).Times(testing::AtLeast(1));
-	Game game = createSut();
+	Gameplay game = createSut();
 	game.Update();
 }
 

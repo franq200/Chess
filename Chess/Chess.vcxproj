@@ -147,13 +147,14 @@ xcopy /s /Y Chess\SFML-2.6.0\bin\sfml-window-2.dll  x64\Release</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="source/Mouse.cpp" />
     <ClCompile Include="source/Event.cpp" />
     <ClCompile Include="source/RectangleShape.cpp" />
     <ClCompile Include="source/Board.cpp" />
     <ClCompile Include="source/Cell.cpp" />
     <ClCompile Include="source/figures/Figure.cpp" />
-    <ClCompile Include="source/Game.cpp" />
+    <ClCompile Include="source\Gameplay.cpp" />
     <ClCompile Include="source/Helper.cpp" />
     <ClCompile Include="source/Texture.cpp" />
     <ClCompile Include="source/Window.cpp" />
@@ -166,12 +167,13 @@ xcopy /s /Y Chess\SFML-2.6.0\bin\sfml-window-2.dll  x64\Release</Command>
     <ClCompile Include="source\figures\Queen.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game.h" />
     <ClInclude Include="include/Event.h" />
     <ClInclude Include="include/interface/IEvent.h" />
     <ClInclude Include="include/Board.h" />
     <ClInclude Include="include/Cell.h" />
     <ClInclude Include="include/figures/Figure.h" />
-    <ClInclude Include="include/Game.h" />
+    <ClInclude Include="include\Gameplay.h" />
     <ClInclude Include="include/Helper.h" />
     <ClInclude Include="include/interface/IBoard.h" />
     <ClInclude Include="include/interface/ICell.h" />

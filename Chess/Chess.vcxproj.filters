@@ -16,9 +16,6 @@
     <Filter Include="GameFiles\Board">
       <UniqueIdentifier>{a06843ae-f503-473a-9c41-113ee512c368}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameFiles\Game">
-      <UniqueIdentifier>{bb7bded0-d7ac-43c4-acfb-72ea259f4336}</UniqueIdentifier>
-    </Filter>
     <Filter Include="NewFilter1">
       <UniqueIdentifier>{cc5c88bf-2d6c-4664-bb58-f3df6dda40a4}</UniqueIdentifier>
     </Filter>
@@ -64,6 +61,12 @@
     <Filter Include="GameFiles\FromSfml\Event">
       <UniqueIdentifier>{3f7ec6cd-f3cb-4bfe-83c1-41ee58915376}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameFiles\Gameplay">
+      <UniqueIdentifier>{bb7bded0-d7ac-43c4-acfb-72ea259f4336}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFiles\Game">
+      <UniqueIdentifier>{77436e76-f836-4354-9ab8-b75f46a4f603}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source/figures/Figure.cpp">
@@ -108,14 +111,17 @@
     <ClCompile Include="source/Board.cpp">
       <Filter>GameFiles\Board</Filter>
     </ClCompile>
-    <ClCompile Include="source/Game.cpp">
-      <Filter>GameFiles\Game</Filter>
+    <ClCompile Include="source\Gameplay.cpp">
+      <Filter>GameFiles\Gameplay</Filter>
     </ClCompile>
     <ClCompile Include="source/Player.cpp">
       <Filter>GameFiles\Player</Filter>
     </ClCompile>
     <ClCompile Include="source/Helper.cpp">
       <Filter>GameFiles\Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>GameFiles\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -185,8 +191,8 @@
     <ClInclude Include="include/interface/IBoard.h">
       <Filter>GameFiles\Board</Filter>
     </ClInclude>
-    <ClInclude Include="include/Game.h">
-      <Filter>GameFiles\Game</Filter>
+    <ClInclude Include="include\Gameplay.h">
+      <Filter>GameFiles\Gameplay</Filter>
     </ClInclude>
     <ClInclude Include="include/interface/IPlayer.h">
       <Filter>GameFiles\Player</Filter>
@@ -196,6 +202,9 @@
     </ClInclude>
     <ClInclude Include="include/Helper.h">
       <Filter>GameFiles\Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>GameFiles\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

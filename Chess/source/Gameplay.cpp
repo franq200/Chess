@@ -1,65 +1,53 @@
-#include "Game.h"
+#include "Gameplay.h"
 #include "Helper.h"
 #include "interface/ITexture.h"
 #include "interface/IBoard.h"
 #include "interface/IEvent.h"
 #include "interface/IMouse.h"
 
-Game::Game(TextureContainer& textures,
+Gameplay::Gameplay(TextureContainer& textures,
 	std::unique_ptr<IBoard> board,
-	std::unique_ptr<IWindow> window,
-	std::unique_ptr<IMouse> mouse,
 	std::unique_ptr<IPlayer> white,
 	std::unique_ptr<IPlayer> black) :
 	m_textures(std::move(textures)),
 	m_board(std::move(board)),
-	m_window(std::move(window)),
-	m_mouse(std::move(mouse)),
 	m_whitePlayer(std::move(white)),
 	m_blackPlayer(std::move(black)),
 	m_currentPlayer(&m_whitePlayer)
 {
 	LoadTextures();
 	m_board->CreateFigures(m_textures, m_whitePlayer, m_blackPlayer);
-	m_window->Create(Resolution(size::windowSizeXPix, size::windowSizeYPix), "Chess");
 }
 
-void Game::Update()
+void Gameplay::Update(std::unique_ptr<IWindow> window, std::unique_ptr<IMouse> mouse)
 {
-	while (m_window->IsOpen())
+	TryEndGame();
+	MoveAndSetCurrentFigure(std::move(window), std::move(mouse));
+	if (m_board->IsAnimating())
 	{
-		Events();
-		if (m_mouse->IsMouseInWindow(m_window))
-		{
-			TryEndGame();
-			MoveAndSetCurrentFigure();
-			if (m_board->IsAnimating())
-			{
-				AnimateMoving();
-			}
-		}
-		Draw();
+		AnimateMoving(std::move(window), std::move(mouse));
 	}
+	Draw(std::move(window));
 }
 
-void Game::AnimateMoving()
+void Gameplay::AnimateMoving(std::unique_ptr<IWindow> window, std::unique_ptr<IMouse> mouse)
 {
-	if (m_mouse->IsButtonPressed(IMouse::Button::Left))
+	if (mouse->IsButtonPressed(IMouse::Button::Left))
 	{
-		m_board->Animate(m_mouse->GetPixelPosition(m_window));
+		m_board->Animate(mouse->GetPixelPosition(window));
 	}
 	else
 	{
-		Pos mouseCell = m_mouse->GetCellPosition(m_window);
+		Pos mouseCell = mouse->GetCellPosition(window);
 		if (m_board->IsMovePossible(mouseCell))
 		{
 			Move(mouseCell);
 		}
-		m_board->EndAnimation(m_mouse->GetCellPosition(m_window));
+		m_board->EndAnimation(mouse->GetCellPosition(window));
 	}
 }
 
-const FiguresVector& Game::GetOpponentFigures() const
+const FiguresVector& Gameplay::GetOpponentFigures() const
 {
 	if (*m_currentPlayer == m_whitePlayer)
 	{
@@ -68,7 +56,7 @@ const FiguresVector& Game::GetOpponentFigures() const
 	return m_whitePlayer->GetFigures();
 }
 
-PlayerColor Game::GetCurrentPlayer() const
+PlayerColor Gameplay::GetCurrentPlayer() const
 {
 	if (*m_currentPlayer == m_whitePlayer)
 	{
@@ -77,15 +65,15 @@ PlayerColor Game::GetCurrentPlayer() const
 	return PlayerColor::black;
 }
 
-bool Game::TryEndGame() const
+bool Gameplay::TryEndGame() const
 {
 	return m_currentPlayer->get()->IsAnyMovePossible(GetOpponentFigures());
 }
 
-void Game::MoveAndSetCurrentFigure()
+void Gameplay::MoveAndSetCurrentFigure(std::unique_ptr<IWindow> window, std::unique_ptr<IMouse> mouse)
 {
-	Pos mouseCell = m_mouse->GetCellPosition(m_window);
-	if (m_mouse->IsButtonPressed(IMouse::Button::Left))
+	Pos mouseCell = mouse->GetCellPosition(window);
+	if (mouse->IsButtonPressed(IMouse::Button::Left))
 	{
 		m_board->StartAnimation();
 		if (!m_isMoveButtonPressed)
@@ -107,31 +95,38 @@ void Game::MoveAndSetCurrentFigure()
 	}
 }
 
-void Game::Move(Pos mouseCell)
+void Gameplay::Move(Pos mouseCell)
 {
 	m_board->MoveCurrentFiguresToNewCell(mouseCell);
 	m_isMoveButtonPressed = true;
 	m_currentPlayer = (*m_currentPlayer == m_whitePlayer) ? &m_blackPlayer : &m_whitePlayer;
 }
 
-void Game::Draw()
+void Gameplay::Reset()
 {
-	m_window->Clear();
-	m_board->Draw(m_window);
-	m_window->Display();
+	EndGame();
+	StartNewGame();
 }
 
-void Game::Events()
+void Gameplay::EndGame()
 {
-	IEvent event;
-	while (m_window->PollEvent(event))
-	{
-		if (event.type == sf::Event::Closed)
-			m_window->Close();
-	}
+	m_board->Reset();
 }
 
-void Game::LoadTextures()
+void Gameplay::StartNewGame()
+{
+	m_isMoveButtonPressed = false;
+	m_currentPlayer = &m_whitePlayer;
+}
+
+void Gameplay::Draw(std::unique_ptr<IWindow> window)
+{
+	window->Clear();
+	m_board->Draw(window);
+	window->Display();
+}
+
+void Gameplay::LoadTextures()
 {
 	bool isLoaded = true;
 	isLoaded &= m_textures["blackQueen"]->LoadFromFile("..\\Chess\\textures\\figures\\BQueen.png");
