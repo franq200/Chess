@@ -16,11 +16,6 @@ King::King(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, si
     };
 }
 
-bool King::IsKing() const
-{
-    return true;
-}
-
 bool King::IsMoveAllowedForThisFigure(const Pos& destinationCell) const
 {
     Pos pos = GetPosition();

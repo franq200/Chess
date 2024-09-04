@@ -25,13 +25,14 @@ public:
 	__declspec(dllexport) bool IsCellOccupied(Pos mouseCell, const std::unique_ptr<IPlayer>& currentPlayer) const override;
 	__declspec(dllexport) void SetCurrentFigure(Pos mouseCell, PlayerColor currentPlayer) override;
 	__declspec(dllexport) bool IsMovePossible(Pos mouseCell) const override;
-	__declspec(dllexport) void MoveCurrentFiguresToNewCell(Pos mouseCell) override;
+	__declspec(dllexport) void MoveCurrentFiguresToNewCell(Pos mouseCell, std::unique_ptr<IPlayer>& opponent) override;
 	__declspec(dllexport) void CreateFigures(TextureContainer& textures, std::unique_ptr<IPlayer>& white, std::unique_ptr<IPlayer>& black) override;
 	__declspec(dllexport) void Animate(const Pos& mousePos) override;
 	__declspec(dllexport) void EndAnimation(const Pos& mousePos) override;
 	__declspec(dllexport) bool IsAnimating() const override;
 	__declspec(dllexport) void StartAnimation() override;
 private:
+	void RemoveFigure(Pos mouseCell, std::unique_ptr<IPlayer>& opponent);
 	bool IsItTakingMove(const Pos& move) const;
 	void DrawCells(std::unique_ptr<IWindow>& window);
 	void DrawFigures(std::unique_ptr<IWindow>& window);
@@ -45,8 +46,10 @@ private:
 	std::shared_ptr<IFigure> GetCurrentFigure() const;
 	Cells m_board;
 	FiguresMap m_figures;
+	std::shared_ptr<IFigure> m_whiteKing;
+	std::shared_ptr<IFigure> m_blackKing;
 	std::optional<Pos> m_selectedFigureCell;
 	std::optional<Pos> m_mousePosInFigure;
-	std::vector<Pos> m_takingMoves = {};
+	std::vector<Pos> m_takingMoves;
 	bool m_isAnimating = false;
 };

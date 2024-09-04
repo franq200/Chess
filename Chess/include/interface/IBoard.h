@@ -28,7 +28,7 @@ public:
 	virtual bool IsCellOccupied(Pos mouseCell, const std::unique_ptr<IPlayer>& currentPlayer) const = 0;
 	virtual void SetCurrentFigure(Pos mouseCell, PlayerColor currentPlayer) = 0;
 	virtual bool IsMovePossible(Pos mouseCell) const = 0;
-	virtual void MoveCurrentFiguresToNewCell(Pos mouseCell) = 0;
+	virtual void MoveCurrentFiguresToNewCell(Pos mouseCell, std::unique_ptr<IPlayer>& opponent) = 0;
 	virtual void CreateFigures(TextureContainer& textures, std::unique_ptr<IPlayer>& white, std::unique_ptr<IPlayer>& black) = 0;
 	virtual void Animate(const Pos& mousePos) = 0;
 	virtual void EndAnimation(const Pos& mousePos) = 0;

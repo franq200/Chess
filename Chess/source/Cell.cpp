@@ -70,6 +70,7 @@ void Cell::DrawCells(std::unique_ptr<IWindow>& window)
 {
 	window->Draw(*m_cell);
 	window->Draw(*m_highlight);
+	window->Draw(*m_takingHighlight);
 }
 
 void Cell::DrawFigures(std::unique_ptr<IWindow>& window)

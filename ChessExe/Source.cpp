@@ -10,7 +10,7 @@
 int main()
 {
 	TextureContainer textures = textures::CreateTextures();
-	Gameplay chess(textures, std::make_unique<Board>(CreateCells(), textures), std::make_unique<Window>(), std::make_unique<Mouse>(), std::make_unique<Player>(), std::make_unique<Player>());
+	Game chess(textures, std::make_unique<Board>(CreateCells(), textures), std::make_unique<Window>(), std::make_unique<Mouse>(), std::make_unique<Player>(), std::make_unique<Player>());
 	chess.Update();
 	return 0;
 }
