@@ -19,18 +19,18 @@ Gameplay::Gameplay(TextureContainer& textures,
 	m_board->CreateFigures(m_textures, m_whitePlayer, m_blackPlayer);
 }
 
-void Gameplay::Update(std::unique_ptr<IWindow> window, std::unique_ptr<IMouse> mouse)
+void Gameplay::Update(std::unique_ptr<IWindow>& window, std::unique_ptr<IMouse>& mouse)
 {
-	TryEndGame();
-	MoveAndSetCurrentFigure(std::move(window), std::move(mouse));
+	//TryEndGame();
+	MoveAndSetCurrentFigure(window, mouse);
 	if (m_board->IsAnimating())
 	{
-		AnimateMoving(std::move(window), std::move(mouse));
+		AnimateMoving(window, mouse);
 	}
-	Draw(std::move(window));
+	Draw(window);
 }
 
-void Gameplay::AnimateMoving(std::unique_ptr<IWindow> window, std::unique_ptr<IMouse> mouse)
+void Gameplay::AnimateMoving(std::unique_ptr<IWindow>& window, std::unique_ptr<IMouse>& mouse)
 {
 	if (mouse->IsButtonPressed(IMouse::Button::Left))
 	{
@@ -70,7 +70,7 @@ bool Gameplay::TryEndGame() const
 	return m_currentPlayer->get()->IsAnyMovePossible(GetOpponentFigures());
 }
 
-void Gameplay::MoveAndSetCurrentFigure(std::unique_ptr<IWindow> window, std::unique_ptr<IMouse> mouse)
+void Gameplay::MoveAndSetCurrentFigure(std::unique_ptr<IWindow>& window, std::unique_ptr<IMouse>& mouse)
 {
 	Pos mouseCell = mouse->GetCellPosition(window);
 	if (mouse->IsButtonPressed(IMouse::Button::Left))
@@ -97,7 +97,8 @@ void Gameplay::MoveAndSetCurrentFigure(std::unique_ptr<IWindow> window, std::uni
 
 void Gameplay::Move(Pos mouseCell)
 {
-	m_board->MoveCurrentFiguresToNewCell(mouseCell);
+	auto opponent = (*m_currentPlayer == m_whitePlayer) ? &m_blackPlayer : &m_whitePlayer;
+	m_board->MoveCurrentFiguresToNewCell(mouseCell, *opponent);
 	m_isMoveButtonPressed = true;
 	m_currentPlayer = (*m_currentPlayer == m_whitePlayer) ? &m_blackPlayer : &m_whitePlayer;
 }
@@ -110,7 +111,7 @@ void Gameplay::Reset()
 
 void Gameplay::EndGame()
 {
-	m_board->Reset();
+	//m_board->Reset();
 }
 
 void Gameplay::StartNewGame()
@@ -119,7 +120,7 @@ void Gameplay::StartNewGame()
 	m_currentPlayer = &m_whitePlayer;
 }
 
-void Gameplay::Draw(std::unique_ptr<IWindow> window)
+void Gameplay::Draw(std::unique_ptr<IWindow>& window)
 {
 	window->Clear();
 	m_board->Draw(window);

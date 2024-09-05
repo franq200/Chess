@@ -1,5 +1,4 @@
 #include "Game.h"
-#include "Gameplay.h"
 #include "Helper.h"
 #include "interface/ITexture.h"
 #include "interface/IBoard.h"
@@ -29,7 +28,7 @@ void Game::Update()
 			switch (m_gameState)
 			{
 			case GameState::playing:
-				m_gameplay.Update(std::move(m_window), std::move(m_mouse)); // ????
+				m_gameplay.Update(m_window, m_mouse);
 			case GameState::menu:
 				break;
 			default:

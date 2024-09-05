@@ -1,20 +1,13 @@
 #pragma once
 #include "interface/IWindow.h"
 #include "interface/IPlayer.h"
+#include "Gameplay.h"
 #include <memory>
 #include <functional>
 #include <map>
 #include <string>
 #include <vector>
 #include <cstdint>
-
-class ITexture;
-class Gameplay;
-class IBoard;
-class IMouse;
-using FigureName = std::string;
-using TextureContainer = std::map<FigureName, std::unique_ptr<ITexture>>;
-enum class PlayerColor : uint8_t;
 
 enum class GameState {
 	playing = 0,

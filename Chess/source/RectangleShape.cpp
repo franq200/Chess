@@ -56,13 +56,13 @@ void RectangleShape::SetCurrentPos()
 Pos RectangleShape::GetPixelTempPosition() const
 {
 	sf::Vector2f pos = m_shape.getPosition();
-	return Pos(pos.x, pos.y);
+	return Pos(static_cast<int16_t>(pos.x), static_cast<int16_t>(pos.y));
 }
 
 Pos RectangleShape::GetCellTempPosition() const
 {
 	sf::Vector2f pos = m_shape.getPosition();
-	return GetCellPosFromPixelPos(Pos(pos.x, pos.y));
+	return GetCellPosFromPixelPos(Pos(static_cast<int16_t>(pos.x), static_cast<int16_t>(pos.y)));
 }
 
 void RectangleShape::OnAnimation()
