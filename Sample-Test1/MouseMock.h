@@ -6,7 +6,8 @@ class IWindow;
 
 class MouseMock : public IMouse
 {
-	MOCK_METHOD(Pos, GetPosition, (const std::unique_ptr<IWindow>& window), (override));
-	MOCK_METHOD(bool, IsButtonPressed, (Button), (const, override));
+	MOCK_METHOD(bool, IsButtonPressed, (Button button), (const, override));
+	MOCK_METHOD(Pos, GetCellPosition, (const std::unique_ptr<IWindow>& window), (override));
+	MOCK_METHOD(Pos, GetPixelPosition, (const std::unique_ptr<IWindow>& window), (override));
 	MOCK_METHOD(bool, IsMouseInWindow, (const std::unique_ptr<IWindow>& window), (const, override));
 };

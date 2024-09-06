@@ -113,9 +113,11 @@
   <ItemGroup>
     <ClInclude Include="BoardMock.h" />
     <ClInclude Include="CellMock.h" />
+    <ClInclude Include="EventMock.h" />
     <ClInclude Include="FigureMock.h" />
     <ClInclude Include="MouseMock.h" />
     <ClInclude Include="PlayerMock.h" />
+    <ClInclude Include="RectangleShapeMock.h" />
     <ClInclude Include="TextureMock.h" />
     <ClInclude Include="WindowMock.h" />
   </ItemGroup>

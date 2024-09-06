@@ -12,13 +12,12 @@ enum class PlayerColor : uint8_t
 
 class IPlayer;
 class ITexture;
+class IWindow;
 class IFigure;
+
 using FigureName = std::string;
 using TextureContainer = std::map<FigureName, std::unique_ptr<ITexture>>;
 using FiguresVector = std::vector<std::shared_ptr<IFigure>>;
-
-class IPlayer;
-class IWindow;
 
 class IBoard
 {

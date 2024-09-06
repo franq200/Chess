@@ -34,6 +34,12 @@
     <ClInclude Include="WindowMock.h">
       <Filter>Mocks</Filter>
     </ClInclude>
+    <ClInclude Include="EventMock.h">
+      <Filter>Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="RectangleShapeMock.h">
+      <Filter>Mocks</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Mocks">

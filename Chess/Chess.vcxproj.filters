@@ -111,11 +111,17 @@
     <ClCompile Include="source/Helper.cpp">
       <Filter>GameFiles\Helper</Filter>
     </ClCompile>
-    <ClCompile Include="source/figures\King.cpp" />
-    <ClCompile Include="source/figures\Pawn.cpp" />
-    <ClCompile Include="source/figures\Queen.cpp" />
     <ClCompile Include="source/Game.cpp">
       <Filter>GameFiles\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="source/figures\Pawn.cpp">
+      <Filter>GameFiles\Figures\Pawn</Filter>
+    </ClCompile>
+    <ClCompile Include="source/figures\Queen.cpp">
+      <Filter>GameFiles\Figures\Queen</Filter>
+    </ClCompile>
+    <ClCompile Include="source/figures\King.cpp">
+      <Filter>GameFiles\Figures\King</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -185,12 +191,20 @@
     <ClInclude Include="include/Helper.h">
       <Filter>GameFiles\Helper</Filter>
     </ClInclude>
-    <ClInclude Include="include/figures\King.h" />
-    <ClInclude Include="include/figures\Pawn.h" />
-    <ClInclude Include="include/figures\Queen.h" />
-    <ClInclude Include="include/interface\IMouse.h" />
     <ClInclude Include="include/Game.h">
       <Filter>GameFiles\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include/interface\IMouse.h">
+      <Filter>GameFiles\FromSfml\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="include/figures\Pawn.h">
+      <Filter>GameFiles\Figures\Pawn</Filter>
+    </ClInclude>
+    <ClInclude Include="include/figures\Queen.h">
+      <Filter>GameFiles\Figures\Queen</Filter>
+    </ClInclude>
+    <ClInclude Include="include/figures\King.h">
+      <Filter>GameFiles\Figures\King</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

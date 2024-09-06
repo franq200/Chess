@@ -42,9 +42,9 @@ protected:
 class GameTest : public BasicChessTests
 {
 protected:
-	Gameplay createSut()
+	Game createSut()
 	{
-		Gameplay game(texturesMock, std::move(boardMock), std::move(windowMock), std::move(mouseMock), std::move(white), std::move(black));
+		Game game(texturesMock, std::move(boardMock), std::move(windowMock), std::move(mouseMock), std::move(white), std::move(black));
 		return game;
 		//return { std::move(texturesMock), std::move(boardMock), std::move(windowMock) };
 	}
@@ -78,19 +78,19 @@ void ExpectSomeTexturesToFail(TextureContainer& texturesMock, int amountOfTextur
 TEST_F(GameTest, AreTexturesBeingLoaded)
 {
 	ExpectTexturesLoaded(texturesMock);
-	Gameplay game = createSut();
+	Game game = createSut();
 }
 
 TEST_F(GameTest, DoesTexturesDetectIfOneTextureFailsToLoadAndThrowException)
 {
 	ExpectSomeTexturesToFail(texturesMock, 1);
-	EXPECT_THROW(Gameplay game = createSut(), std::exception);
+	EXPECT_THROW(Game game = createSut(), std::exception);
 }
 
 TEST_F(GameTest, DoesTexturesDetectIfFiveTextureFailsToLoadAndThrowException)
 {
 	ExpectSomeTexturesToFail(texturesMock, 5);
-	EXPECT_THROW(Gameplay game = createSut(), std::exception);
+	EXPECT_THROW(Game game = createSut(), std::exception);
 }
 
 TEST_F(GameTest, WindowClearAndDisplayFunctionsShouldBeCalledAsLongAsFunctionIsOpenReturnTrue)
@@ -98,12 +98,12 @@ TEST_F(GameTest, WindowClearAndDisplayFunctionsShouldBeCalledAsLongAsFunctionIsO
 	ExpectTexturesLoaded(texturesMock);
 	EXPECT_CALL(*windowMock, IsOpen()).Times(4).WillOnce(testing::Return(true)).WillOnce(testing::Return(true)).WillOnce(testing::Return(true)).WillOnce(testing::Return(false));
 	EXPECT_CALL(*windowMock, Clear()).Times(3);
-	EXPECT_CALL(*boardMock, Draw(testing::_, testing::_, testing::_)).Times(3);
+	EXPECT_CALL(*boardMock, Draw(testing::_)).Times(3);
 	EXPECT_CALL(*white, GetFigures()).Times(6);
 	EXPECT_CALL(*black, GetFigures()).Times(3);
 	EXPECT_CALL(*windowMock, Display()).Times(3);
 	EXPECT_CALL(*windowMock, PollEvent(testing::_)).Times(testing::AtLeast(1));
-	Gameplay game = createSut();
+	Game game = createSut();
 	game.Update();
 }
 
