@@ -5,17 +5,17 @@
 #include "interface/IEvent.h"
 #include "interface/IMouse.h"
 
-Game::Game(TextureContainer& textures,
-	std::unique_ptr<IBoard> board,
-	std::unique_ptr<IWindow> window,
-	std::unique_ptr<IMouse> mouse,
-	std::unique_ptr<IPlayer> white,
-	std::unique_ptr<IPlayer> black) :
+Game::Game(TexturesMap& textures,
+	IBoardPtr board,
+	IWindowPtr window,
+	IMousePtr mouse,
+	IPlayerPtr white,
+	IPlayerPtr black) :
 	m_gameplay(textures, std::move(board), std::move(white), std::move(black)),
 	m_window(std::move(window)),
 	m_mouse(std::move(mouse))
 {
-	m_window->Create(Resolution(size::windowSizeXPix, size::windowSizeYPix), "Chess");
+	m_window->Create(GetResolution(), "Chess");
 }
 
 void Game::Update()
@@ -28,7 +28,10 @@ void Game::Update()
 			switch (m_gameState)
 			{
 			case GameState::playing:
-				m_gameplay.Update(m_window, m_mouse);
+				if (!m_gameplay.Update(m_window, m_mouse))
+				{
+					m_gameState = GameState::menu;
+				}
 			case GameState::menu:
 				break;
 			default:
@@ -46,4 +49,9 @@ void Game::Events()
 		if (event.type == sf::Event::Closed)
 			m_window->Close();
 	}
+}
+
+Resolution Game::GetResolution() const
+{
+	return Resolution(size::windowSizeXPix, size::windowSizeYPix);
 }

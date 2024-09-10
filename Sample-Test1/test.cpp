@@ -8,9 +8,9 @@
 #include "MouseMock.h"
 
 
-TextureContainer CreateTextures()
+TexturesMap CreateTextures()
 {
-	TextureContainer textures;
+	TexturesMap textures;
 	textures["blackPawn"] = std::make_unique<TextureMock>();
 	textures["blackQueen"] = std::make_unique<TextureMock>();
 	textures["blackKing"] = std::make_unique<TextureMock>();
@@ -36,7 +36,7 @@ protected:
 	std::unique_ptr<testing::NiceMock<MouseMock>> mouseMock{ std::make_unique<testing::NiceMock<MouseMock>>() };
 	std::unique_ptr<testing::NiceMock<PlayerMock>> white = std::make_unique<testing::NiceMock<PlayerMock>>();
 	std::unique_ptr<testing::NiceMock<PlayerMock>> black = std::make_unique<testing::NiceMock<PlayerMock>>();
-	TextureContainer texturesMock = CreateTextures();
+	TexturesMap texturesMock = CreateTextures();
 };
 
 class GameTest : public BasicChessTests
@@ -50,7 +50,7 @@ protected:
 	}
 };
 
-void ExpectTexturesLoaded(TextureContainer& texturesMock)
+void ExpectTexturesLoaded(TexturesMap& texturesMock)
 {
 	for (auto& [key, texture] : texturesMock)
 	{
@@ -58,7 +58,7 @@ void ExpectTexturesLoaded(TextureContainer& texturesMock)
 	}
 }
 
-void ExpectSomeTexturesToFail(TextureContainer& texturesMock, int amountOfTexturesToFail)
+void ExpectSomeTexturesToFail(TexturesMap& texturesMock, int amountOfTexturesToFail)
 {
 	int i = 0;
 	for (auto& [key, texture] : texturesMock)

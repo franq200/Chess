@@ -11,27 +11,31 @@ enum class PlayerColor : uint8_t
 };
 
 class IPlayer;
+using IPlayerPtr = std::unique_ptr<IPlayer>;
 class ITexture;
+using ITexturePtr = std::unique_ptr<ITexture>;
 class IWindow;
+using IWindowPtr = std::unique_ptr<IWindow>;
 class IFigure;
+using IFigurePtr = std::shared_ptr<IFigure>;
 
 using FigureName = std::string;
-using TextureContainer = std::map<FigureName, std::unique_ptr<ITexture>>;
-using FiguresVector = std::vector<std::shared_ptr<IFigure>>;
+using TexturesMap = std::map<FigureName, ITexturePtr>;
+using FiguresVector = std::vector<IFigurePtr>;
 
 class IBoard
 {
 public:
 	virtual ~IBoard() = default;
-	virtual void Draw(std::unique_ptr<IWindow>& window) = 0;
-	virtual bool IsCellOccupied(Pos mouseCell, const std::unique_ptr<IPlayer>& currentPlayer) const = 0;
-	virtual void SetCurrentFigure(Pos mouseCell, PlayerColor currentPlayer) = 0;
+	virtual bool IsCellOccupied(Pos mouseCell, const IPlayerPtr& currentPlayer) const = 0;
+	virtual bool IsAnimating() const = 0;
 	virtual bool IsMovePossible(Pos mouseCell) const = 0;
-	virtual void MoveCurrentFiguresToNewCell(Pos mouseCell, std::unique_ptr<IPlayer>& opponent) = 0;
-	virtual void CreateFigures(TextureContainer& textures, std::unique_ptr<IPlayer>& white, std::unique_ptr<IPlayer>& black) = 0;
+	virtual void MoveCurrentFiguresToNewCell(Pos mouseCell, IPlayerPtr& opponent) = 0;
+	virtual void SetCurrentFigure(Pos mouseCell, PlayerColor currentPlayer) = 0;
+	virtual void StartAnimation() = 0;
 	virtual void Animate(const Pos& mousePos) = 0;
 	virtual void EndAnimation(const Pos& mousePos) = 0;
-	virtual bool IsAnimating() const = 0;
-	virtual void StartAnimation() = 0;
+	virtual void CreateFigures(TexturesMap& textures, IPlayerPtr& white, IPlayerPtr& black) = 0;
+	virtual void Draw(IWindowPtr& window) = 0;
 };
 

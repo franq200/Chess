@@ -7,19 +7,19 @@ bool Mouse::IsButtonPressed(Button button) const
 	return m_mouse.isButtonPressed(static_cast<sf::Mouse::Button>(button));
 }
 
-Pos Mouse::GetCellPosition(const std::unique_ptr<IWindow>& window)
+Pos Mouse::GetCellPosition(const IWindowPtr& window)
 {
 	sf::Vector2i mousePos = m_mouse.getPosition(*window->GetSfmlWindow());
 	return GetCellPosFromPixelPos(Pos(mousePos.x, mousePos.y));
 }
 
-Pos Mouse::GetPixelPosition(const std::unique_ptr<IWindow>& window)
+Pos Mouse::GetPixelPosition(const IWindowPtr& window)
 {
 	sf::Vector2i mousePos = m_mouse.getPosition(*window->GetSfmlWindow());
 	return Pos(mousePos.x, mousePos.y);
 }
 
-bool Mouse::IsMouseInWindow(const std::unique_ptr<IWindow>& window) const
+bool Mouse::IsMouseInWindow(const IWindowPtr& window) const
 {
 	sf::Vector2i mousePos = m_mouse.getPosition(*window->GetSfmlWindow());
 	bool isInXRange = mousePos.x >= 0 && mousePos.x <= size::windowSizeXPix;

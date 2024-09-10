@@ -13,7 +13,7 @@ class IEvent;
 namespace sf
 {
 class RenderWindow;
-} // namespace sf
+}
 
 class IWindow
 {

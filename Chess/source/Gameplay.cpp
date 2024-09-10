@@ -1,14 +1,15 @@
 #include "Gameplay.h"
 #include "Helper.h"
 #include "interface/ITexture.h"
+#include "interface/IWindow.h"
 #include "interface/IBoard.h"
 #include "interface/IEvent.h"
 #include "interface/IMouse.h"
 
-Gameplay::Gameplay(TextureContainer& textures,
-	std::unique_ptr<IBoard> board,
-	std::unique_ptr<IPlayer> white,
-	std::unique_ptr<IPlayer> black) :
+Gameplay::Gameplay(TexturesMap& textures,
+	IBoardPtr board,
+	IPlayerPtr white,
+	IPlayerPtr black) :
 	m_textures(std::move(textures)),
 	m_board(std::move(board)),
 	m_whitePlayer(std::move(white)),
@@ -19,7 +20,7 @@ Gameplay::Gameplay(TextureContainer& textures,
 	m_board->CreateFigures(m_textures, m_whitePlayer, m_blackPlayer);
 }
 
-void Gameplay::Update(std::unique_ptr<IWindow>& window, std::unique_ptr<IMouse>& mouse)
+bool Gameplay::Update(IWindowPtr& window, IMousePtr& mouse)
 {
 	//TryEndGame();
 	MoveAndSetCurrentFigure(window, mouse);
@@ -28,9 +29,10 @@ void Gameplay::Update(std::unique_ptr<IWindow>& window, std::unique_ptr<IMouse>&
 		AnimateMoving(window, mouse);
 	}
 	Draw(window);
+	return true;
 }
 
-void Gameplay::AnimateMoving(std::unique_ptr<IWindow>& window, std::unique_ptr<IMouse>& mouse)
+void Gameplay::AnimateMoving(IWindowPtr& window, IMousePtr& mouse)
 {
 	if (mouse->IsButtonPressed(IMouse::Button::Left))
 	{
@@ -56,7 +58,7 @@ const FiguresVector& Gameplay::GetOpponentFigures() const
 	return m_whitePlayer->GetFigures();
 }
 
-PlayerColor Gameplay::GetCurrentPlayer() const
+PlayerColor Gameplay::GetCurrentPlayerColor() const
 {
 	if (*m_currentPlayer == m_whitePlayer)
 	{
@@ -70,7 +72,7 @@ bool Gameplay::TryEndGame() const
 	return m_currentPlayer->get()->IsAnyMovePossible(GetOpponentFigures());
 }
 
-void Gameplay::MoveAndSetCurrentFigure(std::unique_ptr<IWindow>& window, std::unique_ptr<IMouse>& mouse)
+void Gameplay::MoveAndSetCurrentFigure(IWindowPtr& window, IMousePtr& mouse)
 {
 	Pos mouseCell = mouse->GetCellPosition(window);
 	if (mouse->IsButtonPressed(IMouse::Button::Left))
@@ -84,7 +86,7 @@ void Gameplay::MoveAndSetCurrentFigure(std::unique_ptr<IWindow>& window, std::un
 			}
 			if (m_board->IsCellOccupied(mouseCell, *m_currentPlayer))
 			{
-				m_board->SetCurrentFigure(mouseCell, GetCurrentPlayer());
+				m_board->SetCurrentFigure(mouseCell, GetCurrentPlayerColor());
 			}
 			m_isMoveButtonPressed = true;
 		}
@@ -97,30 +99,18 @@ void Gameplay::MoveAndSetCurrentFigure(std::unique_ptr<IWindow>& window, std::un
 
 void Gameplay::Move(Pos mouseCell)
 {
-	auto opponent = (*m_currentPlayer == m_whitePlayer) ? &m_blackPlayer : &m_whitePlayer;
+	IPlayerPtr* opponent = (*m_currentPlayer == m_whitePlayer) ? &m_blackPlayer : &m_whitePlayer;
 	m_board->MoveCurrentFiguresToNewCell(mouseCell, *opponent);
 	m_isMoveButtonPressed = true;
+	ChangeCurrentPlayer();
+}
+
+void Gameplay::ChangeCurrentPlayer()
+{
 	m_currentPlayer = (*m_currentPlayer == m_whitePlayer) ? &m_blackPlayer : &m_whitePlayer;
 }
 
-void Gameplay::Reset()
-{
-	EndGame();
-	StartNewGame();
-}
-
-void Gameplay::EndGame()
-{
-	//m_board->Reset();
-}
-
-void Gameplay::StartNewGame()
-{
-	m_isMoveButtonPressed = false;
-	m_currentPlayer = &m_whitePlayer;
-}
-
-void Gameplay::Draw(std::unique_ptr<IWindow>& window)
+void Gameplay::Draw(IWindowPtr& window)
 {
 	window->Clear();
 	m_board->Draw(window);

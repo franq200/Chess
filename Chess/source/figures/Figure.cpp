@@ -32,7 +32,7 @@ void Figure::SetOutlineColor(Color color)
     m_figure->SetOutlineColor(color);
 }
 
-void Figure::Draw(std::unique_ptr<IWindow>& window)
+void Figure::Draw(IWindowPtr& window)
 {
     window->Draw(*m_figure);
 }
@@ -154,7 +154,7 @@ bool Figure::IsCollisionWithCurrentPlayer(const std::vector<Pos>& movePath, cons
 
 bool Figure::IsCollisionWithOpponent(const std::vector<Pos>& movePath, const FiguresVector& opponentPlayerFigures) const
 {
-    std::shared_ptr<IFigure> collisionFigure = nullptr;
+    IFigurePtr collisionFigure = nullptr;
     for (auto opponentFigure : opponentPlayerFigures)
     {
         Pos opponentFigurePos = opponentFigure->GetPosition();

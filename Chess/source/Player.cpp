@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <algorithm>
 
-void Player::AddFigures(FiguresVector& figures, std::shared_ptr<IFigure>)
+void Player::AddFigures(FiguresVector& figures, IFigurePtr)
 {
 	m_figures = figures;
 }
@@ -22,7 +22,7 @@ void Player::TryChangeCurrentFigure(Pos mousePos)
 	}
 }
 
-bool Player::HasFigure(const std::shared_ptr<IFigure>& figure) const
+bool Player::HasFigure(const IFigurePtr& figure) const
 {
 	return std::find(m_figures.begin(), m_figures.end(), figure) != m_figures.end();
 }

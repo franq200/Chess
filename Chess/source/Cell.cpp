@@ -29,7 +29,7 @@ void Cell::SetSize(Size size)
 	m_cell->SetSize(size);
 }
 
-void Cell::SetFigure(std::shared_ptr<IFigure> figure)
+void Cell::SetFigure(IFigurePtr figure)
 {
 	m_figure = figure;
 	m_figure->SetPosition(m_cell->GetPosition());
@@ -40,12 +40,12 @@ void Cell::RemoveFigure()
 	m_figure.reset();
 }
 
-std::shared_ptr<IFigure> Cell::GetFigure() const
+IFigurePtr Cell::GetFigure() const
 {
 	return m_figure;
 }
 
-bool Cell::IsOccupiedByPlayer(const std::unique_ptr<IPlayer>& currentPlayer) const
+bool Cell::IsOccupiedByPlayer(const IPlayerPtr& currentPlayer) const
 {
 	return currentPlayer->HasFigure(m_figure);
 }
@@ -66,14 +66,14 @@ void Cell::RemoveHighlight()
 	m_takingHighlight->SetSize(Size(0, 0));
 }
 
-void Cell::DrawCells(std::unique_ptr<IWindow>& window)
+void Cell::DrawCells(IWindowPtr& window)
 {
 	window->Draw(*m_cell);
 	window->Draw(*m_highlight);
 	window->Draw(*m_takingHighlight);
 }
 
-void Cell::DrawFigures(std::unique_ptr<IWindow>& window)
+void Cell::DrawFigures(IWindowPtr& window)
 {
 	if (m_figure != nullptr)
 	{

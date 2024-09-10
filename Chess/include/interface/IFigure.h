@@ -3,16 +3,18 @@
 #include "Helper.h"
 
 class IWindow;
+using IWindowPtr = std::unique_ptr<IWindow>;
 
 class IFigure
 {
 public:
-	using FiguresVector = std::vector<std::shared_ptr<IFigure>>;
+	using IFigurePtr = std::shared_ptr<IFigure>;
+	using FiguresVector = std::vector<IFigurePtr>;
 	virtual ~IFigure() = default;
 	virtual bool IsInRange(Pos mousePos) = 0;
 	virtual void SetOutlineThickness(int thickness) = 0;
 	virtual void SetOutlineColor(Color color) = 0;
-	virtual void Draw(std::unique_ptr<IWindow>& window) = 0;
+	virtual void Draw(IWindowPtr& window) = 0;
 	virtual void SetPosition(Pos pos) = 0;
 	virtual Pos GetPosition() const = 0;
 	virtual Pos GetPixelPosition() const = 0;

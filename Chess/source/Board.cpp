@@ -11,18 +11,18 @@
 #include "interface/ITexture.h"
 #include "interface/IRectangleShape.h"
 
-Board::Board(std::array<std::unique_ptr<ICell>, 64> cells, TextureContainer& textures)
+Board::Board(std::array<ICellPtr, 64> cells, TexturesMap& textures)
 {
 	CreateBoard(cells);
 }
 
-void Board::Draw(std::unique_ptr<IWindow>& window)
+void Board::Draw(IWindowPtr& window)
 {
 	DrawCells(window);
 	DrawFigures(window);
 }
 
-bool Board::IsCellOccupied(Pos mouseCell, const std::unique_ptr<IPlayer>& currentPlayer) const
+bool Board::IsCellOccupied(Pos mouseCell, const IPlayerPtr& currentPlayer) const
 {
 	return m_board.at(mouseCell.x).at(mouseCell.y)->IsOccupiedByPlayer(currentPlayer);
 }
@@ -40,7 +40,7 @@ bool Board::IsMovePossible(Pos mouseCell) const
 {
 	if (IsCurrentFigureSet())
 	{
-		const std::shared_ptr<IFigure> currentFigure = GetCurrentFigure();
+		const IFigurePtr currentFigure = GetCurrentFigure();
 		return currentFigure->IsInPossibleMoves(mouseCell);
 	}
 	return false;
@@ -50,7 +50,7 @@ void Board::UpdatePossibleMoves(PlayerColor currentPlayer)
 {
 	if (m_selectedFigureCell.has_value())
 	{
-		const std::shared_ptr<IFigure> currentFigure = GetCurrentFigure();
+		const IFigurePtr currentFigure = GetCurrentFigure();
 		auto [currentPlayerFigures, opponentFigures] = GetPlayersFigures(currentPlayer);
 		Positions possibleMoves = currentFigure->CalculatePossibleMoves(currentPlayerFigures, opponentFigures);
 		for (auto move : possibleMoves)
@@ -73,7 +73,7 @@ bool Board::IsCurrentFigureSet() const
 	return m_selectedFigureCell.has_value();
 }
 
-void Board::MoveCurrentFiguresToNewCell(Pos mouseCell, std::unique_ptr<IPlayer>& opponent)
+void Board::MoveCurrentFiguresToNewCell(Pos mouseCell, IPlayerPtr& opponent)
 {
 	if (IsItTakingMove(mouseCell))
 	{
@@ -86,7 +86,7 @@ void Board::MoveCurrentFiguresToNewCell(Pos mouseCell, std::unique_ptr<IPlayer>&
 	RemoveHighlights();
 }
 
-void Board::CreateFigures(TextureContainer& textures, std::unique_ptr<IPlayer>& white, std::unique_ptr<IPlayer>& black)
+void Board::CreateFigures(TexturesMap& textures, IPlayerPtr& white, IPlayerPtr& black)
 {
 	CreateWhite(textures);
 	CreateBlack(textures);
@@ -137,7 +137,7 @@ void Board::StartAnimation()
 	m_isAnimating = true;
 }
 
-void Board::RemoveFigure(Pos mouseCell, std::unique_ptr<IPlayer>& opponent)
+void Board::RemoveFigure(Pos mouseCell, IPlayerPtr& opponent)
 {
 	for (auto& [color, figures] : m_figures)
 	{
@@ -155,7 +155,7 @@ bool Board::IsItTakingMove(const Pos& move) const
 	return false;
 }
 
-void Board::DrawCells(std::unique_ptr<IWindow>& window)
+void Board::DrawCells(IWindowPtr& window)
 {
 	for (int x = 0; x < m_board.size(); x++)
 	{
@@ -166,7 +166,7 @@ void Board::DrawCells(std::unique_ptr<IWindow>& window)
 	}
 }
 
-void Board::DrawFigures(std::unique_ptr<IWindow>& window)
+void Board::DrawFigures(IWindowPtr& window)
 {
 	for (int x = 0; x < m_board.size(); x++)
 	{
@@ -196,11 +196,11 @@ std::pair<Figures, Figures> Board::GetPlayersFigures(PlayerColor currentPlayer) 
 	return std::pair<Figures, Figures>(currentPlayerFigures, opponentFigures);
 }
 
-void Board::CreateBoard(std::array<std::unique_ptr<ICell>, 64>& cells)
+void Board::CreateBoard(std::array<ICellPtr, 64>& cells)
 {
 	for (int x = 0; x < 8; x++)
 	{
-		std::vector<std::unique_ptr<ICell>> row;
+		std::vector<ICellPtr> row;
 		for (int y = 0; y < 8; y++)
 		{
 			uint8_t cellIndex = GetCellIndex(Pos(x, y));
@@ -247,7 +247,7 @@ namespace
 	};
 }
 
-void Board::CreateWhite(TextureContainer& textures)
+void Board::CreateWhite(TexturesMap& textures)
 {
 	Size size = Size(static_cast<uint16_t>(size::cellSizeXPix), static_cast<uint16_t>(size::cellSizeYPix));
 	WhiteStartingIndex startingIndex;
@@ -285,7 +285,7 @@ void Board::CreateWhite(TextureContainer& textures)
 	m_board[startingIndex.rook2.x][startingIndex.rook2.y]->SetFigure(whiteRook2);
 }
 
-void Board::CreateBlack(TextureContainer& textures)
+void Board::CreateBlack(TexturesMap& textures)
 {
 	BlackStartingIndex startingIndex;
 	Size size = Size(static_cast<uint16_t>(size::cellSizeXPix), static_cast<uint16_t>(size::cellSizeYPix));
@@ -334,7 +334,7 @@ void Board::RemoveHighlights()
 	}
 }
 
-std::shared_ptr<IFigure> Board::GetCurrentFigure() const
+IFigurePtr Board::GetCurrentFigure() const
 {
 	if (IsCurrentFigureSet())
 	{

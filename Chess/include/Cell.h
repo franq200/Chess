@@ -13,21 +13,21 @@ public:
 	__declspec(dllexport) void SetFillColor(Color color) override;
 	__declspec(dllexport) void SetPosition(Pos pos) override;
 	__declspec(dllexport) void SetSize(Size size) override;
-	__declspec(dllexport) void SetFigure(std::shared_ptr<IFigure> figure) override;
+	__declspec(dllexport) void SetFigure(IFigurePtr figure) override;
 	__declspec(dllexport) void RemoveFigure() override;
-	__declspec(dllexport) std::shared_ptr<IFigure> GetFigure() const override;
-	__declspec(dllexport) bool IsOccupiedByPlayer(const std::unique_ptr<IPlayer>& currentPlayer) const override;
+	__declspec(dllexport) IFigurePtr GetFigure() const override;
+	__declspec(dllexport) bool IsOccupiedByPlayer(const IPlayerPtr& currentPlayer) const override;
 	__declspec(dllexport) void Highlight() override;
 	__declspec(dllexport) void HighlightAsTaking() override;
 	__declspec(dllexport) void RemoveHighlight() override;
-	__declspec(dllexport) void DrawCells(std::unique_ptr<IWindow>& window) override;
-	__declspec(dllexport) void DrawFigures(std::unique_ptr<IWindow>& window) override;
+	__declspec(dllexport) void DrawCells(IWindowPtr& window) override;
+	__declspec(dllexport) void DrawFigures(IWindowPtr& window) override;
 private:
 	void InitHighlights();
 	std::unique_ptr<IRectangleShape> m_cell;
 	std::unique_ptr<IRectangleShape> m_highlight;
 	std::unique_ptr<IRectangleShape> m_takingHighlight;
-	std::shared_ptr<IFigure> m_figure = nullptr;
+	IFigurePtr m_figure = nullptr;
 	int m_pos = 0;
 };
 

@@ -18,7 +18,7 @@ public:
 	__declspec(dllexport) bool IsInRange(Pos mousePos) override;
 	__declspec(dllexport) void SetOutlineThickness(int thickness) override;
 	__declspec(dllexport) void SetOutlineColor(Color color) override;
-	__declspec(dllexport) void Draw(std::unique_ptr<IWindow>& window) override;
+	__declspec(dllexport) void Draw(IWindowPtr& window) override;
 	__declspec(dllexport) void SetPosition(Pos pos) override;
 	__declspec(dllexport) Pos GetPosition() const override;
 	__declspec(dllexport) Pos GetPixelPosition() const override;

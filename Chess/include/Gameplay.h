@@ -1,42 +1,43 @@
 #pragma once
-#include "interface/IWindow.h"
 #include "interface/IPlayer.h"
 #include <memory>
-#include <functional>
 #include <map>
 #include <string>
-#include <vector>
-#include <cstdint>
 
+using IPlayerPtr = std::unique_ptr<IPlayer>;
+class IWindow;
+using IWindowPtr = std::unique_ptr<IWindow>;
 class ITexture;
+using ITexturePtr = std::unique_ptr<ITexture>;
 class IBoard;
+using IBoardPtr = std::unique_ptr<IBoard>;
 class IMouse;
+using IMousePtr = std::unique_ptr<IMouse>;
 using FigureName = std::string;
-using TextureContainer = std::map<FigureName, std::unique_ptr<ITexture>>;
+using TexturesMap = std::map<FigureName, ITexturePtr>;
 enum class PlayerColor : uint8_t;
 
 class Gameplay
 {
 public:
-	__declspec(dllexport) Gameplay(TextureContainer& textures, std::unique_ptr<IBoard> board, std::unique_ptr<IPlayer> white, std::unique_ptr<IPlayer> black);
-	__declspec(dllexport) void Update(std::unique_ptr<IWindow>& window, std::unique_ptr<IMouse>& mouse);
+	__declspec(dllexport) Gameplay(TexturesMap& textures, IBoardPtr board, IPlayerPtr white, IPlayerPtr black);
+	__declspec(dllexport) bool Update(IWindowPtr& window, IMousePtr& mouse);
 private:
-	void AnimateMoving(std::unique_ptr<IWindow>& window, std::unique_ptr<IMouse>& mouse);
 	const FiguresVector& GetOpponentFigures() const;
-	PlayerColor GetCurrentPlayer() const;
+	PlayerColor GetCurrentPlayerColor() const;
 	bool TryEndGame() const;
-	void MoveAndSetCurrentFigure(std::unique_ptr<IWindow>& window, std::unique_ptr<IMouse>& mouse);
-	void Draw(std::unique_ptr<IWindow>& window);
-	void LoadTextures();
+	void AnimateMoving(IWindowPtr& window, IMousePtr& mouse);
+	void MoveAndSetCurrentFigure(IWindowPtr& window, IMousePtr& mouse);
 	void Move(Pos mouseCell);
-	void Reset();
-	void EndGame();
-	void StartNewGame();
-	std::unique_ptr<IBoard> m_board;
-	std::unique_ptr<IPlayer> m_whitePlayer;
-	std::unique_ptr<IPlayer> m_blackPlayer;
-	std::unique_ptr<IPlayer>* m_currentPlayer;
-	TextureContainer m_textures;
+	void ChangeCurrentPlayer();
+	void LoadTextures();
+	void Draw(IWindowPtr& window);
+
+	IBoardPtr m_board;
+	IPlayerPtr m_whitePlayer;
+	IPlayerPtr m_blackPlayer;
+	IPlayerPtr* m_currentPlayer;
+	TexturesMap m_textures;
 	bool m_isMoveButtonPressed = false;
 };
 

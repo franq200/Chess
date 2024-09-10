@@ -4,22 +4,23 @@
 
 namespace textures
 {
-
-	TextureContainer CreateTextures()
+	TexturesMap CreateTextures()
 	{
-		TextureContainer textures;
+		TexturesMap textures;
 		textures["blackPawn"] = std::make_unique<Texture>();
 		textures["blackQueen"] = std::make_unique<Texture>();
 		textures["blackKing"] = std::make_unique<Texture>();
 		textures["blackKnight"] = std::make_unique<Texture>();
 		textures["blackRook"] = std::make_unique<Texture>();
 		textures["blackBishop"] = std::make_unique<Texture>();
+
 		textures["whitePawn"] = std::make_unique<Texture>();
 		textures["whiteQueen"] = std::make_unique<Texture>();
 		textures["whiteKing"] = std::make_unique<Texture>();
 		textures["whiteKnight"] = std::make_unique<Texture>();
 		textures["whiteRook"] = std::make_unique<Texture>();
 		textures["whiteBishop"] = std::make_unique<Texture>();
+
 		textures["boardGrey"] = std::make_unique<Texture>();
 		textures["boardRed"] = std::make_unique<Texture>();
 		return textures;
@@ -75,9 +76,9 @@ int GetCellIndex(Pos posIndex)
 	return posIndex.x + posIndex.y * 8;
 }
 
-std::array<std::unique_ptr<ICell>, 64> CreateCells()
+std::array<ICellPtr, 64> CreateCells()
 {
-	std::array<std::unique_ptr<ICell>, 64> cells;
+	std::array<ICellPtr, 64> cells;
 	for (int i = 0; i < cells.size(); i++)
 	{
 		cells[i] = std::make_unique<Cell>();

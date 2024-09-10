@@ -5,30 +5,32 @@
 #include <array>
 
 class ITexture;
+using ITexturePtr = std::unique_ptr<ITexture>;
 class ICell;
+using ICellPtr = std::unique_ptr<ICell>;
 using FigureName = std::string;
-using TextureContainer = std::map<FigureName, std::unique_ptr<ITexture>>;
+using TexturesMap = std::map<FigureName, ITexturePtr>;
 
 namespace textures
 {
-	extern std::unique_ptr<ITexture> blackPawn;
-	extern std::unique_ptr<ITexture> blackQueen;
-	extern std::unique_ptr<ITexture> blackKing;
-	extern std::unique_ptr<ITexture> blackKnight;
-	extern std::unique_ptr<ITexture> blackRook;
-	extern std::unique_ptr<ITexture> blackBishop;
+	extern ITexturePtr blackPawn;
+	extern ITexturePtr blackQueen;
+	extern ITexturePtr blackKing;
+	extern ITexturePtr blackKnight;
+	extern ITexturePtr blackRook;
+	extern ITexturePtr blackBishop;
 
-	extern std::unique_ptr<ITexture> whitePawn;
-	extern std::unique_ptr<ITexture> whiteQueen;
-	extern std::unique_ptr<ITexture> whiteKing;
-	extern std::unique_ptr<ITexture> whiteKnight;
-	extern std::unique_ptr<ITexture> whiteRook;
-	extern std::unique_ptr<ITexture> whiteBishop;
+	extern ITexturePtr whitePawn;
+	extern ITexturePtr whiteQueen;
+	extern ITexturePtr whiteKing;
+	extern ITexturePtr whiteKnight;
+	extern ITexturePtr whiteRook;
+	extern ITexturePtr whiteBishop;
 
-	extern std::unique_ptr<ITexture> boardGrey;
-	extern std::unique_ptr<ITexture> boardRed;
+	extern ITexturePtr boardGrey;
+	extern ITexturePtr boardRed;
 
-	__declspec(dllexport) TextureContainer CreateTextures();
+	__declspec(dllexport) TexturesMap CreateTextures();
 }
 
 struct Pos
@@ -72,4 +74,4 @@ __declspec(dllexport) Pos GetCellPosFromPixelPos(Pos pos);
 
 __declspec(dllexport) int GetCellIndex(Pos posIndex);
 
-__declspec(dllexport) std::array<std::unique_ptr<ICell>, 64> CreateCells();
+__declspec(dllexport) std::array<ICellPtr, 64> CreateCells();
