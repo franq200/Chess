@@ -16,7 +16,7 @@ public:
 	__declspec(dllexport) void SetFigure(IFigurePtr figure) override;
 	__declspec(dllexport) void RemoveFigure() override;
 	__declspec(dllexport) IFigurePtr GetFigure() const override;
-	__declspec(dllexport) bool IsOccupiedByPlayer(const IPlayerPtr& currentPlayer) const override;
+	__declspec(dllexport) bool IsOccupiedByPlayer(const IPlayerPtr& currentPlayer) const override; 
 	__declspec(dllexport) void Highlight() override;
 	__declspec(dllexport) void HighlightAsTaking() override;
 	__declspec(dllexport) void RemoveHighlight() override;
