@@ -30,4 +30,3 @@ private:
 	IFigurePtr m_figure = nullptr;
 	int m_pos = 0;
 };
-
