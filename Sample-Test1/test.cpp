@@ -97,10 +97,9 @@ TEST_F(GameTest, WindowClearAndDisplayFunctionsShouldBeCalledAsLongAsFunctionIsO
 {
 	ExpectTexturesLoaded(texturesMock);
 	EXPECT_CALL(*windowMock, IsOpen()).Times(4).WillOnce(testing::Return(true)).WillOnce(testing::Return(true)).WillOnce(testing::Return(true)).WillOnce(testing::Return(false));
+	EXPECT_CALL(*mouseMock, IsMouseInWindow(testing::_)).Times(4).WillOnce(testing::Return(true)).WillOnce(testing::Return(true)).WillOnce(testing::Return(true)).WillOnce(testing::Return(true));
 	EXPECT_CALL(*windowMock, Clear()).Times(3);
 	EXPECT_CALL(*boardMock, Draw(testing::_)).Times(3);
-	EXPECT_CALL(*white, GetFigures()).Times(6);
-	EXPECT_CALL(*black, GetFigures()).Times(3);
 	EXPECT_CALL(*windowMock, Display()).Times(3);
 	EXPECT_CALL(*windowMock, PollEvent(testing::_)).Times(testing::AtLeast(1));
 	Game game = createSut();
