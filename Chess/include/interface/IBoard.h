@@ -34,7 +34,7 @@ public:
 	virtual void SetCurrentFigure(Pos mouseCell, PlayerColor currentPlayer) = 0;
 	virtual void StartAnimation() = 0;
 	virtual void Animate(const Pos& mousePos) = 0;
-	virtual void EndAnimation(const Pos& mousePos, IPlayerPtr& opponent) = 0;
+	virtual void EndAnimation(const Pos& mousePos) = 0;
 	virtual void CreateFigures(TexturesMap& textures, IPlayerPtr& white, IPlayerPtr& black) = 0;
 	virtual void Draw(IWindowPtr& window) = 0;
 };

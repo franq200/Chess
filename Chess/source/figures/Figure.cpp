@@ -100,9 +100,9 @@ void Figure::ChangeTempPos(const Pos& tempPos)
     m_figure->SetTempPos(tempPos);
 }
 
-void Figure::SetCurrentPos()
+void Figure::RestorePositionBeforeAnimation()
 {
-    m_figure->SetCurrentPos();
+    m_figure->RestorePosition();
 }
 
 Pos Figure::GetPixelTempPosition() const

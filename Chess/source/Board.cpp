@@ -113,17 +113,13 @@ void Board::Animate(const Pos& mousePos)
 	}
 }
 
-void Board::EndAnimation(const Pos& mouseCell, IPlayerPtr& opponent)
+void Board::EndAnimation(const Pos& mouseCell)
 {
-	if (IsCurrentFigureSet())
+	const bool moveNotExectuted = IsCurrentFigureSet();
+	if (moveNotExectuted)
 	{
 		auto currentFigure = GetCurrentFigure();
-		auto currentFigurePos = currentFigure->GetCellTempPosition();
-		if (!currentFigure->IsInPossibleMoves(mouseCell))
-		{
-			MoveCurrentFiguresToNewCell(mouseCell, opponent);
-			currentFigure->SetCurrentPos();
-		}
+		currentFigure->RestorePositionBeforeAnimation();
 	}
 	m_isAnimating = false;
 }

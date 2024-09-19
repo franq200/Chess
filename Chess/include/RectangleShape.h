@@ -14,12 +14,12 @@ public:
 	__declspec(dllexport) void SetFillColor(Color color) override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	__declspec(dllexport) void SetTempPos(const Pos& tempPos) override;
-	__declspec(dllexport) void SetCurrentPos() override;
+	__declspec(dllexport) void RestorePosition() override;
 	__declspec(dllexport) Pos GetPixelTempPosition() const override;
 	__declspec(dllexport) Pos GetCellTempPosition() const override;
 	__declspec(dllexport) void OnAnimation() override;
 private:
 	sf::RectangleShape m_shape;
-	Pos m_currentPos;
+	Pos m_startAnimationPos;
 };
 

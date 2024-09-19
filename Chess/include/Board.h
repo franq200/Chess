@@ -31,7 +31,7 @@ public:
 	__declspec(dllexport) void SetCurrentFigure(Pos mouseCell, PlayerColor currentPlayer) override;
 	__declspec(dllexport) void StartAnimation() override;
 	__declspec(dllexport) void Animate(const Pos& mousePos) override;
-	__declspec(dllexport) void EndAnimation(const Pos& mousePos, IPlayerPtr& opponent) override;
+	__declspec(dllexport) void EndAnimation(const Pos& mousePos) override;
 	__declspec(dllexport) void CreateFigures(TexturesMap& textures, IPlayerPtr& white, IPlayerPtr& black) override;
 	__declspec(dllexport) void Draw(IWindowPtr& window) override;
 private:

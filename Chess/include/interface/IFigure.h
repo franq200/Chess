@@ -20,7 +20,7 @@ public:
 	virtual Pos GetPixelPosition() const = 0;
 	virtual std::vector<Pos> CalculatePossibleMoves(const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) = 0;
 	virtual void ChangeTempPos(const Pos& tempPos) = 0;
-	virtual void SetCurrentPos() = 0;
+	virtual void RestorePositionBeforeAnimation() = 0;
 	virtual Pos GetPixelTempPosition() const = 0;
 	virtual bool IsInPossibleMoves(const Pos& destinationPos) const = 0;
 	virtual Pos GetCellTempPosition() const = 0;

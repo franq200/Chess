@@ -25,7 +25,7 @@ void RectangleShape::SetTexture(const ITexture& texture)
 void RectangleShape::SetPosition(Pos pos)
 {
 	m_shape.setPosition({ static_cast<float>(pos.x), static_cast<float>(pos.y) });
-	m_currentPos = GetPosition();
+	m_startAnimationPos = GetPosition();
 }
 
 void RectangleShape::SetSize(Size size)
@@ -48,9 +48,9 @@ void RectangleShape::SetTempPos(const Pos& tempPos)
 	m_shape.setPosition({ static_cast<float>(tempPos.x) , static_cast<float>(tempPos.y) });
 }
 
-void RectangleShape::SetCurrentPos()
+void RectangleShape::RestorePosition()
 {
-	m_shape.setPosition({ static_cast<float>(m_currentPos.x) , static_cast<float>(m_currentPos.y) });
+	m_shape.setPosition({ static_cast<float>(m_startAnimationPos.x) , static_cast<float>(m_startAnimationPos.y) });
 }
 
 Pos RectangleShape::GetPixelTempPosition() const
@@ -67,5 +67,5 @@ Pos RectangleShape::GetCellTempPosition() const
 
 void RectangleShape::OnAnimation()
 {
-	m_currentPos = GetPosition();
+	m_startAnimationPos = GetPosition();
 }

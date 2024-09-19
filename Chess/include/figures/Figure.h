@@ -24,7 +24,7 @@ public:
 	__declspec(dllexport) Pos GetPixelPosition() const override;
 	__declspec(dllexport) virtual std::vector<Pos> CalculatePossibleMoves(const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) override;
 	__declspec(dllexport) void ChangeTempPos(const Pos& tempPos) override;
-	__declspec(dllexport) void SetCurrentPos() override;
+	__declspec(dllexport) void RestorePositionBeforeAnimation() override;
 	__declspec(dllexport) Pos GetPixelTempPosition() const override;
 	__declspec(dllexport) bool IsInPossibleMoves(const Pos& destinationPos) const override;
 	__declspec(dllexport) Pos GetCellTempPosition() const override;
