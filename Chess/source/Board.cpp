@@ -113,7 +113,7 @@ void Board::Animate(const Pos& mousePos)
 	}
 }
 
-void Board::EndAnimation(const Pos& mouseCell)
+void Board::EndAnimation(const Pos& mouseCell, IPlayerPtr& opponent)
 {
 	if (IsCurrentFigureSet())
 	{
@@ -121,6 +121,7 @@ void Board::EndAnimation(const Pos& mouseCell)
 		auto currentFigurePos = currentFigure->GetCellTempPosition();
 		if (!currentFigure->IsInPossibleMoves(mouseCell))
 		{
+			MoveCurrentFiguresToNewCell(mouseCell, opponent);
 			currentFigure->SetCurrentPos();
 		}
 	}

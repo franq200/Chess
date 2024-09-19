@@ -45,7 +45,8 @@ void Gameplay::AnimateMoving(IWindowPtr& window, IMousePtr& mouse)
 		{
 			Move(mouseCell);
 		}
-		m_board->EndAnimation(mouse->GetCellPosition(window));
+		IPlayerPtr* opponent = (*m_currentPlayer == m_whitePlayer) ? &m_blackPlayer : &m_whitePlayer;
+		m_board->EndAnimation(mouse->GetCellPosition(window), *opponent);
 	}
 }
 
