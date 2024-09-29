@@ -48,22 +48,20 @@ bool Board::IsMovePossible(Pos mouseCell) const
 
 void Board::UpdatePossibleMoves(PlayerColor currentPlayer)
 {
-	if (m_selectedFigureCell.has_value())
+	m_takingMoves.clear();
+	const IFigurePtr currentFigure = GetCurrentFigure();
+	auto [currentPlayerFigures, opponentFigures] = GetPlayersFigures(currentPlayer);
+	Positions possibleMoves = currentFigure->CalculatePossibleMoves(currentPlayerFigures, opponentFigures);
+	for (auto move : possibleMoves)
 	{
-		const IFigurePtr currentFigure = GetCurrentFigure();
-		auto [currentPlayerFigures, opponentFigures] = GetPlayersFigures(currentPlayer);
-		Positions possibleMoves = currentFigure->CalculatePossibleMoves(currentPlayerFigures, opponentFigures);
-		for (auto move : possibleMoves)
+		if (currentFigure->IsFigureTaking(move, opponentFigures))
 		{
-			if (currentFigure->IsFigureTaking(move, opponentFigures))
-			{
-				m_takingMoves.push_back(move);
-				m_board.at(move.x).at(move.y)->HighlightAsTaking();
-			}
-			else
-			{
-				m_board.at(move.x).at(move.y)->Highlight();
-			}
+			m_takingMoves.push_back(move);
+			m_board.at(move.x).at(move.y)->HighlightAsTaking();
+		}
+		else
+		{
+			m_board.at(move.x).at(move.y)->Highlight();
 		}
 	}
 }
@@ -82,7 +80,7 @@ void Board::MoveCurrentFiguresToNewCell(Pos mouseCell, IPlayerPtr& opponent)
 	m_board[mouseCell.x][mouseCell.y]->SetFigure(GetCurrentFigure());
 	m_board[m_selectedFigureCell.value().x][m_selectedFigureCell.value().y]->RemoveFigure();
 	m_selectedFigureCell.reset();
-	
+
 	RemoveHighlights();
 }
 
@@ -104,7 +102,7 @@ void Board::Animate(const Pos& mousePos)
 		{
 			int newXPos = currentFigurePos.x + (mousePos.x - (currentFigurePos.x + m_mousePosInFigure.value().x));
 			int newYPos = currentFigurePos.y + (mousePos.y - (currentFigurePos.y + m_mousePosInFigure.value().y));
-			currentFigure->ChangeTempPos(Pos(newXPos, newYPos));
+			currentFigure->SetShapePos(Pos(newXPos, newYPos));
 		}
 		else if (!m_mousePosInFigure.has_value())
 		{
@@ -201,7 +199,7 @@ void Board::CreateBoard(std::array<ICellPtr, 64>& cells)
 		for (int y = 0; y < 8; y++)
 		{
 			uint8_t cellIndex = GetCellIndex(Pos(x, y));
-			if ((x + y )% 2 == 0)
+			if ((x + y) % 2 == 0)
 			{
 				cells[cellIndex]->SetFillColor(Color(0, 200, 0));
 			}
@@ -250,7 +248,7 @@ void Board::CreateWhite(TexturesMap& textures)
 	WhiteStartingIndex startingIndex;
 
 	const int pawnStartRow = 6;
-	
+
 	for (int i = 0; i < size::boardCellsX; i++)
 	{
 		const auto& figure = m_figures[PlayerColor::white].emplace_back(std::make_shared<Pawn>(*textures["whitePawn"], Pos(i, pawnStartRow), size));
@@ -258,26 +256,26 @@ void Board::CreateWhite(TexturesMap& textures)
 	}
 	const auto& whiteRook1 = m_figures[PlayerColor::white].emplace_back(std::make_shared<Rook>(*textures["whiteRook"], startingIndex.rook1, size));
 	m_board[startingIndex.rook1.x][startingIndex.rook1.y]->SetFigure(whiteRook1);
-	
+
 	const auto& whiteKnight1 = m_figures[PlayerColor::white].emplace_back(std::make_shared<Knight>(*textures["whiteKnight"], startingIndex.knight1, size));
 	m_board[startingIndex.knight1.x][startingIndex.knight1.y]->SetFigure(whiteKnight1);
-	
+
 	const auto& whiteBishop1 = m_figures[PlayerColor::white].emplace_back(std::make_shared<Bishop>(*textures["whiteBishop"], startingIndex.bishop1, size));
 	m_board[startingIndex.bishop1.x][startingIndex.bishop1.y]->SetFigure(whiteBishop1);
-	
+
 	const auto& whiteQueen = m_figures[PlayerColor::white].emplace_back(std::make_shared<Queen>(*textures["whiteQueen"], startingIndex.queen, size));
 	m_board[startingIndex.queen.x][startingIndex.queen.y]->SetFigure(whiteQueen);
-	
+
 	const auto& whiteKing = m_figures[PlayerColor::white].emplace_back(std::make_shared<King>(*textures["whiteKing"], startingIndex.king, size));
 	m_board[startingIndex.king.x][startingIndex.king.y]->SetFigure(whiteKing);
 	m_whiteKing = whiteKing;
-	
+
 	const auto& whiteBishop2 = m_figures[PlayerColor::white].emplace_back(std::make_shared<Bishop>(*textures["whiteBishop"], startingIndex.bishop2, size));
 	m_board[startingIndex.bishop2.x][startingIndex.bishop2.y]->SetFigure(whiteBishop2);
-	
+
 	const auto& whiteKnight2 = m_figures[PlayerColor::white].emplace_back(std::make_shared<Knight>(*textures["whiteKnight"], startingIndex.knight2, size));
 	m_board[startingIndex.knight2.x][startingIndex.knight2.y]->SetFigure(whiteKnight2);
-	
+
 	const auto& whiteRook2 = m_figures[PlayerColor::white].emplace_back(std::make_shared<Rook>(*textures["whiteRook"], startingIndex.rook2, size));
 	m_board[startingIndex.rook2.x][startingIndex.rook2.y]->SetFigure(whiteRook2);
 }
@@ -286,31 +284,31 @@ void Board::CreateBlack(TexturesMap& textures)
 {
 	BlackStartingIndex startingIndex;
 	Size size = Size(static_cast<uint16_t>(size::cellSizeXPix), static_cast<uint16_t>(size::cellSizeYPix));
-	
+
 	const int pawnStartRow = 1;
-	
+
 	const auto& blackRook1 = m_figures[PlayerColor::black].emplace_back(std::make_shared<Rook>(*textures["blackRook"], startingIndex.rook1, size));
 	m_board[startingIndex.rook1.x][startingIndex.rook1.y]->SetFigure(blackRook1);
-	
+
 	const auto& blackKnight1 = m_figures[PlayerColor::black].emplace_back(std::make_shared<Knight>(*textures["blackKnight"], startingIndex.knight1, size));
 	m_board[startingIndex.knight1.x][startingIndex.knight1.y]->SetFigure(blackKnight1);
-	
+
 	const auto& blackBishop1 = m_figures[PlayerColor::black].emplace_back(std::make_shared<Bishop>(*textures["blackBishop"], startingIndex.bishop1, size));
 	m_board[startingIndex.bishop1.x][startingIndex.bishop1.y]->SetFigure(blackBishop1);
-	
+
 	const auto& blackQueen = m_figures[PlayerColor::black].emplace_back(std::make_shared<Queen>(*textures["blackQueen"], startingIndex.queen, size));
 	m_board[startingIndex.queen.x][startingIndex.queen.y]->SetFigure(blackQueen);
-	
+
 	const auto& blackKing = m_figures[PlayerColor::black].emplace_back(std::make_shared<King>(*textures["blackKing"], startingIndex.king, size));
 	m_board[startingIndex.king.x][startingIndex.king.y]->SetFigure(blackKing);
 	m_blackKing = blackKing;
-	
+
 	const auto& blackBishop2 = m_figures[PlayerColor::black].emplace_back(std::make_shared<Bishop>(*textures["blackBishop"], startingIndex.bishop2, size));
 	m_board[startingIndex.bishop2.x][startingIndex.bishop2.y]->SetFigure(blackBishop2);
-	
+
 	const auto& blackKnight2 = m_figures[PlayerColor::black].emplace_back(std::make_shared<Knight>(*textures["blackKnight"], startingIndex.knight2, size));
 	m_board[startingIndex.knight2.x][startingIndex.knight2.y]->SetFigure(blackKnight2);
-	
+
 	const auto& blackRook2 = m_figures[PlayerColor::black].emplace_back(std::make_shared<Rook>(*textures["blackRook"], startingIndex.rook2, size));
 	m_board[startingIndex.rook2.x][startingIndex.rook2.y]->SetFigure(blackRook2);
 	for (int i = 0; i < size::boardCellsX; i++)

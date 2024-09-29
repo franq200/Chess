@@ -7,16 +7,16 @@
 
 Figure::Figure(const ITexture& texture, Pos pos, Size size)
 {
-    m_figure = std::make_unique<RectangleShape>();
-    m_figure->SetOutlineColor(Color(50, 50, 150));
-    m_figure->SetTexture(texture);
-    m_figure->SetPosition(GetPixelPosFromCellPos(pos));
-    m_figure->SetSize(size);
+    m_figureShape = std::make_unique<RectangleShape>();
+    m_figureShape->SetOutlineColor(Color(50, 50, 150));
+    m_figureShape->SetTexture(texture);
+    SetPixelPosition(GetPixelPosFromCellPos(pos));
+    m_figureShape->SetSize(size);
 }
 
 bool Figure::IsInRange(Pos mousePos)
 {
-    Pos pos = m_figure->GetPosition();
+    Pos pos = m_figureShape->GetPosition();
     bool isInXRange = mousePos.x - pos.x <= size::cellSizeXPix && mousePos.x - pos.x >= 0;
     bool isInYRange = mousePos.y - pos.y <= size::cellSizeYPix && mousePos.y - pos.y >= 0;
     return isInXRange && isInYRange;
@@ -24,32 +24,28 @@ bool Figure::IsInRange(Pos mousePos)
 
 void Figure::SetOutlineThickness(int thickness)
 {
-    m_figure->SetOutlineThickness(thickness);
+    m_figureShape->SetOutlineThickness(thickness);
 }
 
 void Figure::SetOutlineColor(Color color)
 {
-    m_figure->SetOutlineColor(color);
+    m_figureShape->SetOutlineColor(color);
 }
 
 void Figure::Draw(IWindowPtr& window)
 {
-    window->Draw(*m_figure);
+    window->Draw(*m_figureShape);
 }
 
-void Figure::SetPosition(Pos pos)
+void Figure::SetPixelPosition(Pos pos)
 {
-    m_figure->SetPosition(pos);
+    SetShapePos(pos);
+    m_position = GetCellPosFromPixelPos(m_figureShape->GetPosition());
 }
 
 Pos Figure::GetPosition() const
 {
-    return GetCellPosFromPixelPos(m_figure->GetPosition());
-}
-
-Pos Figure::GetPixelPosition() const
-{
-    return m_figure->GetPosition();
+    return m_position;
 }
 
 bool Figure::IsMoveAllowed(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const
@@ -80,7 +76,7 @@ std::vector<Pos> Figure::CalculatePossibleMoves(const FiguresVector& currentPlay
                 };
             if (newPos.x >= 0 && newPos.x < 8 && newPos.y >= 0 && newPos.y < 8) 
             {
-                if (IsMoveAllowed(newPos, currentPlayerFigures, opponentPlayerFigures)) 
+                if (IsMoveAllowed(newPos, currentPlayerFigures, opponentPlayerFigures))
                 {
                     possibleMoves.push_back(newPos);
                 }
@@ -95,19 +91,19 @@ std::vector<Pos> Figure::CalculatePossibleMoves(const FiguresVector& currentPlay
     return possibleMoves;
 }
 
-void Figure::ChangeTempPos(const Pos& tempPos)
+void Figure::SetShapePos(const Pos& shapePos)
 {
-    m_figure->SetTempPos(tempPos);
+    m_figureShape->SetPixelPosition(shapePos);
 }
 
 void Figure::RestorePositionBeforeAnimation()
 {
-    m_figure->RestorePosition();
+    m_figureShape->SetPixelPosition(GetPixelPosFromCellPos(m_position));
 }
 
 Pos Figure::GetPixelTempPosition() const
 {
-    return m_figure->GetPixelTempPosition();
+    return m_figureShape->GetPixelTempPosition();
 }
 
 bool Figure::IsInPossibleMoves(const Pos& destinationPos) const
@@ -117,12 +113,12 @@ bool Figure::IsInPossibleMoves(const Pos& destinationPos) const
 
 Pos Figure::GetCellTempPosition() const
 {
-    return m_figure->GetCellTempPosition();
+    return m_figureShape->GetCellTempPosition();
 }
 
 void Figure::OnAnimation()
 {
-    m_figure->OnAnimation();
+    
 }
 
 std::vector<Pos> Figure::GetMovePath(Pos destinationCell, Pos currentPos) const

@@ -22,7 +22,7 @@ Gameplay::Gameplay(TexturesMap& textures,
 
 bool Gameplay::Update(IWindowPtr& window, IMousePtr& mouse)
 {
-	//TryEndGame();
+	TryEndGame();
 	MoveAndSetCurrentFigure(window, mouse);
 	if (m_board->IsAnimating())
 	{

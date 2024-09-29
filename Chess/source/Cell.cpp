@@ -20,8 +20,9 @@ void Cell::SetFillColor(Color color)
 
 void Cell::SetPosition(Pos pos)
 {
-	m_cell->SetPosition(pos);
-	m_highlight->SetPosition(Pos(pos.x + size::cellSizeXPix / 3, pos.y + size::cellSizeYPix / 3));
+	m_cell->SetPixelPosition(pos);
+	m_highlight->SetPixelPosition(Pos(pos.x + size::cellSizeXPix / 3, pos.y + size::cellSizeYPix / 3));
+	m_takingHighlight->SetPixelPosition(Pos(pos.x + size::cellSizeXPix / 4, pos.y + size::cellSizeYPix / 4));
 }
 
 void Cell::SetSize(Size size)
@@ -32,7 +33,7 @@ void Cell::SetSize(Size size)
 void Cell::SetFigure(IFigurePtr figure)
 {
 	m_figure = figure;
-	m_figure->SetPosition(m_cell->GetPosition());
+	m_figure->SetPixelPosition(m_cell->GetPosition());
 }
 
 void Cell::RemoveFigure()

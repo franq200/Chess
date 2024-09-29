@@ -19,11 +19,10 @@ public:
 	__declspec(dllexport) void SetOutlineThickness(int thickness) override;
 	__declspec(dllexport) void SetOutlineColor(Color color) override;
 	__declspec(dllexport) void Draw(IWindowPtr& window) override;
-	__declspec(dllexport) void SetPosition(Pos pos) override;
+	__declspec(dllexport) void SetPixelPosition(Pos pos) override;
 	__declspec(dllexport) Pos GetPosition() const override;
-	__declspec(dllexport) Pos GetPixelPosition() const override;
 	__declspec(dllexport) virtual std::vector<Pos> CalculatePossibleMoves(const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) override;
-	__declspec(dllexport) void ChangeTempPos(const Pos& tempPos) override;
+	__declspec(dllexport) void SetShapePos(const Pos& tempPos) override;
 	__declspec(dllexport) void RestorePositionBeforeAnimation() override;
 	__declspec(dllexport) Pos GetPixelTempPosition() const override;
 	__declspec(dllexport) bool IsInPossibleMoves(const Pos& destinationPos) const override;
@@ -31,7 +30,7 @@ public:
 	__declspec(dllexport) void OnAnimation() override;
 	__declspec(dllexport) bool IsFigureTaking(Pos destinationCell, const FiguresVector& opponentPlayerFigures) const;
 protected:
-	std::unique_ptr<IRectangleShape> m_figure;
+	std::unique_ptr<IRectangleShape> m_figureShape;
 
 	virtual bool IsMoveAllowed(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const;
 	virtual bool IsMoveAllowedForThisFigure(const Pos& destinationCell) const = 0;
@@ -57,5 +56,6 @@ protected:
 	Positions m_directions;
 	int m_moveCounter = 0;
 	std::vector<Pos> m_possibleMoves;
+	Pos m_position;
 };
 

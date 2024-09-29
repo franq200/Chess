@@ -22,10 +22,9 @@ void RectangleShape::SetTexture(const ITexture& texture)
 	m_shape.setTexture(texture.GetTexture());
 }
 
-void RectangleShape::SetPosition(Pos pos)
+void RectangleShape::SetPixelPosition(Pos pos)
 {
 	m_shape.setPosition({ static_cast<float>(pos.x), static_cast<float>(pos.y) });
-	m_startAnimationPos = GetPosition();
 }
 
 void RectangleShape::SetSize(Size size)
@@ -43,16 +42,6 @@ void RectangleShape::draw(sf::RenderTarget& target, sf::RenderStates states) con
 	target.draw(m_shape, states);
 }
 
-void RectangleShape::SetTempPos(const Pos& tempPos)
-{
-	m_shape.setPosition({ static_cast<float>(tempPos.x) , static_cast<float>(tempPos.y) });
-}
-
-void RectangleShape::RestorePosition()
-{
-	m_shape.setPosition({ static_cast<float>(m_startAnimationPos.x) , static_cast<float>(m_startAnimationPos.y) });
-}
-
 Pos RectangleShape::GetPixelTempPosition() const
 {
 	sf::Vector2f pos = m_shape.getPosition();
@@ -63,9 +52,4 @@ Pos RectangleShape::GetCellTempPosition() const
 {
 	sf::Vector2f pos = m_shape.getPosition();
 	return GetCellPosFromPixelPos(Pos(static_cast<int16_t>(pos.x), static_cast<int16_t>(pos.y)));
-}
-
-void RectangleShape::OnAnimation()
-{
-	m_startAnimationPos = GetPosition();
 }
