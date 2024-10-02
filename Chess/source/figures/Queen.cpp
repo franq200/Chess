@@ -15,6 +15,11 @@ Queen::Queen(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, 
     };
 }
 
+std::shared_ptr<IFigure> Queen::Clone() const
+{
+    return std::make_shared<Queen>(*this);
+}
+
 bool Queen::IsMoveAllowedForThisFigure(const Pos& destinationCell) const
 {
     Pos pos = GetPosition();

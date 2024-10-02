@@ -7,6 +7,11 @@ Bishop::Bishop(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos
     m_directions = {Pos(1, 1),Pos(1, -1),Pos(-1, 1),Pos(-1, -1)};
 }
 
+std::shared_ptr<IFigure> Bishop::Clone() const
+{
+    return std::make_shared<Bishop>(*this);
+}
+
 bool Bishop::IsMoveAllowedForThisFigure(const Pos& destinationCell) const
 {
     Pos pos = GetPosition();

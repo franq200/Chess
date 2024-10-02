@@ -1,22 +1,19 @@
 #include "figures/Figure.h"
-#include "interface/IRectangleShape.h"
 #include "interface/ITexture.h"
 #include "Helper.h"
-#include "RectangleShape.h"
 #include "interface/IWindow.h"
 
 Figure::Figure(const ITexture& texture, Pos pos, Size size)
 {
-    m_figureShape = std::make_unique<RectangleShape>();
-    m_figureShape->SetOutlineColor(Color(50, 50, 150));
-    m_figureShape->SetTexture(texture);
+    m_figureShape.SetOutlineColor(Color(50, 50, 150));
+    m_figureShape.SetTexture(texture);
     SetPixelPosition(GetPixelPosFromCellPos(pos));
-    m_figureShape->SetSize(size);
+    m_figureShape.SetSize(size);
 }
 
 bool Figure::IsInRange(Pos mousePos)
 {
-    Pos pos = m_figureShape->GetPosition();
+    Pos pos = m_figureShape.GetPosition();
     bool isInXRange = mousePos.x - pos.x <= size::cellSizeXPix && mousePos.x - pos.x >= 0;
     bool isInYRange = mousePos.y - pos.y <= size::cellSizeYPix && mousePos.y - pos.y >= 0;
     return isInXRange && isInYRange;
@@ -24,23 +21,23 @@ bool Figure::IsInRange(Pos mousePos)
 
 void Figure::SetOutlineThickness(int thickness)
 {
-    m_figureShape->SetOutlineThickness(thickness);
+    m_figureShape.SetOutlineThickness(thickness);
 }
 
 void Figure::SetOutlineColor(Color color)
 {
-    m_figureShape->SetOutlineColor(color);
+    m_figureShape.SetOutlineColor(color);
 }
 
 void Figure::Draw(IWindowPtr& window)
 {
-    window->Draw(*m_figureShape);
+    window->Draw(m_figureShape);
 }
 
 void Figure::SetPixelPosition(Pos pos)
 {
     SetShapePos(pos);
-    m_position = GetCellPosFromPixelPos(m_figureShape->GetPosition());
+    m_position = GetCellPosFromPixelPos(m_figureShape.GetPosition());
 }
 
 Pos Figure::GetPosition() const
@@ -93,17 +90,17 @@ std::vector<Pos> Figure::CalculatePossibleMoves(const FiguresVector& currentPlay
 
 void Figure::SetShapePos(const Pos& shapePos)
 {
-    m_figureShape->SetPixelPosition(shapePos);
+    m_figureShape.SetPixelPosition(shapePos);
 }
 
 void Figure::RestorePositionBeforeAnimation()
 {
-    m_figureShape->SetPixelPosition(GetPixelPosFromCellPos(m_position));
+    m_figureShape.SetPixelPosition(GetPixelPosFromCellPos(m_position));
 }
 
 Pos Figure::GetPixelTempPosition() const
 {
-    return m_figureShape->GetPixelTempPosition();
+    return m_figureShape.GetPixelTempPosition();
 }
 
 bool Figure::IsInPossibleMoves(const Pos& destinationPos) const
@@ -113,7 +110,7 @@ bool Figure::IsInPossibleMoves(const Pos& destinationPos) const
 
 Pos Figure::GetCellTempPosition() const
 {
-    return m_figureShape->GetCellTempPosition();
+    return m_figureShape.GetCellTempPosition();
 }
 
 void Figure::OnAnimation()

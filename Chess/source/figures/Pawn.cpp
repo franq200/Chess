@@ -45,6 +45,11 @@ bool Pawn::IsMoveAllowed(Pos moveCell, const FiguresVector& currentPlayerFigures
     return false;
 }
 
+std::shared_ptr<IFigure> Pawn::Clone() const
+{
+    return std::make_shared<Pawn>(*this);
+}
+
 void Pawn::SetDirectionBasedOnStartingPos() {
     if (GetPosition().y == 6) {
         m_directions = {

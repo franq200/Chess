@@ -110,20 +110,19 @@ std::vector<Pos> Player::GetOpponentTakingMoves(const FiguresVector& opponentPla
 
 std::pair<FiguresVector, IFigurePtr> Player::CloneFigures() const
 {
-	//FiguresVector clonedFigures;
-	//IFigurePtr clonedKing;
-	//for (const auto& figure : m_figures)
-	//{
-	//	if (figure == m_king)
-	//	{
-	//		clonedKing = std::make_shared<IFigure>(figure);
-	//		clonedFigures.emplace_back(clonedKing);
-	//	}
-	//	else
-	//	{
-	//		clonedFigures.emplace_back(std::make_shared<>(figure));
-	//	}
-	//}
-	//return std::pair<FiguresVector, IFigurePtr>(clonedFigures, clonedKing);
-	return std::pair<FiguresVector, IFigurePtr>();
+	FiguresVector clonedFigures;
+	IFigurePtr clonedKing;
+	for (const auto& figure : m_figures)
+	{
+		if (figure == m_king)
+		{
+			clonedKing = figure->Clone();
+			clonedFigures.emplace_back(clonedKing);
+		}
+		else
+		{
+			clonedFigures.emplace_back(figure->Clone());
+		}
+	}
+	return std::pair<FiguresVector, IFigurePtr>(clonedFigures, clonedKing);
 }

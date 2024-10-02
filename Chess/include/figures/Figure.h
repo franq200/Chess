@@ -3,8 +3,8 @@
 #include "Helper.h"
 #include <memory>
 #include <vector>
+#include "RectangleShape.h"
 
-class IRectangleShape;
 class ITexture;
 
 using Positions = std::vector<Pos>;
@@ -29,8 +29,8 @@ public:
 	__declspec(dllexport) Pos GetCellTempPosition() const override;
 	__declspec(dllexport) void OnAnimation() override;
 	__declspec(dllexport) bool IsFigureTaking(Pos destinationCell, const FiguresVector& opponentPlayerFigures) const;
+	__declspec(dllexport) virtual std::shared_ptr<IFigure> Clone() const override = 0;
 protected:
-	std::unique_ptr<IRectangleShape> m_figureShape;
 
 	virtual bool IsMoveAllowed(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const;
 	virtual bool IsMoveAllowedForThisFigure(const Pos& destinationCell) const = 0;
@@ -53,6 +53,7 @@ protected:
 	bool IsCollisionWithOpponent(const std::vector<Pos>& movePath, const FiguresVector& opponentPlayerFigures) const;
 	bool IsCollisionWithAnyPlayer(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const;
 
+	RectangleShape m_figureShape;
 	Positions m_directions;
 	int m_moveCounter = 0;
 	std::vector<Pos> m_possibleMoves;

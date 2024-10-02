@@ -11,6 +11,11 @@ Rook::Rook(const ITexture& texture, Pos pos, Size size) : Figure(texture, pos, s
     };
 }
 
+std::shared_ptr<IFigure> Rook::Clone() const
+{
+    return std::make_shared<Rook>(*this);
+}
+
 bool Rook::IsMoveAllowedForThisFigure(const Pos& destinationCell) const
 {
     Pos pos = GetPosition();

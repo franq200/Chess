@@ -16,6 +16,11 @@ King::King(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, si
     };
 }
 
+std::shared_ptr<IFigure> King::Clone() const
+{
+    return std::make_shared<King>(*this);
+}
+
 bool King::IsMoveAllowedForThisFigure(const Pos& destinationCell) const
 {
     Pos pos = GetPosition();

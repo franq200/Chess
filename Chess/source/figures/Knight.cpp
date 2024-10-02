@@ -15,6 +15,11 @@ Knight::Knight(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos
     };
 }
 
+std::shared_ptr<IFigure> Knight::Clone() const
+{
+    return std::make_shared<Knight>(*this);
+}
+
 bool Knight::IsMoveAllowedForThisFigure(const Pos& destinationCell) const
 {
     Pos pos = GetPosition();
