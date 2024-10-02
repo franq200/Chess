@@ -69,7 +69,7 @@ PlayerColor Gameplay::GetCurrentPlayerColor() const
 
 bool Gameplay::TryEndGame() const
 {
-	return m_currentPlayer->get()->IsAnyMovePossible(GetOpponentFigures());
+	return (*m_currentPlayer)->IsAnyMovePossible(GetOpponentFigures());
 }
 
 void Gameplay::MoveAndSetCurrentFigure(IWindowPtr& window, IMousePtr& mouse)

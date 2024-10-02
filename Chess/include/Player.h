@@ -15,7 +15,6 @@ public:
 private:
 	bool IsKingUnderAttack(const std::vector<Pos>& opponentTakingMoves) const;
 	bool CanKingEscape(const FiguresVector& opponentPlayerFigures) const;
-	std::vector<Pos> GetOpponentTakingMoves(const FiguresVector& opponentPlayerFigures, const FiguresVector& currentPlayerFigures) const;
 	std::pair<FiguresVector, IFigurePtr> CloneFigures() const;
 	IFigurePtr m_currentFigure = nullptr;
 	IFigurePtr m_king = nullptr;

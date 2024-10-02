@@ -5,6 +5,7 @@
 
 Figure::Figure(const ITexture& texture, Pos pos, Size size)
 {
+    m_startingPos = pos;
     m_figureShape.SetOutlineColor(Color(50, 50, 150));
     m_figureShape.SetTexture(texture);
     SetPixelPosition(GetPixelPosFromCellPos(pos));
@@ -113,11 +114,6 @@ Pos Figure::GetCellTempPosition() const
     return m_figureShape.GetCellTempPosition();
 }
 
-void Figure::OnAnimation()
-{
-    
-}
-
 std::vector<Pos> Figure::GetMovePath(Pos destinationCell, Pos currentPos) const
 {
     int8_t xDifferenceRaw = destinationCell.x - currentPos.x;
@@ -181,6 +177,11 @@ bool Figure::IsFigureTaking(Pos destinationCell, const FiguresVector& opponentPl
         }
     }
     return false;
+}
+
+bool operator==(const std::shared_ptr<IFigure>& lhs, const std::shared_ptr<IFigure>& rhs)
+{
+    return lhs->m_startingPos == rhs->m_startingPos;//!
 }
 
 Positions Figure::GetTopPath(const Pos pos, const Pos destinationCell) const

@@ -3,6 +3,36 @@
 #include <SFML/Graphics.hpp>
 #include <algorithm>
 
+namespace
+{
+	FiguresVector CloneOpponentFigures(const FiguresVector& opponentPlayerFigures)
+	{
+		FiguresVector clonedFigures;
+		for (const auto& figure : opponentPlayerFigures)
+		{
+			clonedFigures.emplace_back(figure->Clone());
+		}
+		return clonedFigures;
+	}
+
+	std::vector<Pos> GetOpponentTakingMoves(const FiguresVector& opponentPlayerFigures, const FiguresVector& currentPlayerFigures)
+	{
+		std::vector<Pos> takingMoves;
+		for (auto& opponentFigure : opponentPlayerFigures)
+		{
+			std::vector<Pos> possibleMoves = opponentFigure->CalculatePossibleMoves(opponentPlayerFigures, currentPlayerFigures);
+			for (auto& move : possibleMoves)
+			{
+				if (opponentFigure->IsFigureTaking(move, currentPlayerFigures))
+				{
+					takingMoves.push_back(move);
+				}
+			}
+		}
+		return takingMoves;
+	}
+}
+
 void Player::AddFigures(FiguresVector& figures, IFigurePtr king)
 {
 	m_figures = figures;
@@ -43,18 +73,28 @@ bool Player::IsAnyMovePossible(const FiguresVector& opponentPlayerFigures) const
 			return true;
 		}
 
-		//for (auto& figure : m_figures)
-		//{
-		//	std::vector<Pos> possibleMoves = figure->CalculatePossibleMoves(m_figures, opponentPlayerFigures);
-		//	for (auto& move : possibleMoves)
-		//	{
-		//		std::vector<Pos> opponentTakingMoves = GetOpponentTakingMoves(opponentPlayerFigures);
-		//		if (IsKingUnderAttack(opponentTakingMoves))
-		//		{
-		//
-		//		}
-		//	}
-		//}
+		for (auto& figure : m_figures)
+		{
+			std::vector<Pos> possibleMoves = figure->CalculatePossibleMoves(m_figures, opponentPlayerFigures);
+			for (auto& move : possibleMoves)
+			{
+				auto [clonedFiguresVector, kingCopy] = CloneFigures();
+				auto clonedOpponentFigures = CloneOpponentFigures(opponentPlayerFigures);
+				auto figureCopy = std::find(clonedFiguresVector.begin(), clonedFiguresVector.end(), figure);
+				if (figureCopy == clonedFiguresVector.end())
+				{
+					throw(std::exception("bad figures copy"));
+				}
+				(*figureCopy)->SetPixelPosition(GetPixelPosFromCellPos(move));
+				std::erase_if(clonedOpponentFigures, [&](auto& figure) {return figure->GetPosition() == move; });
+
+				std::vector<Pos> opponentTakingMoves = GetOpponentTakingMoves(clonedOpponentFigures, clonedFiguresVector);
+				if (std::find(opponentTakingMoves.begin(), opponentTakingMoves.end(), kingCopy->GetPosition()) == opponentTakingMoves.end())
+				{
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 	for (auto& figure : m_figures)
@@ -79,33 +119,21 @@ bool Player::IsKingUnderAttack(const std::vector<Pos>& opponentTakingMoves) cons
 
 bool Player::CanKingEscape(const FiguresVector& opponentPlayerFigures) const
 {
-	//std::vector<Pos> kingPossibleMoves = m_king->CalculatePossibleMoves(m_figures, opponentPlayerFigures);
-	//for (auto& move : kingPossibleMoves)
-	//{
-	//	FiguresVector opponentTakingMoves;
-	//	if (std::find(opponentTakingMoves.begin(), opponentTakingMoves.end(), move) == opponentTakingMoves.end())
-	//	{
-	//		return true;
-	//	}
-	//}
-	return false;
-}
-
-std::vector<Pos> Player::GetOpponentTakingMoves(const FiguresVector& opponentPlayerFigures, const FiguresVector& currentPlayerFigures) const
-{
-	std::vector<Pos> takingMoves;
-	for (auto& opponentFigure : opponentPlayerFigures)
+	std::vector<Pos> kingPossibleMoves = m_king->CalculatePossibleMoves(m_figures, opponentPlayerFigures);
+	for (auto& move : kingPossibleMoves)
 	{
-		std::vector<Pos> possibleMoves = opponentFigure->CalculatePossibleMoves(opponentPlayerFigures, currentPlayerFigures);
-		for (auto& move : possibleMoves)
+		auto [clonedFiguresVector, kingCopy] = CloneFigures();
+		auto clonedOpponentFigures = CloneOpponentFigures(opponentPlayerFigures);
+		kingCopy->SetPixelPosition(GetPixelPosFromCellPos(move));
+		std::erase_if(clonedOpponentFigures, [&](auto& figure) {return figure->GetPosition() == move; });
+
+		std::vector<Pos> opponentTakingMoves = GetOpponentTakingMoves(clonedOpponentFigures, clonedFiguresVector);
+		if (std::find(opponentTakingMoves.begin(), opponentTakingMoves.end(), move) == opponentTakingMoves.end())
 		{
-			if (opponentFigure->IsFigureTaking(move, currentPlayerFigures))
-			{
-				takingMoves.push_back(move);
-			}
+			return true;
 		}
 	}
-	return takingMoves;
+	return false;
 }
 
 std::pair<FiguresVector, IFigurePtr> Player::CloneFigures() const

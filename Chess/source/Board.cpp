@@ -32,7 +32,6 @@ void Board::SetCurrentFigure(Pos mouseCell, PlayerColor currentPlayer)
 	RemoveHighlights();
 	m_selectedFigureCell = mouseCell;
 	auto currentFigure = GetCurrentFigure();
-	currentFigure->OnAnimation();
 	UpdatePossibleMoves(currentPlayer);
 }
 

@@ -27,7 +27,6 @@ public:
 	__declspec(dllexport) Pos GetPixelTempPosition() const override;
 	__declspec(dllexport) bool IsInPossibleMoves(const Pos& destinationPos) const override;
 	__declspec(dllexport) Pos GetCellTempPosition() const override;
-	__declspec(dllexport) void OnAnimation() override;
 	__declspec(dllexport) bool IsFigureTaking(Pos destinationCell, const FiguresVector& opponentPlayerFigures) const;
 	__declspec(dllexport) virtual std::shared_ptr<IFigure> Clone() const override = 0;
 protected:
