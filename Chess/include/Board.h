@@ -46,7 +46,7 @@ private:
 	void CreateWhite(TexturesMap& textures);
 	void CreateBlack(TexturesMap& textures);
 	void DrawCells(IWindowPtr& window);
-	void DrawFigures(IWindowPtr& window);
+	void DrawFiguresAndHighlights(IWindowPtr& window);
 
 	Cells m_board;
 	FiguresMap m_figures;

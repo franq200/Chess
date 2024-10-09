@@ -19,7 +19,7 @@ Board::Board(std::array<ICellPtr, 64> cells, TexturesMap& textures)
 void Board::Draw(IWindowPtr& window)
 {
 	DrawCells(window);
-	DrawFigures(window);
+	DrawFiguresAndHighlights(window);
 }
 
 bool Board::IsCellOccupied(Pos mouseCell, const IPlayerPtr& currentPlayer) const
@@ -118,6 +118,7 @@ void Board::EndAnimation(const Pos& mouseCell)
 		auto currentFigure = GetCurrentFigure();
 		currentFigure->RestorePositionBeforeAnimation();
 	}
+	m_mousePosInFigure = std::nullopt;
 	m_isAnimating = false;
 }
 
@@ -160,13 +161,14 @@ void Board::DrawCells(IWindowPtr& window)
 	}
 }
 
-void Board::DrawFigures(IWindowPtr& window)
+void Board::DrawFiguresAndHighlights(IWindowPtr& window)
 {
 	for (int x = 0; x < m_board.size(); x++)
 	{
 		for (int y = 0; y < m_board[x].size(); y++)
 		{
 			m_board[x][y]->DrawFigures(window);
+			m_board[x][y]->DrawHighlights(window);
 		}
 	}
 	if (m_selectedFigureCell.has_value())

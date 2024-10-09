@@ -22,6 +22,7 @@ public:
 	__declspec(dllexport) void RemoveHighlight() override;
 	__declspec(dllexport) void DrawCells(IWindowPtr& window) override;
 	__declspec(dllexport) void DrawFigures(IWindowPtr& window) override;
+	__declspec(dllexport) void DrawHighlights(IWindowPtr& window) override;
 private:
 	void InitHighlights();
 	std::unique_ptr<IRectangleShape> m_cell;
