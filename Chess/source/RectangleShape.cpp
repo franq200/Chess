@@ -51,5 +51,5 @@ Pos RectangleShape::GetPixelTempPosition() const
 Pos RectangleShape::GetCellTempPosition() const
 {
 	sf::Vector2f pos = m_shape.getPosition();
-	return GetCellPosFromPixelPos(Pos(static_cast<int16_t>(pos.x), static_cast<int16_t>(pos.y)));
+	return functions::GetCellPosFromPixelPos(Pos(static_cast<int16_t>(pos.x), static_cast<int16_t>(pos.y)));
 }

@@ -11,7 +11,7 @@
 #include "interface/ITexture.h"
 #include "interface/IRectangleShape.h"
 
-Board::Board(std::array<ICellPtr, 64> cells, TexturesMap& textures)
+Board::Board(std::array<ICellPtr, 64>& cells, TexturesMap& textures)
 {
 	CreateBoard(cells);
 }
@@ -199,7 +199,7 @@ void Board::CreateBoard(std::array<ICellPtr, 64>& cells)
 		std::vector<ICellPtr> row;
 		for (int y = 0; y < 8; y++)
 		{
-			uint8_t cellIndex = GetCellIndex(Pos(x, y));
+			uint8_t cellIndex = functions::GetCellIndex(Pos(x, y));
 			if ((x + y) % 2 == 0)
 			{
 				cells[cellIndex]->SetFillColor(Color(0, 200, 0));

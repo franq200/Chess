@@ -3,29 +3,54 @@
 #include "WindowMock.h"
 #include "BoardMock.h"
 #include "PlayerMock.h"
+#include "FigureMock.h"
+#include "CellMock.h"
 #include "Game.h"
+#include "Board.h"
 #include "Helper.h"
 #include "MouseMock.h"
 
-
-TexturesMap CreateTextures()
+namespace
 {
-	TexturesMap textures;
-	textures["blackPawn"] = std::make_unique<TextureMock>();
-	textures["blackQueen"] = std::make_unique<TextureMock>();
-	textures["blackKing"] = std::make_unique<TextureMock>();
-	textures["blackKnight"] = std::make_unique<TextureMock>();
-	textures["blackRook"] = std::make_unique<TextureMock>();
-	textures["blackBishop"] = std::make_unique<TextureMock>();
-	textures["whitePawn"] = std::make_unique<TextureMock>();
-	textures["whiteQueen"] = std::make_unique<TextureMock>();
-	textures["whiteKing"] = std::make_unique<TextureMock>();
-	textures["whiteKnight"] = std::make_unique<TextureMock>();
-	textures["whiteRook"] = std::make_unique<TextureMock>();
-	textures["whiteBishop"] = std::make_unique<TextureMock>();
-	textures["boardGrey"] = std::make_unique<TextureMock>();
-	textures["boardRed"] = std::make_unique<TextureMock>();
-	return textures;
+	std::array < std::unique_ptr<testing::NiceMock<CellMock>>, 64> CreateCells()
+	{
+		std::array < std::unique_ptr<testing::NiceMock<CellMock>>, 64> cells;
+		for (int i = 0; i < cells.size(); i++)
+		{
+			cells[i] = std::make_unique<testing::NiceMock<CellMock>>();
+		}
+		return cells;
+	}
+
+	FiguresVector CreateFigures()
+	{
+		FiguresVector figures;
+		for (int i = 0; i < 16; i++)
+		{
+			figures.push_back(std::make_shared<testing::NiceMock<FigureMock>>());
+		}
+		return figures;
+	}
+
+	TexturesMap CreateTextures()
+	{
+		TexturesMap textures;
+		textures["blackPawn"] = std::make_unique<TextureMock>();
+		textures["blackQueen"] = std::make_unique<TextureMock>();
+		textures["blackKing"] = std::make_unique<TextureMock>();
+		textures["blackKnight"] = std::make_unique<TextureMock>();
+		textures["blackRook"] = std::make_unique<TextureMock>();
+		textures["blackBishop"] = std::make_unique<TextureMock>();
+		textures["whitePawn"] = std::make_unique<TextureMock>();
+		textures["whiteQueen"] = std::make_unique<TextureMock>();
+		textures["whiteKing"] = std::make_unique<TextureMock>();
+		textures["whiteKnight"] = std::make_unique<TextureMock>();
+		textures["whiteRook"] = std::make_unique<TextureMock>();
+		textures["whiteBishop"] = std::make_unique<TextureMock>();
+		textures["boardGrey"] = std::make_unique<TextureMock>();
+		textures["boardRed"] = std::make_unique<TextureMock>();
+		return textures;
+	}
 }
 
 class BasicChessTests : public testing::Test
@@ -46,56 +71,66 @@ protected:
 	{
 		Game game(texturesMock, std::move(boardMock), std::move(windowMock), std::move(mouseMock), std::move(white), std::move(black));
 		return game;
-		//return { std::move(texturesMock), std::move(boardMock), std::move(windowMock) };
 	}
-};
 
-void ExpectTexturesLoaded(TexturesMap& texturesMock)
-{
-	for (auto& [key, texture] : texturesMock)
+	void ExpectWhitePlayerFigures(const FiguresVector& figures)
 	{
-		EXPECT_CALL(dynamic_cast<TextureMock&>(*texture), LoadFromFile(testing::_)).Times(1).WillOnce(testing::Return(true));
+		EXPECT_CALL(*white, GetFigures()).Times(testing::AtLeast(1)).WillRepeatedly(testing::ReturnRefOfCopy(figures));
 	}
-}
 
-void ExpectSomeTexturesToFail(TexturesMap& texturesMock, int amountOfTexturesToFail)
-{
-	int i = 0;
-	for (auto& [key, texture] : texturesMock)
+	void ExpectBlackPlayerFigures(const FiguresVector& figures)
 	{
-		if (i < amountOfTexturesToFail)
-		{
-			EXPECT_CALL(dynamic_cast<TextureMock&>(*texture), LoadFromFile(testing::_)).Times(1).WillOnce(testing::Return(false));
-		}
-		else
+		EXPECT_CALL(*black, GetFigures()).Times(testing::AtLeast(1)).WillRepeatedly(testing::ReturnRefOfCopy(figures));
+	}
+
+	void ExpectTexturesLoaded()
+	{
+		for (auto& [key, texture] : texturesMock)
 		{
 			EXPECT_CALL(dynamic_cast<TextureMock&>(*texture), LoadFromFile(testing::_)).Times(1).WillOnce(testing::Return(true));
 		}
-		i++;
 	}
-}
+
+	void ExpectSomeTexturesToFail(int amountOfTexturesToFail)
+	{
+		int i = 0;
+		for (auto& [key, texture] : texturesMock)
+		{
+			if (i < amountOfTexturesToFail)
+			{
+				EXPECT_CALL(dynamic_cast<TextureMock&>(*texture), LoadFromFile(testing::_)).Times(1).WillOnce(testing::Return(false));
+			}
+			else
+			{
+				EXPECT_CALL(dynamic_cast<TextureMock&>(*texture), LoadFromFile(testing::_)).Times(1).WillOnce(testing::Return(true));
+			}
+			i++;
+		}
+	}
+};
 
 TEST_F(GameTest, AreTexturesBeingLoaded)
 {
-	ExpectTexturesLoaded(texturesMock);
+	ExpectTexturesLoaded();
 	Game game = createSut();
 }
 
 TEST_F(GameTest, DoesTexturesDetectIfOneTextureFailsToLoadAndThrowException)
 {
-	ExpectSomeTexturesToFail(texturesMock, 1);
+	ExpectSomeTexturesToFail(1);
 	EXPECT_THROW(Game game = createSut(), std::exception);
 }
 
 TEST_F(GameTest, DoesTexturesDetectIfFiveTextureFailsToLoadAndThrowException)
 {
-	ExpectSomeTexturesToFail(texturesMock, 5);
+	ExpectSomeTexturesToFail(5);
 	EXPECT_THROW(Game game = createSut(), std::exception);
 }
 
 TEST_F(GameTest, WindowClearAndDisplayFunctionsShouldBeCalledAsLongAsFunctionIsOpenReturnTrue)
 {
-	ExpectTexturesLoaded(texturesMock);
+	ExpectTexturesLoaded();
+	ExpectBlackPlayerFigures(CreateFigures());
 	EXPECT_CALL(*windowMock, IsOpen()).Times(4).WillOnce(testing::Return(true)).WillOnce(testing::Return(true)).WillOnce(testing::Return(true)).WillOnce(testing::Return(false));
 	EXPECT_CALL(*mouseMock, IsMouseInWindow(testing::_)).Times(4).WillOnce(testing::Return(true)).WillOnce(testing::Return(true)).WillOnce(testing::Return(true)).WillOnce(testing::Return(true));
 	EXPECT_CALL(*windowMock, Clear()).Times(3);
@@ -121,7 +156,7 @@ class GetCellIndexParameterizedTestFixtureCorrectNumbers : public ::testing::Tes
 TEST_P(GetCellIndexParameterizedTestFixtureCorrectNumbers, GetCellIndexTestCorrectNumbers)
 {
 	Parameters parameters = GetParam();
-	EXPECT_EQ(GetCellIndex(parameters.index), parameters.result);
+	EXPECT_EQ(functions::GetCellIndex(parameters.index), parameters.result);
 }
 
 INSTANTIATE_TEST_SUITE_P(GetCellIndexTestCorrectNumbers, GetCellIndexParameterizedTestFixtureCorrectNumbers, ::testing::Values(
@@ -134,12 +169,13 @@ INSTANTIATE_TEST_SUITE_P(GetCellIndexTestCorrectNumbers, GetCellIndexParameteriz
 	Parameters{ {5, 5}, 45}
 ));
 
+
 class GetCellIndexParameterizedTestFixtureWrongNumbers : public ::testing::TestWithParam<Parameters> {};
 
 TEST_P(GetCellIndexParameterizedTestFixtureWrongNumbers, GetCellIndexTestWrongNumbers)
 {
 	Parameters parameters = GetParam();
-	EXPECT_THROW(GetCellIndex(parameters.index), std::exception);
+	EXPECT_THROW(functions::GetCellIndex(parameters.index), std::exception);
 }
 
 INSTANTIATE_TEST_SUITE_P(GetCellIndexTestWrongNumbers, GetCellIndexParameterizedTestFixtureWrongNumbers, ::testing::Values(
@@ -147,3 +183,27 @@ INSTANTIATE_TEST_SUITE_P(GetCellIndexTestWrongNumbers, GetCellIndexParameterized
 	Parameters{ {3, 8}, 1 },
 	Parameters{ {9, 9}, 16 }
 ));
+
+
+class BoardTest : public BasicChessTests
+{
+protected:
+	Board CreateSut()
+	{
+		std::array<std::unique_ptr<testing::NiceMock<CellMock>>, 64> test = CreateCells();
+		Board board(std::ref(test), texturesMock);
+		return board;
+	}
+	std::array < std::unique_ptr<testing::NiceMock<CellMock>>, 64> cellsMock = CreateCells();
+};
+
+#include "Player.h"
+
+TEST_F(BoardTest, jjjj)
+{
+	Board board = CreateSut();
+	Pos expectedPos = Pos(0, 0);
+	EXPECT_CALL(*cellsMock[functions::GetCellIndex(expectedPos)], IsOccupiedByPlayer(testing::_)).WillOnce(testing::Return(true));
+
+	board.IsCellOccupied(Pos(0,0), std::move(white));
+}

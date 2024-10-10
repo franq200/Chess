@@ -85,7 +85,7 @@ bool Player::IsAnyMovePossible(const FiguresVector& opponentPlayerFigures) const
 				{
 					throw(std::exception("bad figures copy"));
 				}
-				(*figureCopy)->SetPixelPosition(GetPixelPosFromCellPos(move));
+				(*figureCopy)->SetPixelPosition(functions::GetPixelPosFromCellPos(move));
 				std::erase_if(clonedOpponentFigures, [&](auto& figure) {return figure->GetPosition() == move; });
 
 				std::vector<Pos> opponentTakingMoves = GetOpponentTakingMoves(clonedOpponentFigures, clonedFiguresVector);
@@ -124,7 +124,7 @@ bool Player::CanKingEscape(const FiguresVector& opponentPlayerFigures) const
 	{
 		auto [clonedFiguresVector, kingCopy] = CloneFigures();
 		auto clonedOpponentFigures = CloneOpponentFigures(opponentPlayerFigures);
-		kingCopy->SetPixelPosition(GetPixelPosFromCellPos(move));
+		kingCopy->SetPixelPosition(functions::GetPixelPosFromCellPos(move));
 		std::erase_if(clonedOpponentFigures, [&](auto& figure) {return figure->GetPosition() == move; });
 
 		std::vector<Pos> opponentTakingMoves = GetOpponentTakingMoves(clonedOpponentFigures, clonedFiguresVector);

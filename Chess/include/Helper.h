@@ -69,9 +69,12 @@ namespace size
 	extern uint16_t cellSizeYPix;
 }
 
-__declspec(dllexport) Pos GetPixelPosFromCellPos(Pos pos);
-__declspec(dllexport) Pos GetCellPosFromPixelPos(Pos pos);
+namespace functions
+{
+	__declspec(dllexport) Pos GetPixelPosFromCellPos(Pos pos);
+	__declspec(dllexport) Pos GetCellPosFromPixelPos(Pos pos);
 
-__declspec(dllexport) int GetCellIndex(Pos posIndex);
+	__declspec(dllexport) int GetCellIndex(Pos posIndex);
 
-__declspec(dllexport) std::array<ICellPtr, 64> CreateCells();
+	__declspec(dllexport) std::array<ICellPtr, 64> CreateCells();
+}

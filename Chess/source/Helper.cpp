@@ -57,31 +57,34 @@ Size::Size(uint16_t newX, uint16_t newY):
 {
 }
 
-Pos GetPixelPosFromCellPos(Pos pos)
+namespace functions
 {
-	return Pos(pos.x * size::cellSizeXPix, pos.y * size::cellSizeYPix);
-}
-
-Pos GetCellPosFromPixelPos(Pos pos)
-{
-	return Pos(pos.x / size::cellSizeXPix, pos.y / size::cellSizeYPix);
-}
-
-int GetCellIndex(Pos posIndex)
-{
-	if (posIndex.x >= 8 || posIndex.y >= 8 || posIndex.x < 0 || posIndex.y < 0)
+	Pos GetPixelPosFromCellPos(Pos pos)
 	{
-		throw(std::exception("too big position index"));
+		return Pos(pos.x * size::cellSizeXPix, pos.y * size::cellSizeYPix);
 	}
-	return posIndex.x + posIndex.y * 8;
-}
 
-std::array<ICellPtr, 64> CreateCells()
-{
-	std::array<ICellPtr, 64> cells;
-	for (int i = 0; i < cells.size(); i++)
+	Pos GetCellPosFromPixelPos(Pos pos)
 	{
-		cells[i] = std::make_unique<Cell>();
+		return Pos(pos.x / size::cellSizeXPix, pos.y / size::cellSizeYPix);
 	}
-	return cells;
+
+	int GetCellIndex(Pos posIndex)
+	{
+		if (posIndex.x >= 8 || posIndex.y >= 8 || posIndex.x < 0 || posIndex.y < 0)
+		{
+			throw(std::exception("too big position index"));
+		}
+		return posIndex.x + posIndex.y * 8;
+	}
+
+	std::array<ICellPtr, 64> CreateCells()
+	{
+		std::array<ICellPtr, 64> cells;
+		for (int i = 0; i < cells.size(); i++)
+		{
+			cells[i] = std::make_unique<Cell>();
+		}
+		return cells;
+	}
 }

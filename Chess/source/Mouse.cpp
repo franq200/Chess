@@ -10,7 +10,7 @@ bool Mouse::IsButtonPressed(Button button) const
 Pos Mouse::GetCellPosition(const IWindowPtr& window)
 {
 	sf::Vector2i mousePos = m_mouse.getPosition(*window->GetSfmlWindow());
-	return GetCellPosFromPixelPos(Pos(mousePos.x, mousePos.y));
+	return functions::GetCellPosFromPixelPos(Pos(mousePos.x, mousePos.y));
 }
 
 Pos Mouse::GetPixelPosition(const IWindowPtr& window)

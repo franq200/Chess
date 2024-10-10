@@ -8,7 +8,7 @@ Figure::Figure(const ITexture& texture, Pos pos, Size size)
     m_startingPos = pos;
     m_figureShape.SetOutlineColor(Color(50, 50, 150));
     m_figureShape.SetTexture(texture);
-    SetPixelPosition(GetPixelPosFromCellPos(pos));
+    SetPixelPosition(functions::GetPixelPosFromCellPos(pos));
     m_figureShape.SetSize(size);
 }
 
@@ -38,7 +38,7 @@ void Figure::Draw(IWindowPtr& window)
 void Figure::SetPixelPosition(Pos pos)
 {
     SetShapePos(pos);
-    m_position = GetCellPosFromPixelPos(m_figureShape.GetPosition());
+    m_position = functions::GetCellPosFromPixelPos(m_figureShape.GetPosition());
 }
 
 Pos Figure::GetPosition() const
@@ -96,7 +96,7 @@ void Figure::SetShapePos(const Pos& shapePos)
 
 void Figure::RestorePositionBeforeAnimation()
 {
-    m_figureShape.SetPixelPosition(GetPixelPosFromCellPos(m_position));
+    m_figureShape.SetPixelPosition(functions::GetPixelPosFromCellPos(m_position));
 }
 
 Pos Figure::GetPixelTempPosition() const
