@@ -7,14 +7,15 @@
 #include "CellMock.h"
 #include "Game.h"
 #include "Board.h"
+#include "Player.h"
 #include "Helper.h"
 #include "MouseMock.h"
 
 namespace
 {
-	std::array < std::unique_ptr<testing::NiceMock<CellMock>>, 64> CreateCells()
+	std::array<ICellPtr, 64> CreateCells()
 	{
-		std::array < std::unique_ptr<testing::NiceMock<CellMock>>, 64> cells;
+		std::array<ICellPtr, 64> cells;
 		for (int i = 0; i < cells.size(); i++)
 		{
 			cells[i] = std::make_unique<testing::NiceMock<CellMock>>();
@@ -151,7 +152,7 @@ struct Parameters
 	int result = 0;
 };
 
-class GetCellIndexParameterizedTestFixtureCorrectNumbers : public ::testing::TestWithParam<Parameters>{};
+class GetCellIndexParameterizedTestFixtureCorrectNumbers : public ::testing::TestWithParam<Parameters> {};
 
 TEST_P(GetCellIndexParameterizedTestFixtureCorrectNumbers, GetCellIndexTestCorrectNumbers)
 {
@@ -160,13 +161,13 @@ TEST_P(GetCellIndexParameterizedTestFixtureCorrectNumbers, GetCellIndexTestCorre
 }
 
 INSTANTIATE_TEST_SUITE_P(GetCellIndexTestCorrectNumbers, GetCellIndexParameterizedTestFixtureCorrectNumbers, ::testing::Values(
-	Parameters{ {7, 1}, 15},
-	Parameters{ {1, 4}, 33},
-	Parameters{ {3, 7}, 59},
-	Parameters{ {7, 7}, 63},
-	Parameters{ {0, 0}, 0},
-	Parameters{ {1, 1}, 9},
-	Parameters{ {5, 5}, 45}
+	Parameters{ {7, 1}, 15 },
+	Parameters{ {1, 4}, 33 },
+	Parameters{ {3, 7}, 59 },
+	Parameters{ {7, 7}, 63 },
+	Parameters{ {0, 0}, 0 },
+	Parameters{ {1, 1}, 9 },
+	Parameters{ {5, 5}, 45 }
 ));
 
 
@@ -190,20 +191,30 @@ class BoardTest : public BasicChessTests
 protected:
 	Board CreateSut()
 	{
-		std::array<std::unique_ptr<testing::NiceMock<CellMock>>, 64> test = CreateCells();
-		Board board(std::ref(test), texturesMock);
+		Board board(std::move(cellsMock), texturesMock);
 		return board;
 	}
-	std::array < std::unique_ptr<testing::NiceMock<CellMock>>, 64> cellsMock = CreateCells();
+	std::array <ICellPtr, 64> cellsMock = CreateCells();
 };
-
-#include "Player.h"
 
 TEST_F(BoardTest, jjjj)
 {
-	Board board = CreateSut();
 	Pos expectedPos = Pos(0, 0);
-	EXPECT_CALL(*cellsMock[functions::GetCellIndex(expectedPos)], IsOccupiedByPlayer(testing::_)).WillOnce(testing::Return(true));
+	testing::NiceMock<CellMock>* expectedMock = dynamic_cast<testing::NiceMock<CellMock>*>(cellsMock[functions::GetCellIndex(expectedPos)].get());
+	EXPECT_TRUE( expectedMock != nullptr);
+    EXPECT_CALL(*expectedMock, IsOccupiedByPlayer(testing::_)).WillOnce(testing::Return(true));
+//	EXPECT_CALL(*cellsMock[functions::GetCellIndex(expectedPos)], IsOccupiedByPlayer(testing::_)).WillOnce(testing::Return(true));
+	Board board = CreateSut();
 
-	board.IsCellOccupied(Pos(0,0), std::move(white));
+	board.IsCellOccupied(Pos(0, 0), std::move(white));
 }
+
+class PlayerTest : public BasicChessTests
+{
+protected:
+	Player CreateSut()
+	{
+		Player player;
+		return player;
+	}
+};

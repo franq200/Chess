@@ -25,6 +25,7 @@ public:
 	virtual Pos GetCellTempPosition() const = 0;
 	virtual bool IsFigureTaking(Pos destinationCell, const FiguresVector& opponentPlayerFigures) const = 0;
 	virtual std::shared_ptr<IFigure> Clone() const = 0;
+	virtual void OnMove() = 0;
 	friend bool operator==(const std::shared_ptr<IFigure>& lhs, const std::shared_ptr<IFigure>& rhs);
 protected:
 	Pos m_startingPos;

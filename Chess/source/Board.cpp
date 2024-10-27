@@ -11,7 +11,7 @@
 #include "interface/ITexture.h"
 #include "interface/IRectangleShape.h"
 
-Board::Board(std::array<ICellPtr, 64>& cells, TexturesMap& textures)
+Board::Board(std::array<ICellPtr, 64> cells, TexturesMap& textures)
 {
 	CreateBoard(cells);
 }
@@ -76,6 +76,7 @@ void Board::MoveCurrentFiguresToNewCell(Pos mouseCell, IPlayerPtr& opponent)
 	{
 		RemoveFigure(mouseCell, opponent);
 	}
+	GetCurrentFigure()->OnMove();
 	m_board[mouseCell.x][mouseCell.y]->SetFigure(GetCurrentFigure());
 	m_board[m_selectedFigureCell.value().x][m_selectedFigureCell.value().y]->RemoveFigure();
 	m_selectedFigureCell.reset();

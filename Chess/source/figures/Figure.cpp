@@ -48,7 +48,7 @@ Pos Figure::GetPosition() const
 
 bool Figure::IsMoveAllowed(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const
 {
-    if (IsMoveAllowedForThisFigure(destinationCell))
+    if (IsMoveAllowedForThisFigure(destinationCell) || IsCastle(destinationCell))
     {
         if (IsCollisionWithAnyPlayer(destinationCell, currentPlayerFigures, opponentPlayerFigures))
         {
@@ -56,6 +56,16 @@ bool Figure::IsMoveAllowed(Pos destinationCell, const FiguresVector& currentPlay
         }
         return true;
     }
+    return false;
+}
+
+bool Figure::IsMoveAllowedForThisFigure(const Pos& destinationCell) const
+{
+    return false;
+}
+
+bool Figure::IsCastle(const Pos& destinationCell) const
+{
     return false;
 }
 
@@ -177,6 +187,16 @@ bool Figure::IsFigureTaking(Pos destinationCell, const FiguresVector& opponentPl
         }
     }
     return false;
+}
+
+std::shared_ptr<IFigure> Figure::Clone() const
+{
+    return std::shared_ptr<IFigure>();
+}
+
+void Figure::OnMove()
+{
+    m_moveCounter++;
 }
 
 bool operator==(const std::shared_ptr<IFigure>& lhs, const std::shared_ptr<IFigure>& rhs)

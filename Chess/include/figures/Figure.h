@@ -28,11 +28,13 @@ public:
 	__declspec(dllexport) bool IsInPossibleMoves(const Pos& destinationPos) const override;
 	__declspec(dllexport) Pos GetCellTempPosition() const override;
 	__declspec(dllexport) bool IsFigureTaking(Pos destinationCell, const FiguresVector& opponentPlayerFigures) const;
-	__declspec(dllexport) virtual std::shared_ptr<IFigure> Clone() const override = 0;
+	__declspec(dllexport) virtual std::shared_ptr<IFigure> Clone() const override;
+	__declspec(dllexport) virtual void OnMove() override;
 protected:
 
 	virtual bool IsMoveAllowed(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const;
-	virtual bool IsMoveAllowedForThisFigure(const Pos& destinationCell) const = 0;
+	virtual bool IsMoveAllowedForThisFigure(const Pos& destinationCell) const;
+	virtual bool IsCastle(const Pos& destinationCell) const;
 
 	Positions GetTopPath(const Pos pos, const Pos destinationCell) const;
 	Positions GetDownPath(const Pos pos, const Pos destinationCell) const;

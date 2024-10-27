@@ -28,3 +28,8 @@ bool King::IsMoveAllowedForThisFigure(const Pos& destinationCell) const
     uint8_t xDifference = std::abs(destinationCell.x - pos.x);
     return xDifference + yDifference == 1 || (xDifference == 1 && yDifference == 1);
 }
+
+bool King::IsCastle(const Pos& destinationCell) const
+{
+    return m_moveCounter == 0 && (destinationCell.x == 1 || destinationCell.x == 6);
+}

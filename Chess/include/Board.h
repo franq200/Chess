@@ -22,7 +22,7 @@ class Board : public IBoard
 {
 public:
 	//__declspec(dllexport) Board() = default;
-	__declspec(dllexport) Board(std::array < ICellPtr, 64>& cells, TexturesMap& textures);
+	__declspec(dllexport) Board(std::array < ICellPtr, 64> cells, TexturesMap& textures);
 
 	__declspec(dllexport) bool IsCellOccupied(Pos mouseCell, const IPlayerPtr& currentPlayer) const override;
 	__declspec(dllexport) bool IsAnimating() const override;

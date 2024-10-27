@@ -10,5 +10,6 @@ public:
 	__declspec(dllexport) std::shared_ptr<IFigure> Clone() const override;
 protected:
 	bool IsMoveAllowedForThisFigure(const Pos& destinationCell) const override;
+	bool IsCastle(const Pos& destinationCell) const override;
 };
 
