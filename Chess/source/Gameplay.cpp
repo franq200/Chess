@@ -22,14 +22,17 @@ Gameplay::Gameplay(TexturesMap& textures,
 
 bool Gameplay::Update(IWindowPtr& window, IMousePtr& mouse)
 {
-	TryEndGame();
-	MoveAndSetCurrentFigure(window, mouse);
-	if (m_board->IsAnimating())
+	if (!TryEndGame())
 	{
-		AnimateMoving(window, mouse);
+		MoveAndSetCurrentFigure(window, mouse);
+		if (m_board->IsAnimating())
+		{
+			AnimateMoving(window, mouse);
+		}
+		Draw(window);
+		return true;
 	}
-	Draw(window);
-	return true;
+	return false;
 }
 
 void Gameplay::AnimateMoving(IWindowPtr& window, IMousePtr& mouse)
@@ -69,7 +72,7 @@ PlayerColor Gameplay::GetCurrentPlayerColor() const
 
 bool Gameplay::TryEndGame() const
 {
-	return (*m_currentPlayer)->IsAnyMovePossible(GetOpponentFigures());
+	return !(*m_currentPlayer)->IsAnyMovePossible(GetOpponentFigures());
 }
 
 void Gameplay::MoveAndSetCurrentFigure(IWindowPtr& window, IMousePtr& mouse)

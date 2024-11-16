@@ -18,6 +18,8 @@ using Figures = std::vector < IFigurePtr>;
 using FiguresMap = std::map<PlayerColor, Figures>;
 using Cells = std::vector<std::vector<ICellPtr>>;
 
+using Positions = std::vector<Pos>;
+
 class Board : public IBoard
 {
 public:
@@ -35,6 +37,10 @@ public:
 	__declspec(dllexport) void CreateFigures(TexturesMap& textures, IPlayerPtr& white, IPlayerPtr& black) override;
 	__declspec(dllexport) void Draw(IWindowPtr& window) override;
 private:
+	bool IsShortCastlePossible(const Positions& opponentTakingMoves) const;
+	bool IsLongCastlePossible(const Positions& opponentTakingMoves) const;
+	std::vector<Pos> GetTakingMoves(const IFigurePtr& currentFigure, const Figures& opponentFigures, const Positions& possibleMoves) const;
+	void HighlightMoves(const Positions& possibleMoves);
 	std::pair<Figures, Figures> GetPlayersFigures(PlayerColor currentPlayer) const;
 	IFigurePtr GetCurrentFigure() const;
 	bool IsItTakingMove(const Pos& move) const;

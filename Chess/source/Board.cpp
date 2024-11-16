@@ -11,6 +11,39 @@
 #include "interface/ITexture.h"
 #include "interface/IRectangleShape.h"
 
+namespace
+{
+	std::vector<Pos> GetRooksPositions(const FiguresVector& currentPlayerFigures)
+	{
+		std::vector<Pos> rooksPos;
+		for (auto& figure : currentPlayerFigures)
+		{
+			if (figure->)
+			{
+				rooksPos.push_back(figure->GetPosition());
+			}
+		}
+		return rooksPos;
+	}
+
+	std::vector<Pos> GetOpponentTakingMoves(const FiguresVector& opponentPlayerFigures, const FiguresVector& currentPlayerFigures)
+	{
+		std::vector<Pos> takingMoves;
+		for (auto& opponentFigure : opponentPlayerFigures)
+		{
+			std::vector<Pos> possibleMoves = opponentFigure->CalculatePossibleMoves(opponentPlayerFigures, currentPlayerFigures);
+			for (auto& move : possibleMoves)
+			{
+				if (opponentFigure->IsFigureTaking(move, currentPlayerFigures))
+				{
+					takingMoves.push_back(move);
+				}
+			}
+		}
+		return takingMoves;
+	}
+}
+
 Board::Board(std::array<ICellPtr, 64> cells, TexturesMap& textures)
 {
 	CreateBoard(cells);
@@ -20,6 +53,51 @@ void Board::Draw(IWindowPtr& window)
 {
 	DrawCells(window);
 	DrawFiguresAndHighlights(window);
+}
+
+bool Board::IsShortCastlePossible(const Positions& opponentTakingMoves) const
+{
+	//if king not under attack
+	//if rook pos.y == king pos.y and rook pos.x == 0
+
+	if (std::find(opponentTakingMoves.begin(), opponentTakingMoves.end(), [](auto takingMove) {return takingMove == m_whiteKing->GetPositon() || takingMove == m_blackKing->GetPosition()}) != opponentTakingMoves.end())
+	{
+		return false;
+	}
+
+}
+
+bool Board::IsLongCastlePossible(const Positions& opponentTakingMoves) const
+{
+	//return false;
+}
+
+std::vector<Pos> Board::GetTakingMoves(const IFigurePtr& currentFigure, const Figures& opponentFigures, const Positions& possibleMoves) const
+{
+	std::vector<Pos> takingMoves;
+	for (auto move : possibleMoves)
+	{
+		if (currentFigure->IsFigureTaking(move, opponentFigures))
+		{
+			takingMoves.push_back(move);
+		}
+	}
+	return takingMoves;
+}
+
+void Board::HighlightMoves(const Positions& possibleMoves)
+{
+	for (auto move : possibleMoves)
+	{
+		if (!m_takingMoves.empty() && std::find(m_takingMoves.begin(), m_takingMoves.end(), [](auto takingMove) {return takingMove == move;}) == m_takingMoves.end())
+		{
+			m_board.at(move.x).at(move.y)->HighlightAsTaking();
+		}
+		else
+		{
+			m_board.at(move.x).at(move.y)->Highlight();
+		}
+	}
 }
 
 bool Board::IsCellOccupied(Pos mouseCell, const IPlayerPtr& currentPlayer) const
@@ -50,19 +128,12 @@ void Board::UpdatePossibleMoves(PlayerColor currentPlayer)
 	m_takingMoves.clear();
 	const IFigurePtr currentFigure = GetCurrentFigure();
 	auto [currentPlayerFigures, opponentFigures] = GetPlayersFigures(currentPlayer);
+	auto opponentTakingMoves = GetOpponentTakingMoves(currentPlayerFigures, opponentFigures);
+	bool isShortCastlePossible = IsShortCastlePossible(opponentTakingMoves);
+	bool isLongCastlePossible = IsLongCastlePossible(opponentTakingMoves);
 	Positions possibleMoves = currentFigure->CalculatePossibleMoves(currentPlayerFigures, opponentFigures);
-	for (auto move : possibleMoves)
-	{
-		if (currentFigure->IsFigureTaking(move, opponentFigures))
-		{
-			m_takingMoves.push_back(move);
-			m_board.at(move.x).at(move.y)->HighlightAsTaking();
-		}
-		else
-		{
-			m_board.at(move.x).at(move.y)->Highlight();
-		}
-	}
+	m_takingMoves = GetTakingMoves(currentFigure, opponentFigures, possibleMoves);
+	HighlightMoves(possibleMoves);
 }
 
 bool Board::IsCurrentFigureSet() const
