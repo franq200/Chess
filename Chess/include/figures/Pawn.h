@@ -14,7 +14,7 @@ class Pawn : public Figure
 public:
 	Pawn() = default;
 	Pawn(const ITexture& texture, Pos pos, Size size);
-	__declspec(dllexport) bool IsMoveAllowed(Pos moveCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const override;
+	__declspec(dllexport) std::unique_ptr<IMoveExecutor> GenerateExecutor(Pos moveCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const override;
 	__declspec(dllexport) std::shared_ptr<IFigure> Clone() const override;
 	__declspec(dllexport) bool IsPawn() const override;
 private:

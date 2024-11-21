@@ -2,6 +2,7 @@
 #include "interface/ITexture.h"
 #include "Helper.h"
 #include "interface/IWindow.h"
+#include "../IMoveExecutor.h"
 
 Figure::Figure(const ITexture& texture, Pos pos, Size size)
 {
@@ -46,17 +47,21 @@ Pos Figure::GetPosition() const
     return m_position;
 }
 
-bool Figure::IsMoveAllowed(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const
+std::unique_ptr<IMoveExecutor> Figure::GenerateExecutor(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const
 {
     if (IsMoveAllowedForThisFigure(destinationCell, currentPlayerFigures, opponentPlayerFigures))
     {
         if (IsCollisionWithAnyPlayer(destinationCell, currentPlayerFigures, opponentPlayerFigures))
         {
-            return false;
+            return nullptr;
         }
-        return true;
+        if (IsFigureTaking(destinationCell, opponentPlayerFigures))
+        {
+            return std::make_unique<TakingMoveExecutor>(destinationCell);
+        }
+        return std::make_unique<NormalMoveExecutor>(destinationCell);
     }
-    return false;
+    return nullptr;
 }
 
 bool Figure::IsMoveAllowedForThisFigure(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const
@@ -64,9 +69,9 @@ bool Figure::IsMoveAllowedForThisFigure(Pos destinationCell, const FiguresVector
     return false;
 }
 
-std::vector<Pos> Figure::CalculatePossibleMoves(const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures)
+std::vector<std::unique_ptr<IMoveExecutor>> Figure::CalculatePossibleMoves(const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures)
 {
-    std::vector<Pos> possibleMoves;
+    std::vector<std::unique_ptr<IMoveExecutor>> possibleMoves;
     Pos currentPos = GetPosition();
     
     for (const auto& direction : m_directions)
@@ -79,9 +84,10 @@ std::vector<Pos> Figure::CalculatePossibleMoves(const FiguresVector& currentPlay
                 };
             if (newPos.x >= 0 && newPos.x < 8 && newPos.y >= 0 && newPos.y < 8) 
             {
-                if (IsMoveAllowed(newPos, currentPlayerFigures, opponentPlayerFigures))
+                auto executor = GenerateExecutor(newPos, currentPlayerFigures, opponentPlayerFigures);
+                if (executor != nullptr)
                 {
-                    possibleMoves.push_back(newPos);
+                    possibleMoves.push_back(std::move(executor));
                 }
             }
             else

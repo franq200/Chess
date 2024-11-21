@@ -123,6 +123,7 @@
     <ClCompile Include="source/figures\King.cpp">
       <Filter>GameFiles\Figures\King</Filter>
     </ClCompile>
+    <ClCompile Include="IMoveExecutor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include/figures/Figure.h">
@@ -206,6 +207,7 @@
     <ClInclude Include="include/figures\King.h">
       <Filter>GameFiles\Figures\King</Filter>
     </ClInclude>
+    <ClInclude Include="IMoveExecutor.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ChessDiagram.cd" />

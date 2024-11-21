@@ -1,5 +1,6 @@
 #include "figures/Pawn.h"
 #include "interface/IRectangleShape.h"
+#include "../IMoveExecutor.h"
 
 Pawn::Pawn(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, size)
 {
@@ -9,40 +10,40 @@ Pawn::Pawn(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, si
 }
 
 
-bool Pawn::IsMoveAllowed(Pos moveCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const
+std::unique_ptr<IMoveExecutor> Pawn::GenerateExecutor(Pos moveCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const
 {
     Pos pos = GetPosition();
     int yDifference = moveCell.y - pos.y;
     int xDifference = moveCell.x - pos.x;
 
     if (IsCollisionWithCurrentPlayer({ moveCell }, currentPlayerFigures)) {
-        return false;
+        return nullptr;
     }
 
     if (yDifference == static_cast<int8_t>(m_dir) && xDifference == 0) {
         for (auto figure : opponentPlayerFigures) {
             Pos figurePos = figure->GetPosition();
             if (figurePos.x == moveCell.x && figurePos.y == moveCell.y) {
-                return false;
+                return nullptr;
             }
         }
-        return true;
+        return std::make_unique<NormalMoveExecutor>(moveCell);
     }
 
     if (pos.y == m_startingHeight && yDifference == 2 * static_cast<int8_t>(m_dir) && xDifference == 0) {
         if (IsCollisionWithAnyPlayer({ moveCell }, currentPlayerFigures, opponentPlayerFigures)) {
-            return false;
+            return nullptr;
         }
-        return true;
+        return std::make_unique<NormalMoveExecutor>(moveCell);
     }
 
     if (yDifference == static_cast<int8_t>(m_dir) && std::abs(xDifference) == 1) {
         if (IsFigureTaking(moveCell, opponentPlayerFigures)) {
-            return true;
+            return std::make_unique<TakingMoveExecutor>(moveCell);
         }
     }
 
-    return false;
+    return nullptr;
 }
 
 std::shared_ptr<IFigure> Pawn::Clone() const

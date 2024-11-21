@@ -119,13 +119,13 @@ bool Player::IsKingUnderAttack(const std::vector<Pos>& opponentTakingMoves) cons
 
 bool Player::CanKingEscape(const FiguresVector& opponentPlayerFigures) const
 {
-	std::vector<Pos> kingPossibleMoves = m_king->CalculatePossibleMoves(m_figures, opponentPlayerFigures);
+	std::vector<std::unique_ptr<IMoveExecutor>> kingPossibleMoves = m_king->CalculatePossibleMoves(m_figures, opponentPlayerFigures);
 	for (auto& move : kingPossibleMoves)
 	{
 		auto [clonedFiguresVector, kingCopy] = CloneFigures();
 		auto clonedOpponentFigures = CloneOpponentFigures(opponentPlayerFigures);
-		kingCopy->SetPixelPosition(functions::GetPixelPosFromCellPos(move));
-		std::erase_if(clonedOpponentFigures, [&](auto& figure) {return figure->GetPosition() == move; });
+		kingCopy->SetPixelPosition(functions::GetPixelPosFromCellPos(move->GetDestinationPos()));
+		std::erase_if(clonedOpponentFigures, [&](auto& figure) {return figure->GetPosition() == move->GetDestinationPos(); });
 
 		std::vector<Pos> opponentTakingMoves = GetOpponentTakingMoves(clonedOpponentFigures, clonedFiguresVector);
 		if (std::find(opponentTakingMoves.begin(), opponentTakingMoves.end(), move) == opponentTakingMoves.end())

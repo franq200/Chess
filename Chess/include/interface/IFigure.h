@@ -2,6 +2,7 @@
 #include <vector>
 #include "Helper.h"
 
+class IMoveExecutor;
 class IWindow;
 using IWindowPtr = std::unique_ptr<IWindow>;
 
@@ -17,7 +18,7 @@ public:
 	virtual void Draw(IWindowPtr& window) = 0;
 	virtual void SetPixelPosition(Pos pos) = 0;
 	virtual Pos GetPosition() const = 0;
-	virtual std::vector<Pos> CalculatePossibleMoves(const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) = 0;
+	virtual std::vector<std::unique_ptr<IMoveExecutor>> CalculatePossibleMoves(const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) = 0;
 	virtual void SetShapePos(const Pos& tempPos) = 0;
 	virtual void RestorePositionBeforeAnimation() = 0;
 	virtual Pos GetPixelTempPosition() const = 0;

@@ -6,6 +6,7 @@
 #include "RectangleShape.h"
 
 class ITexture;
+class IMoveExecutor;
 
 using Positions = std::vector<Pos>;
 
@@ -21,7 +22,7 @@ public:
 	__declspec(dllexport) void Draw(IWindowPtr& window) override;
 	__declspec(dllexport) void SetPixelPosition(Pos pos) override;
 	__declspec(dllexport) Pos GetPosition() const override;
-	__declspec(dllexport) virtual std::vector<Pos> CalculatePossibleMoves(const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) override;
+	__declspec(dllexport) virtual std::vector<std::unique_ptr<IMoveExecutor>> CalculatePossibleMoves(const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) override;
 	__declspec(dllexport) void SetShapePos(const Pos& tempPos) override;
 	__declspec(dllexport) void RestorePositionBeforeAnimation() override;
 	__declspec(dllexport) Pos GetPixelTempPosition() const override;
@@ -32,7 +33,7 @@ public:
 	__declspec(dllexport) virtual void OnMove() override;
 protected:
 
-	virtual bool IsMoveAllowed(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const;
+	virtual std::unique_ptr<IMoveExecutor> GenerateExecutor(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const;
 	virtual bool IsMoveAllowedForThisFigure(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const;
 
 	Positions GetTopPath(const Pos pos, const Pos destinationCell) const;
@@ -56,7 +57,7 @@ protected:
 	RectangleShape m_figureShape;
 	Positions m_directions;
 	int m_moveCounter = 0;
-	std::vector<Pos> m_possibleMoves;
+	std::vector<std::unique_ptr<IMoveExecutor>> m_possibleMoves;
 	Pos m_position;
 };
 
