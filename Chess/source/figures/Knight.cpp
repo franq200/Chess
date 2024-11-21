@@ -20,7 +20,7 @@ std::shared_ptr<IFigure> Knight::Clone() const
     return std::make_shared<Knight>(*this);
 }
 
-bool Knight::IsMoveAllowedForThisFigure(const Pos& destinationCell) const
+bool Knight::IsMoveAllowedForThisFigure(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const
 {
     Pos pos = GetPosition();
     uint8_t yDifference = std::abs(destinationCell.y - pos.y);

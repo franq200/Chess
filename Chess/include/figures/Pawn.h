@@ -16,12 +16,13 @@ public:
 	Pawn(const ITexture& texture, Pos pos, Size size);
 	__declspec(dllexport) bool IsMoveAllowed(Pos moveCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const override;
 	__declspec(dllexport) std::shared_ptr<IFigure> Clone() const override;
+	__declspec(dllexport) bool IsPawn() const override;
 private:
 	bool IsPromotion(Pos moveCell);
 	void SetDirectionBasedOnStartingPos();
 	MoveDirection m_dir = MoveDirection::unknown;
 	uint8_t m_startingHeight = 0;
 protected:
-	bool IsMoveAllowedForThisFigure(const Pos& destinationCell) const override;
+	bool IsMoveAllowedForThisFigure(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const override;
 };
 

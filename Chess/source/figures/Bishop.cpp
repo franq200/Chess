@@ -12,7 +12,7 @@ std::shared_ptr<IFigure> Bishop::Clone() const
     return std::make_shared<Bishop>(*this);
 }
 
-bool Bishop::IsMoveAllowedForThisFigure(const Pos& destinationCell) const
+bool Bishop::IsMoveAllowedForThisFigure(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const
 {
     Pos pos = GetPosition();
     uint8_t yDifference = std::abs(destinationCell.y - pos.y);

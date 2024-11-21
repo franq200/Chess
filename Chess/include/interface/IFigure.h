@@ -26,8 +26,11 @@ public:
 	virtual bool IsFigureTaking(Pos destinationCell, const FiguresVector& opponentPlayerFigures) const = 0;
 	virtual std::shared_ptr<IFigure> Clone() const = 0;
 	virtual void OnMove() = 0;
-	virtual Pos GetStartingPos() const = 0;
 	friend bool operator==(const std::shared_ptr<IFigure>& lhs, const std::shared_ptr<IFigure>& rhs);
+
+	virtual bool IsKing() const { return false; };
+	virtual bool IsRook() const { return false; };
+	virtual bool IsPawn() const { return false; };
 protected:
 	Pos m_startingPos;
 };

@@ -20,7 +20,7 @@ std::shared_ptr<IFigure> Queen::Clone() const
     return std::make_shared<Queen>(*this);
 }
 
-bool Queen::IsMoveAllowedForThisFigure(const Pos& destinationCell) const
+bool Queen::IsMoveAllowedForThisFigure(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const
 {
     Pos pos = GetPosition();
     uint8_t yDifference = std::abs(destinationCell.y - pos.y);

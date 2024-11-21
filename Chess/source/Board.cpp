@@ -13,21 +13,6 @@
 
 namespace
 {
-	std::vector<Pos> GetRooksPositions(const FiguresVector& currentPlayerFigures)
-	{
-		std::vector<Pos> rooksPos;
-		for (auto& figure : currentPlayerFigures)
-		{
-			Pos startingPos = figure->GetStartingPos();
-			bool isRook = (startingPos.x == 0 || startingPos.x == 7) && startingPos.y % 7 == 0;
-			if (isRook)
-			{
-				rooksPos.push_back(figure->GetPosition());
-			}
-		}
-		return rooksPos;
-	}
-
 	std::vector<Pos> GetOpponentTakingMoves(const FiguresVector& opponentPlayerFigures, const FiguresVector& currentPlayerFigures)
 	{
 		std::vector<Pos> takingMoves;
@@ -62,7 +47,7 @@ bool Board::IsShortCastlePossible(const Positions& opponentTakingMoves) const
 	//if king not under attack
 	//if rook pos.y == king pos.y and rook pos.x == 0
 
-	if (std::find(opponentTakingMoves.begin(), opponentTakingMoves.end(), [this](auto takingMove) {return takingMove == m_whiteKing->GetPosition() || takingMove == m_blackKing->GetPosition(); }) != opponentTakingMoves.end())
+	if (std::find_if(opponentTakingMoves.begin(), opponentTakingMoves.end(), [this](auto takingMove) {return takingMove == m_whiteKing->GetPosition() || takingMove == m_blackKing->GetPosition(); }) != opponentTakingMoves.end())
 	{
 		return false;
 	}
@@ -71,7 +56,7 @@ bool Board::IsShortCastlePossible(const Positions& opponentTakingMoves) const
 
 bool Board::IsLongCastlePossible(const Positions& opponentTakingMoves) const
 {
-	//return false;
+	return false;
 }
 
 std::vector<Pos> Board::GetTakingMoves(const IFigurePtr& currentFigure, const Figures& opponentFigures, const Positions& possibleMoves) const
@@ -91,7 +76,7 @@ void Board::HighlightMoves(const Positions& possibleMoves)
 {
 	for (auto move : possibleMoves)
 	{
-		if (!m_takingMoves.empty() && std::find(m_takingMoves.begin(), m_takingMoves.end(), [move](auto takingMove) {return takingMove.x == move.x;}) == m_takingMoves.end())
+		if (!m_takingMoves.empty() && std::find_if(m_takingMoves.begin(), m_takingMoves.end(), [move](auto takingMove) {return takingMove.x == move.x;}) == m_takingMoves.end())
 		{
 			m_board.at(move.x).at(move.y)->HighlightAsTaking();
 		}

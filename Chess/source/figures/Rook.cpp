@@ -16,7 +16,12 @@ std::shared_ptr<IFigure> Rook::Clone() const
     return std::make_shared<Rook>(*this);
 }
 
-bool Rook::IsMoveAllowedForThisFigure(const Pos& destinationCell) const
+bool Rook::IsRook() const
+{
+    return true;
+}
+
+bool Rook::IsMoveAllowedForThisFigure(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const
 {
     Pos pos = GetPosition();
     uint8_t yDifference = std::abs(destinationCell.y - pos.y);

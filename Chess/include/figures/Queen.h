@@ -9,6 +9,6 @@ public:
     Queen(const ITexture& texture, Pos pos, Size size);
     __declspec(dllexport) std::shared_ptr<IFigure> Clone() const override;
 protected:
-    bool IsMoveAllowedForThisFigure(const Pos& destinationCell) const override;
+    bool IsMoveAllowedForThisFigure(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const override;
 };
 

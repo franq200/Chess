@@ -50,6 +50,11 @@ std::shared_ptr<IFigure> Pawn::Clone() const
     return std::make_shared<Pawn>(*this);
 }
 
+bool Pawn::IsPawn() const
+{
+    return true;
+}
+
 void Pawn::SetDirectionBasedOnStartingPos() {
     if (GetPosition().y == 6) {
         m_directions = {
@@ -73,7 +78,7 @@ void Pawn::SetDirectionBasedOnStartingPos() {
     }
 }
 
-bool Pawn::IsMoveAllowedForThisFigure(const Pos& destinationCell) const
+bool Pawn::IsMoveAllowedForThisFigure(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const
 {
     return false;
 }

@@ -11,6 +11,6 @@ public:
 	Knight(const ITexture& texture, Pos pos, Size size);
 	__declspec(dllexport) std::shared_ptr<IFigure> Clone() const override;
 protected:
-	bool IsMoveAllowedForThisFigure(const Pos& destinationCell) const;
+	bool IsMoveAllowedForThisFigure(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const;
 	std::vector<Pos> GetMovePath(Pos destinationCell, Pos currentPos) const;
 };
