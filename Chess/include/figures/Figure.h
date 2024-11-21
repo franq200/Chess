@@ -30,6 +30,7 @@ public:
 	__declspec(dllexport) bool IsFigureTaking(Pos destinationCell, const FiguresVector& opponentPlayerFigures) const;
 	__declspec(dllexport) virtual std::shared_ptr<IFigure> Clone() const override;
 	__declspec(dllexport) virtual void OnMove() override;
+	__declspec(dllexport) Pos GetStartingPos() const override;
 protected:
 
 	virtual bool IsMoveAllowed(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const;

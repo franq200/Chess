@@ -199,6 +199,11 @@ void Figure::OnMove()
     m_moveCounter++;
 }
 
+Pos Figure::GetStartingPos() const
+{
+    return m_startingPos;
+}
+
 bool operator==(const std::shared_ptr<IFigure>& lhs, const std::shared_ptr<IFigure>& rhs)
 {
     return lhs->m_startingPos == rhs->m_startingPos;//!

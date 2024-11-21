@@ -18,7 +18,9 @@ namespace
 		std::vector<Pos> rooksPos;
 		for (auto& figure : currentPlayerFigures)
 		{
-			if (figure->)
+			Pos startingPos = figure->GetStartingPos();
+			bool isRook = (startingPos.x == 0 || startingPos.x == 7) && startingPos.y % 7 == 0;
+			if (isRook)
 			{
 				rooksPos.push_back(figure->GetPosition());
 			}
@@ -60,7 +62,7 @@ bool Board::IsShortCastlePossible(const Positions& opponentTakingMoves) const
 	//if king not under attack
 	//if rook pos.y == king pos.y and rook pos.x == 0
 
-	if (std::find(opponentTakingMoves.begin(), opponentTakingMoves.end(), [](auto takingMove) {return takingMove == m_whiteKing->GetPositon() || takingMove == m_blackKing->GetPosition()}) != opponentTakingMoves.end())
+	if (std::find(opponentTakingMoves.begin(), opponentTakingMoves.end(), [this](auto takingMove) {return takingMove == m_whiteKing->GetPosition() || takingMove == m_blackKing->GetPosition(); }) != opponentTakingMoves.end())
 	{
 		return false;
 	}
@@ -89,7 +91,7 @@ void Board::HighlightMoves(const Positions& possibleMoves)
 {
 	for (auto move : possibleMoves)
 	{
-		if (!m_takingMoves.empty() && std::find(m_takingMoves.begin(), m_takingMoves.end(), [](auto takingMove) {return takingMove == move;}) == m_takingMoves.end())
+		if (!m_takingMoves.empty() && std::find(m_takingMoves.begin(), m_takingMoves.end(), [move](auto takingMove) {return takingMove.x == move.x;}) == m_takingMoves.end())
 		{
 			m_board.at(move.x).at(move.y)->HighlightAsTaking();
 		}
