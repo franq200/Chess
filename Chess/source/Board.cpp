@@ -10,6 +10,7 @@
 #include "interface/ICell.h"
 #include "interface/ITexture.h"
 #include "interface/IRectangleShape.h"
+#include "../IMoveExecutor.h"
 
 namespace
 {
@@ -18,12 +19,12 @@ namespace
 		std::vector<Pos> takingMoves;
 		for (auto& opponentFigure : opponentPlayerFigures)
 		{
-			std::vector<Pos> possibleMoves = opponentFigure->CalculatePossibleMoves(opponentPlayerFigures, currentPlayerFigures);
+			std::vector<std::unique_ptr<IMoveExecutor>> possibleMoves = opponentFigure->CalculatePossibleMoves(opponentPlayerFigures, currentPlayerFigures);
 			for (auto& move : possibleMoves)
 			{
-				if (opponentFigure->IsFigureTaking(move, currentPlayerFigures))
+				if (opponentFigure->IsFigureTaking(move->GetDestinationPos(), currentPlayerFigures))
 				{
-					takingMoves.push_back(move);
+					takingMoves.push_back(move->GetDestinationPos());
 				}
 			}
 		}
@@ -59,30 +60,31 @@ bool Board::IsLongCastlePossible(const Positions& opponentTakingMoves) const
 	return false;
 }
 
-std::vector<Pos> Board::GetTakingMoves(const IFigurePtr& currentFigure, const Figures& opponentFigures, const Positions& possibleMoves) const
+std::vector<Pos> Board::GetTakingMoves(const IFigurePtr& currentFigure, const Figures& opponentFigures, const std::vector<std::unique_ptr<IMoveExecutor>>& possibleMoves) const
 {
 	std::vector<Pos> takingMoves;
-	for (auto move : possibleMoves)
+	for (auto& move : possibleMoves)
 	{
-		if (currentFigure->IsFigureTaking(move, opponentFigures))
+		if (currentFigure->IsFigureTaking(move->GetDestinationPos(), opponentFigures))
 		{
-			takingMoves.push_back(move);
+			takingMoves.push_back(move->GetDestinationPos());
 		}
 	}
 	return takingMoves;
 }
 
-void Board::HighlightMoves(const Positions& possibleMoves)
+void Board::HighlightMoves(const std::vector<std::unique_ptr<IMoveExecutor>>& possibleMoves)
 {
-	for (auto move : possibleMoves)
+	for (auto& move : possibleMoves)
 	{
-		if (!m_takingMoves.empty() && std::find_if(m_takingMoves.begin(), m_takingMoves.end(), [move](auto takingMove) {return takingMove.x == move.x;}) == m_takingMoves.end())
+		auto moveDestinationPos = move->GetDestinationPos();
+		if (!m_takingMoves.empty() && std::find_if(m_takingMoves.begin(), m_takingMoves.end(), [moveDestinationPos](auto takingMove) {return takingMove.x == moveDestinationPos.x;}) == m_takingMoves.end())
 		{
-			m_board.at(move.x).at(move.y)->HighlightAsTaking();
+			m_board.at(moveDestinationPos.x).at(moveDestinationPos.y)->HighlightAsTaking();
 		}
 		else
 		{
-			m_board.at(move.x).at(move.y)->Highlight();
+			m_board.at(moveDestinationPos.x).at(moveDestinationPos.y)->Highlight();
 		}
 	}
 }
@@ -118,7 +120,7 @@ void Board::UpdatePossibleMoves(PlayerColor currentPlayer)
 	auto opponentTakingMoves = GetOpponentTakingMoves(currentPlayerFigures, opponentFigures);
 	bool isShortCastlePossible = IsShortCastlePossible(opponentTakingMoves);
 	bool isLongCastlePossible = IsLongCastlePossible(opponentTakingMoves);
-	Positions possibleMoves = currentFigure->CalculatePossibleMoves(currentPlayerFigures, opponentFigures);
+	std::vector<std::unique_ptr<IMoveExecutor>> possibleMoves = currentFigure->CalculatePossibleMoves(currentPlayerFigures, opponentFigures);
 	m_takingMoves = GetTakingMoves(currentFigure, opponentFigures, possibleMoves);
 	HighlightMoves(possibleMoves);
 }

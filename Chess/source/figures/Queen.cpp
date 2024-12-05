@@ -1,5 +1,6 @@
 #include "figures/Queen.h"
 #include "interface/IRectangleShape.h"
+#include "../IMoveExecutor.h"
 
 Queen::Queen(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, size)
 {

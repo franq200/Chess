@@ -1,6 +1,7 @@
 #include "figures/King.h"
 #include "interface/IRectangleShape.h"
 #include "Helper.h"
+#include "../IMoveExecutor.h"
 
 King::King(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, size)
 {

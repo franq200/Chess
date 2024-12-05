@@ -1,5 +1,6 @@
 #include "figures/Knight.h"
 #include "interface/IRectangleShape.h"
+#include "../IMoveExecutor.h"
 
 Knight::Knight(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, size)
 {

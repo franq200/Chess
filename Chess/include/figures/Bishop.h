@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include "Figure.h"
+#include "../IMoveExecutor.h"
 
 using Positions = std::vector<Pos>;
 
