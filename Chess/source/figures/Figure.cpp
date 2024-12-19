@@ -1,8 +1,11 @@
+#include <assert.h>
 #include "figures/Figure.h"
 #include "interface/ITexture.h"
 #include "Helper.h"
 #include "interface/IWindow.h"
-#include "../IMoveExecutor.h"
+#include "IMoveExecutor.h"
+#include "interface/IPlayer.h"
+#include "Board.h"
 
 Figure::Figure(const ITexture& texture, Pos pos, Size size)
 {
@@ -47,7 +50,7 @@ Pos Figure::GetPosition() const
     return m_position;
 }
 
-std::unique_ptr<IMoveExecutor> Figure::GenerateExecutor(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const
+MoveExecutorPtr Figure::GenerateExecutor(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const
 {
     if (IsMoveAllowedForThisFigure(destinationCell, currentPlayerFigures, opponentPlayerFigures))
     {
@@ -69,9 +72,9 @@ bool Figure::IsMoveAllowedForThisFigure(Pos destinationCell, const FiguresVector
     return false;
 }
 
-std::vector<std::unique_ptr<IMoveExecutor>> Figure::CalculatePossibleMoves(const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures)
+std::vector<MoveExecutorPtr> Figure::CalculatePossibleMoves(const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures)
 {
-    std::vector<std::unique_ptr<IMoveExecutor>> possibleMoves;
+    std::vector<MoveExecutorPtr> possibleMoves;
     Pos currentPos = GetPosition();
     
     for (const auto& direction : m_directions)
@@ -117,7 +120,7 @@ Pos Figure::GetPixelTempPosition() const
 
 bool Figure::IsInPossibleMoves(const Pos& destinationPos) const
 {
-    return std::find(m_possibleMoves.begin(), m_possibleMoves.end(), destinationPos) != m_possibleMoves.end();
+    return std::find_if(m_possibleMoves.begin(), m_possibleMoves.end(), [&](auto& move) {return move->GetDestinationPos() == destinationPos; }) != m_possibleMoves.end();
 }
 
 Pos Figure::GetCellTempPosition() const
@@ -190,14 +193,19 @@ bool Figure::IsFigureTaking(Pos destinationCell, const FiguresVector& opponentPl
     return false;
 }
 
-std::shared_ptr<IFigure> Figure::Clone() const
+std::shared_ptr<IFigure> Figure::Clone()
 {
     return std::shared_ptr<IFigure>();
 }
 
-void Figure::OnMove()
+void Figure::OnMove(Board& board, IPlayerPtr& opponent, Pos mouseCell)
 {
     m_moveCounter++;
+    auto executorIt = std::find_if(m_possibleMoves.begin(), m_possibleMoves.end(), [&](auto& move) {return move->GetDestinationPos() == mouseCell; });
+
+    assert(("executorIt must be valid here", executorIt != m_possibleMoves.end()));
+
+    executorIt->get()->Execute(board, opponent);
 }
 
 bool operator==(const std::shared_ptr<IFigure>& lhs, const std::shared_ptr<IFigure>& rhs)

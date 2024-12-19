@@ -1,7 +1,6 @@
 #include "figures/King.h"
 #include "interface/IRectangleShape.h"
 #include "Helper.h"
-#include "../IMoveExecutor.h"
 
 King::King(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, size)
 {
@@ -17,7 +16,7 @@ King::King(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, si
     };
 }
 
-std::shared_ptr<IFigure> King::Clone() const
+std::shared_ptr<IFigure> King::Clone()
 {
     return std::make_shared<King>(*this);
 }

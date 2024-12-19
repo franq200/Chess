@@ -5,6 +5,10 @@
 class IMoveExecutor;
 class IWindow;
 using IWindowPtr = std::unique_ptr<IWindow>;
+using MoveExecutorPtr = std::shared_ptr<IMoveExecutor>;
+class Board;
+class IPlayer;
+using IPlayerPtr = std::unique_ptr<IPlayer>;
 
 class IFigure
 {
@@ -18,15 +22,15 @@ public:
 	virtual void Draw(IWindowPtr& window) = 0;
 	virtual void SetPixelPosition(Pos pos) = 0;
 	virtual Pos GetPosition() const = 0;
-	virtual std::vector<std::unique_ptr<IMoveExecutor>> CalculatePossibleMoves(const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) = 0;
+	virtual std::vector<MoveExecutorPtr> CalculatePossibleMoves(const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) = 0;
 	virtual void SetShapePos(const Pos& tempPos) = 0;
 	virtual void RestorePositionBeforeAnimation() = 0;
 	virtual Pos GetPixelTempPosition() const = 0;
 	virtual bool IsInPossibleMoves(const Pos& destinationPos) const = 0;
 	virtual Pos GetCellTempPosition() const = 0;
 	virtual bool IsFigureTaking(Pos destinationCell, const FiguresVector& opponentPlayerFigures) const = 0;
-	virtual std::shared_ptr<IFigure> Clone() const = 0;
-	virtual void OnMove() = 0;
+	virtual std::shared_ptr<IFigure> Clone() = 0;
+	virtual void OnMove(Board& board, IPlayerPtr& opponent, Pos mouseCell) = 0;
 	friend bool operator==(const std::shared_ptr<IFigure>& lhs, const std::shared_ptr<IFigure>& rhs);
 
 	virtual bool IsKing() const { return false; };

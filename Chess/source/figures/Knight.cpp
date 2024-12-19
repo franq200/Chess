@@ -1,6 +1,5 @@
 #include "figures/Knight.h"
 #include "interface/IRectangleShape.h"
-#include "../IMoveExecutor.h"
 
 Knight::Knight(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, size)
 {
@@ -16,7 +15,7 @@ Knight::Knight(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos
     };
 }
 
-std::shared_ptr<IFigure> Knight::Clone() const
+std::shared_ptr<IFigure> Knight::Clone()
 {
     return std::make_shared<Knight>(*this);
 }

@@ -22,6 +22,8 @@ class Window;
 using Figures = std::vector < IFigurePtr>;
 using FiguresMap = std::map<PlayerColor, Figures>;
 using Cells = std::vector<std::vector<ICellPtr>>;
+using MoveExecutorPtr = std::shared_ptr<IMoveExecutor>;
+using MoveExecutors = std::vector<MoveExecutorPtr>;
 
 using Positions = std::vector<Pos>;
 
@@ -47,8 +49,8 @@ public:
 private:
 	bool IsShortCastlePossible(const Positions& opponentTakingMoves) const;
 	bool IsLongCastlePossible(const Positions& opponentTakingMoves) const;
-	std::vector<Pos> GetTakingMoves(const IFigurePtr& currentFigure, const Figures& opponentFigures, const std::vector<std::unique_ptr<IMoveExecutor>>& possibleMoves) const;
-	void HighlightMoves(const std::vector<std::unique_ptr<IMoveExecutor>>& possibleMoves);
+	std::vector<Pos> GetTakingMoves(const IFigurePtr& currentFigure, const Figures& opponentFigures, const MoveExecutors& possibleMoves) const;
+	void HighlightMoves(const MoveExecutors& possibleMoves);
 	std::pair<Figures, Figures> GetPlayersFigures(PlayerColor currentPlayer) const;
 	IFigurePtr GetCurrentFigure() const;
 	bool IsItTakingMove(const Pos& move) const;

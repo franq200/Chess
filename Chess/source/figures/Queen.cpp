@@ -1,6 +1,5 @@
 #include "figures/Queen.h"
 #include "interface/IRectangleShape.h"
-#include "../IMoveExecutor.h"
 
 Queen::Queen(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, size)
 {
@@ -16,7 +15,7 @@ Queen::Queen(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, 
     };
 }
 
-std::shared_ptr<IFigure> Queen::Clone() const
+std::shared_ptr<IFigure> Queen::Clone()
 {
     return std::make_shared<Queen>(*this);
 }

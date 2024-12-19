@@ -22,18 +22,18 @@ public:
 	__declspec(dllexport) void Draw(IWindowPtr& window) override;
 	__declspec(dllexport) void SetPixelPosition(Pos pos) override;
 	__declspec(dllexport) Pos GetPosition() const override;
-	__declspec(dllexport) virtual std::vector<std::unique_ptr<IMoveExecutor>> CalculatePossibleMoves(const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) override;
+	__declspec(dllexport) virtual std::vector<MoveExecutorPtr> CalculatePossibleMoves(const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) override;
 	__declspec(dllexport) void SetShapePos(const Pos& tempPos) override;
 	__declspec(dllexport) void RestorePositionBeforeAnimation() override;
 	__declspec(dllexport) Pos GetPixelTempPosition() const override;
 	__declspec(dllexport) bool IsInPossibleMoves(const Pos& destinationPos) const override;
 	__declspec(dllexport) Pos GetCellTempPosition() const override;
 	__declspec(dllexport) bool IsFigureTaking(Pos destinationCell, const FiguresVector& opponentPlayerFigures) const;
-	__declspec(dllexport) virtual std::shared_ptr<IFigure> Clone() const override;
-	__declspec(dllexport) virtual void OnMove() override;
+	__declspec(dllexport) virtual std::shared_ptr<IFigure> Clone() override;
+	__declspec(dllexport) virtual void OnMove(Board& board, IPlayerPtr& opponent, Pos mouseCell) override;
 protected:
 
-	virtual std::unique_ptr<IMoveExecutor> GenerateExecutor(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const;
+	virtual MoveExecutorPtr GenerateExecutor(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const;
 	virtual bool IsMoveAllowedForThisFigure(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const;
 
 	Positions GetTopPath(const Pos pos, const Pos destinationCell) const;
@@ -57,7 +57,7 @@ protected:
 	RectangleShape m_figureShape;
 	Positions m_directions;
 	int m_moveCounter = 0;
-	std::vector<std::unique_ptr<IMoveExecutor>> m_possibleMoves;
+	std::vector<MoveExecutorPtr> m_possibleMoves;
 	Pos m_position;
 };
 

@@ -10,7 +10,7 @@
 #include "interface/ICell.h"
 #include "interface/ITexture.h"
 #include "interface/IRectangleShape.h"
-#include "../IMoveExecutor.h"
+#include "IMoveExecutor.h"
 
 namespace
 {
@@ -19,7 +19,7 @@ namespace
 		std::vector<Pos> takingMoves;
 		for (auto& opponentFigure : opponentPlayerFigures)
 		{
-			std::vector<std::unique_ptr<IMoveExecutor>> possibleMoves = opponentFigure->CalculatePossibleMoves(opponentPlayerFigures, currentPlayerFigures);
+			std::vector<MoveExecutorPtr> possibleMoves = opponentFigure->CalculatePossibleMoves(opponentPlayerFigures, currentPlayerFigures);
 			for (auto& move : possibleMoves)
 			{
 				if (opponentFigure->IsFigureTaking(move->GetDestinationPos(), currentPlayerFigures))
@@ -60,7 +60,7 @@ bool Board::IsLongCastlePossible(const Positions& opponentTakingMoves) const
 	return false;
 }
 
-std::vector<Pos> Board::GetTakingMoves(const IFigurePtr& currentFigure, const Figures& opponentFigures, const std::vector<std::unique_ptr<IMoveExecutor>>& possibleMoves) const
+std::vector<Pos> Board::GetTakingMoves(const IFigurePtr& currentFigure, const Figures& opponentFigures, const MoveExecutors& possibleMoves) const
 {
 	std::vector<Pos> takingMoves;
 	for (auto& move : possibleMoves)
@@ -73,7 +73,7 @@ std::vector<Pos> Board::GetTakingMoves(const IFigurePtr& currentFigure, const Fi
 	return takingMoves;
 }
 
-void Board::HighlightMoves(const std::vector<std::unique_ptr<IMoveExecutor>>& possibleMoves)
+void Board::HighlightMoves(const MoveExecutors& possibleMoves)
 {
 	for (auto& move : possibleMoves)
 	{
@@ -118,9 +118,7 @@ void Board::UpdatePossibleMoves(PlayerColor currentPlayer)
 	const IFigurePtr currentFigure = GetCurrentFigure();
 	auto [currentPlayerFigures, opponentFigures] = GetPlayersFigures(currentPlayer);
 	auto opponentTakingMoves = GetOpponentTakingMoves(currentPlayerFigures, opponentFigures);
-	bool isShortCastlePossible = IsShortCastlePossible(opponentTakingMoves);
-	bool isLongCastlePossible = IsLongCastlePossible(opponentTakingMoves);
-	std::vector<std::unique_ptr<IMoveExecutor>> possibleMoves = currentFigure->CalculatePossibleMoves(currentPlayerFigures, opponentFigures);
+	MoveExecutors possibleMoves = currentFigure->CalculatePossibleMoves(currentPlayerFigures, opponentFigures);
 	m_takingMoves = GetTakingMoves(currentFigure, opponentFigures, possibleMoves);
 	HighlightMoves(possibleMoves);
 }
@@ -132,16 +130,8 @@ bool Board::IsCurrentFigureSet() const
 
 void Board::MoveCurrentFiguresToNewCell(Pos mouseCell, IPlayerPtr& opponent)
 {
-	if (IsItTakingMove(mouseCell))
-	{
-		RemoveFigure(mouseCell, opponent);
-	}
-	GetCurrentFigure()->OnMove();
-	m_board[mouseCell.x][mouseCell.y]->SetFigure(GetCurrentFigure());
-	m_board[m_selectedFigureCell.value().x][m_selectedFigureCell.value().y]->RemoveFigure();
-	m_selectedFigureCell.reset();
-
-	RemoveHighlights();
+	const IFigurePtr currentFigure = GetCurrentFigure();
+	currentFigure->OnMove(*this, opponent, mouseCell);
 }
 
 void Board::CreateFigures(TexturesMap& textures, IPlayerPtr& white, IPlayerPtr& black)

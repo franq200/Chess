@@ -1,6 +1,5 @@
 #include "figures/Rook.h"
 #include "interface/IRectangleShape.h"
-#include "../IMoveExecutor.h"
 
 Rook::Rook(const ITexture& texture, Pos pos, Size size) : Figure(texture, pos, size)
 {
@@ -12,7 +11,7 @@ Rook::Rook(const ITexture& texture, Pos pos, Size size) : Figure(texture, pos, s
     };
 }
 
-std::shared_ptr<IFigure> Rook::Clone() const
+std::shared_ptr<IFigure> Rook::Clone()
 {
     return std::make_shared<Rook>(*this);
 }

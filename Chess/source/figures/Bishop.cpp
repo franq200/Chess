@@ -7,7 +7,7 @@ Bishop::Bishop(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos
     m_directions = {Pos(1, 1),Pos(1, -1),Pos(-1, 1),Pos(-1, -1)};
 }
 
-std::shared_ptr<IFigure> Bishop::Clone() const
+std::shared_ptr<IFigure> Bishop::Clone()
 {
     return std::make_shared<Bishop>(*this);
 }

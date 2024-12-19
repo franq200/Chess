@@ -147,7 +147,6 @@ xcopy /s /Y Chess\SFML-2.6.0\bin\sfml-window-2.dll  x64\Release</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="IMoveExecutor.cpp" />
     <ClCompile Include="source/Game.cpp" />
     <ClCompile Include="source/Mouse.cpp" />
     <ClCompile Include="source/Event.cpp" />
@@ -166,9 +165,9 @@ xcopy /s /Y Chess\SFML-2.6.0\bin\sfml-window-2.dll  x64\Release</Command>
     <ClCompile Include="source/figures\King.cpp" />
     <ClCompile Include="source/figures\Pawn.cpp" />
     <ClCompile Include="source/figures\Queen.cpp" />
+    <ClCompile Include="source\IMoveExecutor.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IMoveExecutor.h" />
     <ClInclude Include="include/Game.h" />
     <ClInclude Include="include/Event.h" />
     <ClInclude Include="include/interface/IEvent.h" />
@@ -196,6 +195,7 @@ xcopy /s /Y Chess\SFML-2.6.0\bin\sfml-window-2.dll  x64\Release</Command>
     <ClInclude Include="include/figures\Queen.h" />
     <ClInclude Include="include/interface\IMouse.h" />
     <ClInclude Include="include/Mouse.h" />
+    <ClInclude Include="include\IMoveExecutor.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ChessDiagram.cd" />

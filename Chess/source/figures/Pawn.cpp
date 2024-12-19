@@ -1,6 +1,5 @@
 #include "figures/Pawn.h"
 #include "interface/IRectangleShape.h"
-#include "../IMoveExecutor.h"
 
 Pawn::Pawn(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, size)
 {
@@ -10,7 +9,7 @@ Pawn::Pawn(const ITexture& texture, Pos pos, Size size) :Figure(texture, pos, si
 }
 
 
-std::unique_ptr<IMoveExecutor> Pawn::GenerateExecutor(Pos moveCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const
+MoveExecutorPtr Pawn::GenerateExecutor(Pos moveCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const
 {
     Pos pos = GetPosition();
     int yDifference = moveCell.y - pos.y;
@@ -46,7 +45,7 @@ std::unique_ptr<IMoveExecutor> Pawn::GenerateExecutor(Pos moveCell, const Figure
     return nullptr;
 }
 
-std::shared_ptr<IFigure> Pawn::Clone() const
+std::shared_ptr<IFigure> Pawn::Clone()
 {
     return std::make_shared<Pawn>(*this);
 }
