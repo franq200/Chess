@@ -119,6 +119,8 @@ void Board::UpdatePossibleMoves(PlayerColor currentPlayer)
 	auto [currentPlayerFigures, opponentFigures] = GetPlayersFigures(currentPlayer);
 	auto opponentTakingMoves = GetOpponentTakingMoves(currentPlayerFigures, opponentFigures);
 	MoveExecutors possibleMoves = currentFigure->CalculatePossibleMoves(currentPlayerFigures, opponentFigures);
+	RemoveForbiddenMoves(possibleMoves, currentFigure, GetCurrentKing(currentPlayer), opponentFigures, currentPlayerFigures);
+	currentFigure->SetPossibleMoves(possibleMoves);
 	m_takingMoves = GetTakingMoves(currentFigure, opponentFigures, possibleMoves);
 	HighlightMoves(possibleMoves);
 }
@@ -226,6 +228,54 @@ void Board::DrawFiguresAndHighlights(IWindowPtr& window)
 	{
 		m_board[m_selectedFigureCell.value().x][m_selectedFigureCell.value().y]->DrawFigures(window);
 	}
+}
+
+IFigurePtr Board::GetCurrentKing(PlayerColor currentPlayer) const
+{
+	if (currentPlayer == PlayerColor::white)
+	{
+		return m_whiteKing;
+	}
+	else
+	{
+		return m_blackKing;
+	}
+}
+
+void Board::RemoveForbiddenMoves(MoveExecutors& possibleMoves, const IFigurePtr& currentFigure, const IFigurePtr& currentKing, const FiguresVector& opponentFigures, const FiguresVector& currentPlayerFigures)
+{
+	auto removeCondition = [&](const auto& possibleMove){
+		FiguresVector clonedFigures;
+		IFigurePtr clonedKing;
+		for (const auto& figure : currentPlayerFigures)
+		{
+			if (figure == currentKing)
+			{
+				clonedKing = figure->Clone();
+				clonedFigures.emplace_back(clonedKing);
+			}
+			else
+			{
+				clonedFigures.emplace_back(figure->Clone());
+			}
+		}
+		FiguresVector clonedOpponentFigures;
+		for (const auto& figure : opponentFigures)
+		{
+			clonedFigures.emplace_back(figure->Clone());
+		}
+		if( possibleMove->GetDestinationPos() == Pos(3,1)) // break
+			std::cout << "jestem";
+
+		auto figureCopy = std::find(clonedFigures.begin(), clonedFigures.end(), currentFigure);
+		(*figureCopy)->SetPixelPosition(functions::GetPixelPosFromCellPos(possibleMove->GetDestinationPos()));
+		std::erase_if(clonedOpponentFigures, [&](auto& figure) {return figure->GetPosition() == possibleMove->GetDestinationPos(); });
+		auto opponentTakingMoves = GetOpponentTakingMoves(clonedOpponentFigures, clonedFigures); // ? czy cloned
+		const auto& clonedKingPos = clonedKing->GetPosition();
+		return std::any_of(opponentTakingMoves.begin(), opponentTakingMoves.end(), [&clonedKingPos](auto& el){return el == clonedKingPos;});
+	};
+
+	std::erase_if(possibleMoves, removeCondition);
 }
 
 std::pair<Figures, Figures> Board::GetPlayersFigures(PlayerColor currentPlayer) const

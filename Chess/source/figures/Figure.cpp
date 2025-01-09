@@ -99,7 +99,7 @@ std::vector<MoveExecutorPtr> Figure::CalculatePossibleMoves(const FiguresVector&
             }
         }
     }
-    m_possibleMoves = possibleMoves;
+    //m_possibleMoves = possibleMoves;
     return possibleMoves;
 }
 
@@ -206,6 +206,11 @@ void Figure::OnMove(Board& board, IPlayerPtr& opponent, Pos mouseCell)
     assert(("executorIt must be valid here", executorIt != m_possibleMoves.end()));
 
     executorIt->get()->Execute(board, opponent);
+}
+
+void Figure::SetPossibleMoves(const std::vector<MoveExecutorPtr>& possibleMoves)
+{
+    m_possibleMoves = possibleMoves;
 }
 
 bool operator==(const std::shared_ptr<IFigure>& lhs, const std::shared_ptr<IFigure>& rhs)

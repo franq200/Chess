@@ -100,6 +100,7 @@ bool Player::IsAnyMovePossible(const FiguresVector& opponentPlayerFigures) const
 	}
 	for (auto& figure : m_figures)
 	{
+		// to do: case dla remisu
 		if (!figure->CalculatePossibleMoves(m_figures, opponentPlayerFigures).empty())
 		{
 			return true;

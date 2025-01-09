@@ -10,6 +10,11 @@ enum class PlayerColor : uint8_t
 	black
 };
 
+class NormalMoveExecutor;
+class TakingMoveExecutor;
+class CastleMoveExecutor;
+class IMoveExecutor;
+
 class IPlayer;
 using IPlayerPtr = std::unique_ptr<IPlayer>;
 class ITexture;
@@ -22,6 +27,8 @@ using IFigurePtr = std::shared_ptr<IFigure>;
 using FigureName = std::string;
 using TexturesMap = std::map<FigureName, ITexturePtr>;
 using FiguresVector = std::vector<IFigurePtr>;
+using MoveExecutorPtr = std::shared_ptr<IMoveExecutor>;
+using MoveExecutors = std::vector<MoveExecutorPtr>;
 
 class IBoard
 {

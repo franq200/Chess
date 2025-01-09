@@ -31,6 +31,7 @@ public:
 	virtual bool IsFigureTaking(Pos destinationCell, const FiguresVector& opponentPlayerFigures) const = 0;
 	virtual std::shared_ptr<IFigure> Clone() = 0;
 	virtual void OnMove(Board& board, IPlayerPtr& opponent, Pos mouseCell) = 0;
+	virtual void SetPossibleMoves(const std::vector<MoveExecutorPtr>& possibleMoves) = 0;
 	friend bool operator==(const std::shared_ptr<IFigure>& lhs, const std::shared_ptr<IFigure>& rhs);
 
 	virtual bool IsKing() const { return false; };

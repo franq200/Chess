@@ -8,11 +8,6 @@
 #include <optional>
 #include "Helper.h"
 
-class IMoveExecutor;
-class NormalMoveExecutor;
-class TakingMoveExecutor;
-class CastleMoveExecutor;
-
 class ICell;
 using ICellPtr = std::unique_ptr<ICell>;
 class IFigure;
@@ -22,8 +17,6 @@ class Window;
 using Figures = std::vector < IFigurePtr>;
 using FiguresMap = std::map<PlayerColor, Figures>;
 using Cells = std::vector<std::vector<ICellPtr>>;
-using MoveExecutorPtr = std::shared_ptr<IMoveExecutor>;
-using MoveExecutors = std::vector<MoveExecutorPtr>;
 
 using Positions = std::vector<Pos>;
 
@@ -63,6 +56,8 @@ private:
 	void CreateBlack(TexturesMap& textures);
 	void DrawCells(IWindowPtr& window);
 	void DrawFiguresAndHighlights(IWindowPtr& window);
+	IFigurePtr GetCurrentKing(PlayerColor currentPlayer) const;
+	void RemoveForbiddenMoves(MoveExecutors& possibleMoves, const IFigurePtr& currentFigure, const IFigurePtr& currentKing, const FiguresVector& opponentFigures, const FiguresVector& currentPlayerFigures);
 
 	Cells m_board;
 	FiguresMap m_figures;
