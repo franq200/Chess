@@ -40,6 +40,8 @@ public:
 	friend class TakingMoveExecutor;
 	friend class CastleMoveExecutor;
 private:
+	std::pair<FiguresVector, IFigurePtr> CloneFigures(const IFigurePtr& currentKing, const FiguresVector& currentPlayerFigures) const;
+	FiguresVector CloneOpponentFigures(const FiguresVector& opponentPlayerFigures) const;
 	bool IsShortCastlePossible(const Positions& opponentTakingMoves) const;
 	bool IsLongCastlePossible(const Positions& opponentTakingMoves) const;
 	std::vector<Pos> GetTakingMoves(const IFigurePtr& currentFigure, const Figures& opponentFigures, const MoveExecutors& possibleMoves) const;

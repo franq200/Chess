@@ -43,6 +43,35 @@ void Board::Draw(IWindowPtr& window)
 	DrawFiguresAndHighlights(window);
 }
 
+std::pair<FiguresVector, IFigurePtr> Board::CloneFigures(const IFigurePtr& currentKing, const FiguresVector& currentPlayerFigures) const
+{
+	FiguresVector clonedFigures;
+	IFigurePtr clonedKing;
+	for (const auto& figure : currentPlayerFigures)
+	{
+		if (figure == currentKing)
+		{
+			clonedKing = figure->Clone();
+			clonedFigures.emplace_back(clonedKing);
+		}
+		else
+		{
+			clonedFigures.emplace_back(figure->Clone());
+		}
+	}
+	return std::pair<FiguresVector, IFigurePtr>(clonedFigures, clonedKing);
+}
+
+FiguresVector Board::CloneOpponentFigures(const FiguresVector& opponentPlayerFigures) const
+{
+	FiguresVector clonedFigures;
+	for (const auto& figure : opponentPlayerFigures)
+	{
+		clonedFigures.emplace_back(figure->Clone());
+	}
+	return clonedFigures;
+}
+
 bool Board::IsShortCastlePossible(const Positions& opponentTakingMoves) const
 {
 	//if king not under attack
@@ -245,32 +274,13 @@ IFigurePtr Board::GetCurrentKing(PlayerColor currentPlayer) const
 void Board::RemoveForbiddenMoves(MoveExecutors& possibleMoves, const IFigurePtr& currentFigure, const IFigurePtr& currentKing, const FiguresVector& opponentFigures, const FiguresVector& currentPlayerFigures)
 {
 	auto removeCondition = [&](const auto& possibleMove){
-		FiguresVector clonedFigures;
-		IFigurePtr clonedKing;
-		for (const auto& figure : currentPlayerFigures)
-		{
-			if (figure == currentKing)
-			{
-				clonedKing = figure->Clone();
-				clonedFigures.emplace_back(clonedKing);
-			}
-			else
-			{
-				clonedFigures.emplace_back(figure->Clone());
-			}
-		}
-		FiguresVector clonedOpponentFigures;
-		for (const auto& figure : opponentFigures)
-		{
-			clonedFigures.emplace_back(figure->Clone());
-		}
-		if( possibleMove->GetDestinationPos() == Pos(3,1)) // break
-			std::cout << "jestem";
+		auto [clonedFigures, clonedKing] = CloneFigures(currentKing, currentPlayerFigures);
+		auto clonedOpponentFigures = CloneOpponentFigures(opponentFigures);
+		auto currentFigureCopy = std::find(clonedFigures.begin(), clonedFigures.end(), currentFigure);
 
-		auto figureCopy = std::find(clonedFigures.begin(), clonedFigures.end(), currentFigure);
-		(*figureCopy)->SetPixelPosition(functions::GetPixelPosFromCellPos(possibleMove->GetDestinationPos()));
+		(*currentFigureCopy)->SetPixelPosition(functions::GetPixelPosFromCellPos(possibleMove->GetDestinationPos()));
 		std::erase_if(clonedOpponentFigures, [&](auto& figure) {return figure->GetPosition() == possibleMove->GetDestinationPos(); });
-		auto opponentTakingMoves = GetOpponentTakingMoves(clonedOpponentFigures, clonedFigures); // ? czy cloned
+		auto opponentTakingMoves = GetOpponentTakingMoves(clonedOpponentFigures, clonedFigures);
 		const auto& clonedKingPos = clonedKing->GetPosition();
 		return std::any_of(opponentTakingMoves.begin(), opponentTakingMoves.end(), [&clonedKingPos](auto& el){return el == clonedKingPos;});
 	};
