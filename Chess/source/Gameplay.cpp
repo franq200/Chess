@@ -5,6 +5,7 @@
 #include "interface/IBoard.h"
 #include "interface/IEvent.h"
 #include "interface/IMouse.h"
+#include "interface/IPlayer.h"
 
 Gameplay::Gameplay(TexturesMap& textures,
 	IBoardPtr board,
@@ -24,32 +25,11 @@ bool Gameplay::Update(IWindowPtr& window, IMousePtr& mouse)
 {
 	if (!TryEndGame())
 	{
-		MoveAndSetCurrentFigure(window, mouse);
-		if (m_board->IsAnimating())
-		{
-			AnimateMoving(window, mouse);
-		}
+		TryMoveAndSetCurrentFigure(window, mouse);
 		Draw(window);
 		return true;
 	}
 	return false;
-}
-
-void Gameplay::AnimateMoving(IWindowPtr& window, IMousePtr& mouse)
-{
-	if (mouse->IsButtonPressed(IMouse::Button::Left))
-	{
-		m_board->Animate(mouse->GetPixelPosition(window));
-	}
-	else
-	{
-		Pos mouseCell = mouse->GetCellPosition(window);
-		if (m_board->IsMovePossible(mouseCell))
-		{
-			Move(mouseCell);
-		}
-		m_board->EndAnimation(mouse->GetCellPosition(window));
-	}
 }
 
 const FiguresVector& Gameplay::GetOpponentFigures() const
@@ -72,16 +52,17 @@ PlayerColor Gameplay::GetCurrentPlayerColor() const
 
 bool Gameplay::TryEndGame() const
 {
-	return !(*m_currentPlayer)->IsAnyMovePossible(GetOpponentFigures());
+	IPlayer& currentPlayer = **m_currentPlayer;
+	return ! currentPlayer.IsAnyMovePossible(GetOpponentFigures());
 }
 
-void Gameplay::MoveAndSetCurrentFigure(IWindowPtr& window, IMousePtr& mouse)
+void Gameplay::TryMoveAndSetCurrentFigure(IWindowPtr& window, IMousePtr& mouse)
 {
 	Pos mouseCell = mouse->GetCellPosition(window);
 	if (mouse->IsButtonPressed(IMouse::Button::Left))
 	{
-		m_board->StartAnimation();
-		if (!m_isMoveButtonPressed)
+		m_board->Animate(mouse->GetPixelPosition(window));
+		if (! mouse->WasButtonPressed(IMouse::Button::Left))
 		{
 			if (m_board->IsMovePossible(mouseCell))
 			{
@@ -91,12 +72,16 @@ void Gameplay::MoveAndSetCurrentFigure(IWindowPtr& window, IMousePtr& mouse)
 			{
 				m_board->SetCurrentFigure(mouseCell, GetCurrentPlayerColor());
 			}
-			m_isMoveButtonPressed = true;
 		}
 	}
-	else
+	else if (mouse->WasButtonPressed(IMouse::Button::Left))
 	{
-		m_isMoveButtonPressed = false;
+		Pos mouseCell = mouse->GetCellPosition(window);
+		if (m_board->IsMovePossible(mouseCell))
+		{
+			Move(mouseCell);
+		}
+		m_board->EndAnimation(mouse->GetCellPosition(window));
 	}
 }
 
@@ -104,7 +89,6 @@ void Gameplay::Move(Pos mouseCell)
 {
 	IPlayerPtr* opponent = (*m_currentPlayer == m_whitePlayer) ? &m_blackPlayer : &m_whitePlayer;
 	m_board->MoveCurrentFiguresToNewCell(mouseCell, *opponent);
-	m_isMoveButtonPressed = true;
 	ChangeCurrentPlayer();
 }
 

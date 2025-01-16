@@ -27,11 +27,9 @@ public:
 	__declspec(dllexport) Board(std::array < ICellPtr, 64> cells, TexturesMap& textures);
 
 	__declspec(dllexport) bool IsCellOccupied(Pos mouseCell, const IPlayerPtr& currentPlayer) const override;
-	__declspec(dllexport) bool IsAnimating() const override;
 	__declspec(dllexport) bool IsMovePossible(Pos mouseCell) const override;
 	__declspec(dllexport) void MoveCurrentFiguresToNewCell(Pos mouseCell, IPlayerPtr& opponent) override;
 	__declspec(dllexport) void SetCurrentFigure(Pos mouseCell, PlayerColor currentPlayer) override;
-	__declspec(dllexport) void StartAnimation() override;
 	__declspec(dllexport) void Animate(const Pos& mousePos) override;
 	__declspec(dllexport) void EndAnimation(const Pos& mousePos) override;
 	__declspec(dllexport) void CreateFigures(TexturesMap& textures, IPlayerPtr& white, IPlayerPtr& black) override;
@@ -68,5 +66,4 @@ private:
 	std::optional<Pos> m_selectedFigureCell;
 	std::optional<Pos> m_mousePosInFigure;
 	std::vector<Pos> m_takingMoves;
-	bool m_isAnimating = false;
 };

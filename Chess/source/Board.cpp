@@ -201,17 +201,6 @@ void Board::EndAnimation(const Pos& mouseCell)
 		currentFigure->RestorePositionBeforeAnimation();
 	}
 	m_mousePosInFigure = std::nullopt;
-	m_isAnimating = false;
-}
-
-bool Board::IsAnimating() const
-{
-	return m_isAnimating;
-}
-
-void Board::StartAnimation()
-{
-	m_isAnimating = true;
 }
 
 void Board::RemoveFigure(Pos mouseCell, IPlayerPtr& opponent)

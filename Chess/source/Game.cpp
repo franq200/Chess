@@ -24,6 +24,7 @@ void Game::Update()
 	{
 		if (m_mouse->IsMouseInWindow(m_window))
 		{
+			m_mouse->Update(IMouse::UpdateType::current);
 			Events();
 			switch (m_gameState)
 			{
@@ -37,6 +38,7 @@ void Game::Update()
 			default:
 				break;
 			}
+			m_mouse->Update(IMouse::UpdateType::previous);
 		}
 	}
 }
