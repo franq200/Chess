@@ -227,7 +227,7 @@ void Board::DrawCells(IWindowPtr& window)
 	{
 		for (int y = 0; y < m_board[x].size(); y++)
 		{
-			m_board[x][y]->DrawCells(window);
+			m_board[x][y]->Draw(window);
 		}
 	}
 }

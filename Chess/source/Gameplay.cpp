@@ -43,11 +43,7 @@ const FiguresVector& Gameplay::GetOpponentFigures() const
 
 PlayerColor Gameplay::GetCurrentPlayerColor() const
 {
-	if (*m_currentPlayer == m_whitePlayer)
-	{
-		return PlayerColor::white;
-	}
-	return PlayerColor::black;
+	return (*m_currentPlayer == m_whitePlayer) ? PlayerColor::white : PlayerColor::black;
 }
 
 bool Gameplay::TryEndGame() const

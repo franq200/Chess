@@ -26,7 +26,7 @@ public:
 	virtual void Highlight() = 0;
 	virtual void HighlightAsTaking() = 0;
 	virtual void RemoveHighlight() = 0;
-	virtual void DrawCells(IWindowPtr& window) = 0;
+	virtual void Draw(IWindowPtr& window) = 0;
 	virtual void DrawFigures(IWindowPtr& window) = 0;
 	virtual void DrawHighlights(IWindowPtr& window) = 0;
 };

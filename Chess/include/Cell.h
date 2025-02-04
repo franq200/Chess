@@ -20,7 +20,7 @@ public:
 	__declspec(dllexport) void Highlight() override;
 	__declspec(dllexport) void HighlightAsTaking() override;
 	__declspec(dllexport) void RemoveHighlight() override;
-	__declspec(dllexport) void DrawCells(IWindowPtr& window) override;
+	__declspec(dllexport) void Draw(IWindowPtr& window) override;
 	__declspec(dllexport) void DrawFigures(IWindowPtr& window) override;
 	__declspec(dllexport) void DrawHighlights(IWindowPtr& window) override;
 private:

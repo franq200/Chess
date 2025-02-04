@@ -15,29 +15,39 @@ MoveExecutorPtr Pawn::GenerateExecutor(Pos moveCell, const FiguresVector& curren
     int yDifference = moveCell.y - pos.y;
     int xDifference = moveCell.x - pos.x;
 
-    if (IsCollisionWithCurrentPlayer({ moveCell }, currentPlayerFigures)) {
+    int8_t dir = GetDirectionAsNumber();
+
+    if (IsCollisionWithCurrentPlayer({ moveCell }, currentPlayerFigures)) 
+    {
         return nullptr;
     }
 
-    if (yDifference == static_cast<int8_t>(m_dir) && xDifference == 0) {
-        for (auto figure : opponentPlayerFigures) {
+    if (yDifference == dir && xDifference == 0)
+    {
+        for (auto figure : opponentPlayerFigures) 
+        {
             Pos figurePos = figure->GetPosition();
-            if (figurePos.x == moveCell.x && figurePos.y == moveCell.y) {
+            if (figurePos.x == moveCell.x && figurePos.y == moveCell.y) 
+            {
                 return nullptr;
             }
         }
         return std::make_unique<NormalMoveExecutor>(moveCell);
     }
 
-    if (pos.y == m_startingHeight && yDifference == 2 * static_cast<int8_t>(m_dir) && xDifference == 0) {
-        if (IsCollisionWithAnyPlayer({ moveCell }, currentPlayerFigures, opponentPlayerFigures)) {
+    if (pos.y == m_startingHeight && yDifference == 2 * dir && xDifference == 0)
+    {
+        if (IsCollisionWithOpponent({moveCell, Pos(moveCell.x, moveCell.y + dir)}, opponentPlayerFigures))
+        {
             return nullptr;
         }
         return std::make_unique<NormalMoveExecutor>(moveCell);
     }
 
-    if (yDifference == static_cast<int8_t>(m_dir) && std::abs(xDifference) == 1) {
-        if (IsFigureTaking(moveCell, opponentPlayerFigures)) {
+    if (yDifference == dir && std::abs(xDifference) == 1)
+    {
+        if (IsFigureTaking(moveCell, opponentPlayerFigures)) 
+        {
             return std::make_unique<TakingMoveExecutor>(moveCell);
         }
     }
@@ -76,6 +86,11 @@ void Pawn::SetDirectionBasedOnStartingPos() {
         m_dir = MoveDirection::down;
         m_startingHeight = 1;
     }
+}
+
+const int8_t Pawn::GetDirectionAsNumber() const
+{
+    return static_cast<int8_t>(m_dir);
 }
 
 bool Pawn::IsMoveAllowedForThisFigure(Pos destinationCell, const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures) const

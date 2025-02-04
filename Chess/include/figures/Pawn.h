@@ -21,6 +21,7 @@ public:
 private:
 	bool IsPromotion(Pos moveCell);
 	void SetDirectionBasedOnStartingPos();
+	const int8_t GetDirectionAsNumber() const;
 	MoveDirection m_dir = MoveDirection::unknown;
 	uint8_t m_startingHeight = 0;
 protected:

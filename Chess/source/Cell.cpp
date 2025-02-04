@@ -71,7 +71,7 @@ void Cell::RemoveHighlight()
 	m_takingHighlight->SetSize(Size(0, 0));
 }
 
-void Cell::DrawCells(IWindowPtr& window)
+void Cell::Draw(IWindowPtr& window)
 {
 	window->Draw(*m_cell);
 }
