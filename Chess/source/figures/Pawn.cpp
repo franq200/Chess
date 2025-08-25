@@ -88,7 +88,7 @@ void Pawn::SetDirectionBasedOnStartingPos() {
     }
 }
 
-const int8_t Pawn::GetDirectionAsNumber() const
+int8_t Pawn::GetDirectionAsNumber() const
 {
     return static_cast<int8_t>(m_dir);
 }
