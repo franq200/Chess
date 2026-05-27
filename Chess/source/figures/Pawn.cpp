@@ -37,9 +37,16 @@ MoveExecutorPtr Pawn::GenerateExecutor(Pos moveCell, const FiguresVector& curren
 
     if (pos.y == m_startingHeight && yDifference == 2 * dir && xDifference == 0)
     {
-        if (IsCollisionWithOpponent({moveCell, Pos(moveCell.x, moveCell.y + dir)}, opponentPlayerFigures))
+        if (IsCollisionWithAnyPlayer(moveCell, currentPlayerFigures, opponentPlayerFigures))
         {
             return nullptr;
+        }
+        for (auto figure : opponentPlayerFigures)
+        {
+            if (figure->GetPosition() == moveCell) 
+            {
+                return nullptr;
+			}
         }
         return std::make_unique<NormalMoveExecutor>(moveCell);
     }
