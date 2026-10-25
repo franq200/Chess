@@ -11,4 +11,6 @@ public:
 	MOCK_METHOD(Pos, GetCellPosition, (const std::unique_ptr<IWindow>& window), (override));
 	MOCK_METHOD(Pos, GetPixelPosition, (const std::unique_ptr<IWindow>& window), (override));
 	MOCK_METHOD(bool, IsMouseInWindow, (const std::unique_ptr<IWindow>& window), (const, override));
+	MOCK_METHOD(bool, WasButtonPressed, (Button button), (const, override));
+	MOCK_METHOD(void, Update, (UpdateType type), (override));
 };

@@ -12,7 +12,7 @@ Gra w szachy w C++, SFML do grafiki, GoogleTest do testów i mocki
 
 
 ## Budowanie i Testy
-- Build: "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe" Chess.sln /p:Configuration=Debug /p:Platform=x64
+- Build: "C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Current\Bin\MSBuild.exe" Chess.sln /p:Configuration=Debug /p:Platform=x64
 - Testy: .\x64\Debug\Sample-Test1.exe
 - Po każdej zmianie zbuduj projekt i uruchom testy
 

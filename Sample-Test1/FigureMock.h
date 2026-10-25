@@ -11,13 +11,15 @@ public:
     MOCK_METHOD(void, Draw, (IWindowPtr& window), (override));
     MOCK_METHOD(void, SetPixelPosition, (Pos pos), (override));
     MOCK_METHOD(Pos, GetPosition, (), (const, override));
-    MOCK_METHOD(std::vector<Pos>, CalculatePossibleMoves, (const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures), (override));
+    MOCK_METHOD(std::vector<MoveExecutorPtr>, CalculatePossibleMoves, (const FiguresVector& currentPlayerFigures, const FiguresVector& opponentPlayerFigures), (override));
     MOCK_METHOD(void, SetShapePos, (const Pos& tempPos), (override));
     MOCK_METHOD(void, RestorePositionBeforeAnimation, (), (override));
     MOCK_METHOD(Pos, GetPixelTempPosition, (), (const, override));
     MOCK_METHOD(bool, IsInPossibleMoves, (const Pos& destinationPos), (const, override));
     MOCK_METHOD(Pos, GetCellTempPosition, (), (const, override));
     MOCK_METHOD(bool, IsFigureTaking, (Pos destinationCell, const FiguresVector& opponentPlayerFigures), (const, override));
-    MOCK_METHOD(std::shared_ptr<IFigure>, Clone, (), (const, override));
+    MOCK_METHOD(std::shared_ptr<IFigure>, Clone, (), (override));
+    MOCK_METHOD(void, OnMove, (Board& board, IPlayerPtr& opponent, Pos mouseCell), (override));
+    MOCK_METHOD(void, SetPossibleMoves, (const std::vector<MoveExecutorPtr>& possibleMoves), (override));
 };
 

@@ -16,7 +16,7 @@ public:
     MOCK_METHOD(void, Highlight, (), (override));
     MOCK_METHOD(void, HighlightAsTaking, (), (override));
     MOCK_METHOD(void, RemoveHighlight, (), (override));
-    MOCK_METHOD(void, DrawCells, (IWindowPtr& window), (override));
+    MOCK_METHOD(void, Draw,(IWindowPtr& window), (override));
     MOCK_METHOD(void, DrawFigures, (IWindowPtr& window), (override));
     MOCK_METHOD(void, DrawHighlights, (IWindowPtr& window), (override));
 };

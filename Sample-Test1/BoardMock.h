@@ -13,6 +13,4 @@ public:
     MOCK_METHOD(void, CreateFigures, (TexturesMap& textures, IPlayerPtr& white, IPlayerPtr& black), (override));
     MOCK_METHOD(void, Animate, (const Pos& mousePos), (override));
     MOCK_METHOD(void, EndAnimation, (const Pos& mousePos), (override));
-    MOCK_METHOD(bool, IsAnimating, (), (const, override));
-    MOCK_METHOD(void, StartAnimation, (), (override));
 };
